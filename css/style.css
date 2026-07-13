@@ -1935,3 +1935,24 @@ body {
     opacity: 0 !important;
     visibility: hidden !important;
 }
+/* تعريف حركة الاهتزاز لأيقونة اليوتيوب */
+@keyframes wiggleEffect {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* ستايل أيقونة اليوتيوب الريسبونسيف */
+.youtube-wiggle {
+    color: #FF0000 !important; /* لون يوتيوب الأحمر */
+    font-size: 1.75rem !important; /* حجم ريسبونسيف ومتناسق بالملّي مع إخواته */
+    transition: transform 0.2s ease-in-out !important;
+    display: inline-block !important;
+}
+
+/* تفعيل الاهتزاز عند الهوفر */
+.youtube-wiggle:hover {
+    animation: wiggleEffect 0.5s ease-in-out !important;
+}
