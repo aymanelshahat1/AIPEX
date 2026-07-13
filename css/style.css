@@ -1,0 +1,1920 @@
+body {
+    font-family: 'Cairo', sans-serif; /* أو أي خط عصري */
+    -webkit-font-smoothing: antialiased; /* بيخلي الخط ناعم جداً على ماك وكروم */
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6; /* مسافة مريحة بين السطور */
+    color: #ffffff;
+}
+
+h2.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px; /* تباعد بسيط يدي فخامة */
+    text-transform: uppercase;
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    font-size: 1rem;
+    font-family: 'Cairo', sans-serif;
+    color: #b0b0b0; /* لون رمادي فاتح للنصوص الطويلة عشان ميبقاش مزعج للعين */
+    max-width: 90%;
+    margin: 0 auto;
+}
+html {
+    scroll-behavior: auto; /* ده بيخلي التنقل لحظي ومبيعملش "نتعة" */
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a;
+    color: white;
+    font-family: sans-serif;
+    /* امسح الـ display: flex والـ align-items من هنا عشان العناصر متجيش جنب بعض */
+}
+
+.content { max-width: 800px; }
+h1 { font-size: 3rem; margin-bottom: 20px; }
+
+/* تنسيق الأزرار */
+button {
+    background: transparent;
+    border: 1px solid #555;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover { background: white; color: black; }
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: fixed; /* ليبقى الشريط ثابتاً في الأعلى */
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+section {
+    scroll-margin-top: 80px; /* جرب 80، لو لسه بيغطي زوده لـ 100 */
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #888; /* تغيير اللون عند المرور بالماوس */
+}
+/* احذف أو عطل هذا الجزء من الـ body أو الـ container */
+/* 
+display: flex;
+align-items: center;
+justify-content: center; 
+*/
+
+/* اجعل كل قسم يأخذ مساحة الشاشة كاملة وينزل تحت الآخر */
+section {
+    min-height: 100vh;
+    width: 100%;
+    display: flex; /* لمركزة المحتوى داخل القسم فقط */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.about-content {
+    display: flex;
+    gap: 20px;
+}
+
+.skill-card {
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+/* تنسيق الـ Navbar ليكون إطاراً دائرياً في الأعلى */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    
+    /* السنترة (محفوظة كما هي) */
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 90%;
+    max-width: 1200px;
+    
+    /* الشكل العام باللمسة الذهبية */
+    background-color: rgba(0, 0, 0, 0.3); /* خليتها أغمق شوية عشان الذهبي يظهر */
+    border: 1px solid rgba(255, 215, 0, 0.2); /* إطار ذهبي خفيف */
+    border-radius: 50px;
+    
+    /* إضافة توهج ذهبي خفيف جداً للحواف */
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+    
+    /* تأثير الزجاج (Glassmorphism) */
+    backdrop-filter: blur(10px);
+    
+    z-index: 1000;
+}
+/* التوهج عند الوقوف بالماوس على الـ Navbar */
+.navbar {
+    /* ضيف السطر ده لكود الـ navbar الحالي عشان الحركة تبقى ناعمة */
+    transition: all 0.4s ease; 
+}
+
+.navbar:hover {
+    /* هنا بنزود قوة الظل الذهبي لما تقرب الماوس */
+    border: 1px solid rgba(255, 215, 0, 0.4); /* الإطار يفتح شوية */
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.2); /* توهج ذهبي هادئ ومنتشر */
+    background-color: rgba(0, 0, 0, 0.4); /* الخلفية تغمق سنة بسيطة */
+}
+/* التعديل على روابط القائمة */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    /* إضافة Transition عشان الحركة تكون ناعمة */
+    transition: all 0.3s ease;
+}
+
+/* التأثير عند المرور بالماوس */
+.nav-links a:hover {
+    color: #fff;
+    /* التوهج: الـ shadow هو اللي بيعمل اللمعة */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+/* 1. إخفاء مؤشر الماوس الافتراضي في كامل الموقع */
+body {
+    cursor: none;
+}
+
+/* 2. تصميم الدائرة (الماوس الجديد) */
+.custom-cursor {
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    
+    /* التعديلات الضرورية للحركة */
+    position: fixed;
+    top: 0; 
+    left: 0;
+    
+    pointer-events: none;
+    z-index: 99999;
+    
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    
+    animation: cursor-pulse 2s infinite alternate;
+    
+    /* تعديل السلاسة: شلنا الـ transform من الـ transition عشان الـ JS يتحكم فيه مباشرة */
+    transition: width 0.2s ease, height 0.2s ease, border 0.2s ease;
+    
+    /* إضافة دي بتخلي الحركة أنعم بكتير */
+    will-change: transform;
+}
+
+/* تأثير الانيميشن عند الوقوف فوق الروابط */
+.custom-cursor.hover {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: white;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+}
+
+/* تعريف حركة النبض */
+@keyframes cursor-pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 10%;
+    gap: 50px;
+}
+
+.contact-form {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.2); /* إطار ذهبي خفيف */
+    width: 50%;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    color: white;
+    padding: 15px 0;
+    margin-bottom: 20px;
+}
+
+.contact-form button {
+    background: white;
+    color: black;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* توهج ذهبي عند التركيز */
+input:focus, textarea:focus {
+    border-bottom: 1px solid #FFD700;
+    outline: none;
+}
+/* إعطاء مساحة لكل الأقسام عشان الـ navbar ما يغطيش عليهم */
+section {
+    padding-top: 100px; /* زود أو قلل القيمة دي حسب طول الـ navbar بتاعك */
+    min-height: 100vh;
+}
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* سنترة رأسية */
+    align-items: center;     /* سنترة أفقية */
+    min-height: 100vh;       /* عشان ياخد ارتفاع الشاشة كامل */
+    text-align: center;      /* سنترة النص */
+    padding: 0 20px;         /* مسافة بسيطة من الجوانب للريسبونسيف */
+}
+
+.content {
+    max-width: 800px;        /* عشان الفقرة متفرشش في كل الشاشة */
+}
+
+/* تكبير الخط */
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}    /* كبرنا الخط */
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}    /* كبرنا الخط */
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+/* النص الأساسي في الهوم */
+.content h1 {
+    font-size: clamp(3rem, 8vw, 6rem); /* ده "السحر": الخط بيتغير حجمه أوتوماتيك حسب حجم الشاشة */
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.content .description {
+    font-size: clamp(1rem, 2vw, 1.3rem); /* الموبايل ياخد 1rem واللاب توب ياخد 1.3rem */
+    line-height: 1.6;
+    padding: 0 10px; /* عشان الكلام مياكلش في حروف الموبايل */
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px; /* مسافة بسيطة بين النص والزراير */
+}
+
+/* ده التنسيق الأساسي اللي يخلي الزرار يظهر "فيد" لما نقرب منه */
+.buttons button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    /* دي أهم حاجة للـ Fade: بتخلي التغيير ياخد وقت (0.3 ثانية) بدل ما يحصل فجأة */
+    transition: all 0.3s ease; 
+}
+
+/* ده بقى "السحر" لما الماوس يقرب من الزرار */
+.buttons button:hover {
+    background: white;       /* يقلب أبيض */
+    color: black;            /* الكلام يقلب أسود عشان يبان ع الأبيض */
+    border-color: white;     /* يقلب أبيض عشان يبقى كله لون واحد */
+    
+    /* لمسة فخامة إضافية: ظل خفيف عشان الزرار يبرز عن باقي الصفحة */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
+    
+    /* تكبير بسيط جداً للزرار عشان يبان "ظاهر" */
+    transform: scale(1.05); 
+}
+h1, h2 {
+    color: #fff;
+    /* ظل ذهبي خفيف جداً يدي إحساس الفخامة */
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* لو عايز كلمة معينة تلمع ذهبي */
+.gold-text {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+.services-section {
+    padding: 100px 10%;
+    text-align: center;
+}
+
+/* في ملف style.css */
+/* تنسيق الـ Grid في اللابتوب */
+/* ده للجهاز الكبير */
+.services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "card1 card2"
+        "card3 card3";
+    gap: 30px;
+}
+
+/* ده للموبايل (تأكد إنك ضايف display: grid هنا) */
+@media (max-width: 768px) {
+    .services-grid {
+        display: grid; /* <--- اتأكد إن دي موجودة هنا */
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "card1"
+            "card2"
+            "card3";
+    }
+}
+
+/* تسمية كل كارت عشان الـ Grid يفهم مكانه */
+.card-1 { grid-area: card1; }
+.card-2 { grid-area: card2; }
+.card-3 { grid-area: card3; }
+
+/* تنسيق الموبايل (كله تحت بعض) */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr; /* عمود واحد */
+        grid-template-areas: 
+            "card1"
+            "card2"
+            "card3";
+    }
+}
+
+/* تأثير "اللمعة الذهبية" لما تقف على المربع */
+.service-card:hover {
+    border-color: #FFD700;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+}
+
+.service-card h3 {
+    color: #FFD700;
+    margin-bottom: 15px;
+}
+.service-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 40px; /* زيادة المساحة الداخلية ليعطي طولاً إضافياً */
+    border-radius: 20px;
+    transition: 0.3s;
+    
+    /* هذا هو الجزء المسؤول عن الطول */
+    min-height: 350px; /* يمكنك زيادة هذا الرقم (مثلاً 400px) إذا كنت تريدها أطول */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* لترتيب الكلام من أعلى المربع */
+}
+
+/* الكلاس ده هنضيفه بالجافاسكريبت لما المربع يظهر في الشاشة */
+.service-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* تنسيق العنوان الرئيسي */
+.section-title {
+    font-size: 3.5rem;          /* حجم كبير ومميز */
+    font-weight: 700;           /* خط سميك */
+    text-align: center;         /* سنترة في نص الصفحة */
+    margin-bottom: 50px;        /* مساحة تحت العنوان عشان المربعات متبقاش لازقة فيه */
+    color: #ffffff;             /* لون أبيض صافي */
+    letter-spacing: 2px;        /* تباعد بسيط بين الحروف للفخامة */
+    text-transform: uppercase;  /* تحويل الحروف لكبيرة */
+}
+/* الألوان الجديدة */
+:root {
+    --silver-glow: 0 0 15px rgba(224, 224, 224, 0.4);
+    --silver-border: 1px solid rgba(224, 224, 224, 0.2);
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: var(--silver-border);
+    transition: 0.5s ease;
+}
+
+.service-card:hover {
+    border-color: #E0E0E0;
+    box-shadow: var(--silver-glow);
+}
+
+.service-card h3 {
+    color: #E0E0E0; /* عنوان فضي */
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 40px;
+}
+
+.service-card {
+    background: #0a0a0a; /* أسود فخم */
+    border: 1px solid rgba(192, 192, 192, 0.3); /* إطار فضي */
+    border-radius: 25px;
+    padding: 50px 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 450px; /* الطول الذي طلبته */
+}
+
+/* التأثير الفضي المتوهج عند الماوس */
+.service-card:hover {
+    border-color: #C0C0C0;
+    box-shadow: 0 0 25px rgba(192, 192, 192, 0.2);
+    transform: translateY(-10px);
+}
+
+.service-card h3 {
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    margin: 20px 0;
+}
+
+.service-card p {
+    color: #B0B0B0; /* رمادي فاتح للنصوص */
+    line-height: 1.8;
+}
+
+.learn-more {
+    margin-top: 30px;
+    padding: 10px 25px;
+    background: transparent;
+    border: 1px solid #C0C0C0;
+    color: #C0C0C0;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.learn-more:hover {
+    background: #C0C0C0;
+    color: #000;
+}
+/* الحاوية الدائرية للصورة */
+.card-image {
+    width: 180px;   /* كبرناها شوية عشان تبقى أوضح */
+    height: 180px;
+    margin-bottom: 20px;
+    border: 4px solid #C0C0C0;
+    border-radius: 50%;
+    overflow: hidden;
+    /* عشان نتأكد إن الصورة في النص بالضبط */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* التأثير الفضي المتوهج حول الدايرة */
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+}
+
+/* الصورة نفسها جوا الدايرة */
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* بتملا الدايرة صح */
+    transition: 0.4s;
+    
+    /* السطر ده هو "السحر" اللي بيمنع التبكسل، بيخلي المتصفح يستخدم أفضل خوارزمية لتنعيم الحواف */
+    image-rendering: -webkit-optimize-contrast; /* لمتصفحات كروم وسفاري */
+    image-rendering: crisp-edges; /* للمتصفحات الحديثة الأخرى */
+    -ms-interpolation-mode: bicubic; /* لمتصفحات إنترنت إكسبلورر القديمة */
+}
+
+.card-image {
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.3); /* توهج فضي خفيف حوالين الدايرة */
+}
+.role-text {
+    display: block; /* عشان تنزل تحت الاسم وتفصل عنه */
+    font-size: 0.5em; /* خليناها صغيرة جداً مقارنة بالاسم */
+    font-weight: 300;
+    color: #666666; /* لون رمادي مطفي جداً (أبيض خافت) */
+    letter-spacing: 2px; /* تباعد الحروف بيدي فخامة */
+    text-transform: uppercase;
+    margin-top: 5px;
+    transition: all 0.5s ease; /* نعومة في التحول */
+}
+
+/* تأثير الماوس (اللمسة الذهبية) */
+.role-text:hover {
+    color: #D4AF37; /* لون ذهبي */
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8); /* توهج ذهبي خفيف */
+    cursor: default;
+}
+/* ده كلاس للأب (الكارد كله) أو للعنصر اللي عايز تظهر فيه الأنيميشن */
+.name-title {
+    opacity: 0; /* يبدأ مختفي */
+    animation: fadeInDown 1.5s ease-out forwards; /* forwards بتخلي العنصر يثبت في آخر وضع له */
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* الكلاس الأساسي للعنصر (مختفي) */
+/* 1. العنصر اللي عايز تظهره، إديله الكلاس ده */
+.animate-me {
+    opacity: 0;
+    animation: fadeEffect 1.5s ease-in-out forwards;
+}
+
+/* 2. الأنيميشن نفسه */
+@keyframes fadeEffect {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* وضع البداية: الصفحة فوق الشاشة ومختفية */
+.page-transition {
+    animation: slideDown 0.8s ease-out forwards;
+}
+.social-links {
+    display: flex;
+    justify-content: center; /* بيخليهم في نص الكارد */
+    gap: 20px;               /* مسافة بين الأيقونتين */
+    margin-top: 20px;        /* مسافة عن النص اللي فوقهم */
+    padding-top: 10px;
+    border-top: 1px solid #333; /* خط رفيع بيفصل الأيقونات عن النص */
+}
+
+.social-icon {
+    font-size: 20px;
+    color: #888;             /* لون رمادي خافت */
+    transition: all 0.3s ease;
+}
+
+/* تأثير التوهج عند الوقوف بالماوس */
+.whatsapp:hover {
+    color: #25D366;
+    text-shadow: 0 0 10px #25D366;
+}
+
+.facebook:hover {
+    color: #1877F2;
+    text-shadow: 0 0 10px #1877F2;
+}
+
+/* امنع أي تأثير سكرول على أيقونات السوشيال */
+.social-links a {
+    scroll-behavior: auto !important;
+    display: inline-block; /* مهم جداً عشان اللينك مياخدش عرض الصفحة */
+}
+.social-links a {
+    /* ده بيمنع أي حركة غير مقصودة للينك نفسه */
+    display: inline-block;
+    transition: none !important; /* إلغاء الترانزيشن للينك نفسه */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.social-links a:active, .social-links a:focus {
+    /* بيمنع أي تأثير "الضغط" (Active) اللي بيحرك العنصر */
+    transform: none !important;
+    outline: none !important;
+}
+/* ده هيخلي أي لينك يفتح فوراً بدون زحف */
+a {
+    scroll-behavior: auto !important;
+}
+/* ده هيجمد الصفحة ويمنع أي حاجة تحركها */
+html, body {
+    overflow-y: scroll !important;
+    scroll-behavior: auto !important;
+}
+/* تنسيق الـ Container جوه الكارت */
+/* 1. تصغير حجم الـ Tags */
+/* الحاوية الخارجية للشريط */
+/* الحاوية اللي بتحتوي الشريط والأيقونات عشان يفضلوا فوق بعض */
+.card-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* الشريط اللي بيلف */
+/* 1. إزالة الحواف من المهارات لتبدو "بلا حواف" */
+/* 1. الحاوية (تأكد من عدم وجود خلفية) */
+/* تنسيق الـ Footer داخل الكارت */
+.card-footer {
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.ceo-title {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #666; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    
+    /* التعديلات الجديدة هنا */
+    margin-top: -10px;    /* دي اللي هترفع الكلمة لفوق وتلزقها في الاسم */
+    margin-bottom: 10px;
+    transition: all 0.4s ease;
+}
+
+/* تأثير التوهج الأزرق عند الاقتراب */
+.ceo-title:hover {
+    color: #00d4ff; /* لون أزرق سماوي مضيء */
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); /* توهج أزرق */
+    cursor: default;
+}
+.social-icon.linkedin:hover {
+    color: #0077b5; /* لون اللينكد إن الرسمي */
+}
+/* ده عشان يسنتر الـ section بالكامل */
+.about-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* بيخلي السيكشن واخد طول الشاشة كلها */
+    text-align: center;
+    padding: 20px;
+}
+
+/* ده للعنوان عشان يفضل متسنتر وبشكل احترافي */
+/* تنسيق العنوان */
+.about-title-animate {
+    font-family: 'Montserrat', sans-serif; /* الخط الجديد */
+    font-size: 6rem;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+    /* التوهج الذهبي (تم زيادة القوة عشان يظهر) */
+    text-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700; 
+    transition: all 0.4s ease;
+}
+
+/* تنسيق النص السفلي */
+.about-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #f0f0f0; /* أبيض مائل للرمادي لراحة العين */
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: 400;
+}
+
+/* تنسيق الجملة اللي تحت العنوان */
+.quote-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+/* إعدادات العنوان الأساسية (عشان الحركة تبدأ من هنا) */
+.team-leads-title, .about-title-animate {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem; /* أو أي حجم أنت محدده */
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    
+    /* ده الجزء الأهم للموشن: بنحدد مدة ونوع الحركة */
+    transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+    cursor: pointer; /* عشان الماوس يتحول لشكل اليد لما يقرب */
+}
+
+/* الحركة اللي هتحصل لما الماوس يقرب (Hover) */
+/* الإعدادات الأساسية (بدون توهج قوي) */
+.team-leads-title, .about-title-animate {
+    /* ... باقي التنسيقات ... */
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.3); /* توهج خفيف جداً في الطبيعي */
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+}
+
+/* التعديل هنا: التوهج لما الماوس يقرب */
+.team-leads-title:hover, .about-title-animate:hover {
+    transform: scale(1.05) translateY(-5px); /* زوم أقل عشان يكون أنعم */
+    
+    /* توهج خفيف، ناعم، ومش فاقع */
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.2);
+}
+/* عنوان القسم الجديد عشان يتماشى مع "About Me" */
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 80px;
+    margin-bottom: 50px;
+    text-shadow: 0 0 10px #ffd700; /* لمسة ذهبية بسيطة */
+}
+
+/* تنسيق الكروت */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto 80px auto;
+}
+
+.course-card {
+    background: #0f0f0f; /* لون أسود مقارب لخلفية الموقع */
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #222;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.course-card:hover {
+    border-color: #ffd700;
+    transform: translateY(-10px);
+}
+.course-card {
+    background: #252525; /* خلفية سوداء فخمة */
+    border-radius: 20px; /* حواف مستديرة زي الصورة بالضبط */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.3s ease;
+    border: 1px solid #333;
+}
+
+.card-content {
+    padding: 40px 20px;
+    text-align: center;
+    color: #fff; /* كلام أبيض */
+}
+
+.card-content h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.btn-orange {
+    background-color: #f37021; /* اللون البرتقالي بتاع الأكاديمية */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 15px;
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+.btn-orange:hover {
+    background-color: #d65d15; /* لون أغمق شوية عند الماوس */
+}
+
+/* عشان المربعات تبقى جنب بعض 3 */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px; /* مسافة أكبر بين الكروت */
+    max-width: 1200px;
+    margin: 50px auto; /* مسافة فوق وتحت */
+    padding: 0 20px;
+}
+
+.course-card {
+    background: #1a1a1a; /* لون أغمق شوية عشان يبرز */
+    border-radius: 20px;
+    padding: 50px 30px; /* زودنا الـ padding عشان المربع يكبر */
+    text-align: center;
+    border: 1px solid #333;
+    transition: 0.4s;
+    min-height: 300px; /* طول ثابت ومناسب */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-card h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    color: #ffd700; /* لون ذهبي للوصف عشان يظهر */
+    margin-bottom: 30px;
+}
+
+/* تصميم الزرار الجديد */
+.btn-gold-outline {
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 50px; /* دائري وشيك */
+    font-weight: bold;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.btn-gold-outline:hover {
+    background: #ffd700;
+    color: #000;
+    transform: scale(1.05);
+}
+/* كود الـ Responsive للموبايل */
+@media (max-width: 768px) {
+    .courses-grid {
+        /* تغيير الـ grid من 3 أعمدة لعمود واحد */
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+
+    .course-card {
+        min-height: auto; /* عشان المربع ميبقاش طويل زيادة عن اللزوم */
+        padding: 30px 20px;
+    }
+
+    .section-title {
+        font-size: 2rem; /* تصغير حجم الخط في الموبايل */
+    }
+}
+.course-card {
+    background: #1a1a1a;
+    border-radius: 20px;
+    border: 1px solid #333;
+    transition: 0.4s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* ده اللي بيخلي الحواف مستديرة للصورة */
+    height: 380px; /* طول مناسب للمربع */
+    padding: 0;
+}
+
+.card-top {
+    width: 100%;
+    height: 65%; /* الصورة تاخد المساحة العلوية */
+    background: #000; /* عشان لو الصورة أصغر شوية، الخلفية تكون سودة */
+}
+
+.course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* خليناها contain عشان اللوجو يظهر كامل من غير ما يتقص */
+    padding: 20px; /* سيبنا مساحة صغيرة حوالين اللوجو */
+}
+
+.card-top p {
+    color: #ffd700;
+    margin: 0;
+    padding-bottom: 10px;
+    font-weight: 500;
+}
+
+.btn-gold-outline {
+    margin: 0 30px 30px 30px; /* مسافة للزرار تحت */
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ffd700;
+    color: #ffd700;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: 0.3s;
+}
+.code-text {
+    font-family: 'Courier New', Courier, monospace;
+    color: #fff; /* النص الأساسي أبيض */
+    background: #000;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    border: 1px solid #333;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* دي عشان تخلي الـ Tags لونها ذهبي زي هويتك */
+.code-text::before {
+    content: ""; /* ممكن تضيف أيقونة لو حابب */
+}
+:root {
+    --gold: #c5a059;       /* ذهبي هادئ وفخم (بدل الأصفر الفاقع) */
+    --bg-card: #1a1a1a;    /* الخلفية السودة */
+    --text-white: #e0e0e0; /* أبيض مريح للعين (مش ناصع) */
+}
+
+/* تعديل الزرار */
+.btn-gold-outline {
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    transition: 0.3s;
+}
+
+.btn-gold-outline:hover {
+    background: var(--gold);
+    color: #000;
+}
+
+/* تعديل النص البرمجي */
+.code-text {
+    color: var(--gold); /* اللون الذهبي الهادئ */
+    background: #111; /* خلفية سودة أغمق شوية */
+    border-left: 3px solid var(--gold);
+}
+
+/* تعديل عنوان القسم */
+.section-title {
+    color: #fff;
+    text-shadow: 0 0 15px rgba(197, 160, 89, 0.5); /* توهج ذهبي هادئ */
+}
+.btn-soon {
+    border: 1px solid #c5a059; /* نفس اللون الذهبي */
+    color: #c5a059;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: default; /* الماوس مش هيتحول لـ "إيد" لما يقف عليه */
+    opacity: 0.7; /* شفافية خفيفة توحي إنه لسه مش متاح */
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.badge-soon {
+    background: transparent;
+    border: 1px solid #c5a059;
+    color: #c5a059;
+    padding: 4px 16px; /* قللنا الـ padding أكتر */
+    border-radius: 20px; /* حواف أنعم وأصغر */
+    font-size: 0.7rem;   /* خط أصغر عشان يلم */
+    letter-spacing: 1px;
+    margin-top: 10px;    /* مسافة بسيطة فوق الزرار */
+    cursor: default;
+    display: inline-block;
+}
+/* ده الزرار الأساسي اللي إنت عامله وشكله عاجبك */
+/* الزرار الأساسي (للأصلي والـ Soon) */
+.btn-gold-outline, .btn-soon-disabled {
+    display: inline-block;
+    width: 85%; /* خليناه نسبة مئوية عشان يظبط على أي عرض للكارد */
+    padding: 12px 0; /* ده اللي بيتحكم في "التخن" بتاع الزرار */
+    text-align: center;
+    border: 1.5px solid #c5a059;
+    color: #c5a059;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+    box-sizing: border-box; /* ده أهم سطر عشان يمنع اللخبطة في المقاسات */
+}
+
+/* تنسيق خاص للـ Soon عشان يفضل جاف */
+.btn-soon-disabled {
+    cursor: default;
+    opacity: 0.6;
+    pointer-events: none;
+}
+.btn-gold-outline, .btn-soon-disabled {
+    /* ... باقي التنسيقات زي ما هي ... */
+    margin-top: 20px; /* زودنا المسافة من فوق عشان ينزل لتحت */
+    
+    /* لو حاسس إنه لسه لازق، ممكن تزود الـ padding من تحت بس للكارد */
+    padding-bottom: 5px; 
+}
+.btn-gold-outline, .btn-soon-disabled {
+    /* ده اللي بيسنتر أي حاجة جوه الزرار */
+    display: flex;             /* بيحول الزرار لـ Flex Container */
+    justify-content: center;   /* سنترة أفقية (يمين وشمال) */
+    align-items: center;       /* سنترة رأسية (فوق وتحت) */
+    
+    /* باقي التنسيقات اللي اتفقنا عليها */
+    width: 85%;
+    padding: 12px 0;
+    border: 1.5px solid #c5a059;
+    border-radius: 50px;
+    color: #c5a059;
+    font-weight: 600;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin-top: 10px; /* المسافة اللي اتفقنا عليها */
+    padding-bottom: 5px; 
+}
+.about-section {
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.creative-card {
+    background: linear-gradient(145deg, #1a1a1a, #262626);
+    padding: 40px;
+    border-radius: 30px;
+    max-width: 700px;
+    text-align: center;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.creative-card h2 {
+    font-size: 2rem;
+    color: #c5a059;
+    margin-bottom: 20px;
+}
+
+.about-text {
+    font-size: 1.1rem;
+    color: #eee;
+    line-height: 1.6;
+    min-height: 150px; /* بيحجز مساحة للنص عشان الصفحة متهزش */
+    white-space: pre-wrap;
+}
+
+.cta-box {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.whatsapp-btn:hover {
+    background: #128C7E;
+    transform: translateY(-5px);
+}
+.about-section {
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.floating-title {
+    font-size: 3rem;
+    color: #c5a059;
+    margin-bottom: 20px;
+    /* حركة عوم خفيفة للعنوان */
+    animation: float 4s ease-in-out infinite;
+}
+
+.about-text {
+    font-size: 1.2rem;
+    color: #ccc;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    animation: fadeIn 2s ease-in;
+}
+
+.cta-container {
+    padding: 20px;
+    /* حركة عوم للزرار والرسالة */
+    animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+}
+.about-section {
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 900px; /* وسعنا السكشن عشان يشيل كلام أكتر */
+    margin: 0 auto;
+}
+
+.floating-title {
+    font-size: 4rem; /* كبرنا العنوان */
+    color: #c5a059;
+    margin-bottom: 30px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.about-text {
+    font-size: 1.5rem; /* حجم خط كبير وواضح */
+    color: #fff; /* خليته أبيض ناصع عشان العين ترتاح في القراءة */
+    line-height: 1.8;
+    margin-bottom: 40px;
+    animation: fadeIn 2s ease-in;
+    font-weight: 300; /* خط خفيف وشيك */
+}
+
+.whatsapp-btn {
+    font-size: 1.2rem; /* كبرنا الزرار */
+    padding: 20px 40px;
+    /* باقي الكود زي ما هو */
+}
+.about-content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text {
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.5; /* تحكم في المسافة بين السطور */
+    margin: 0 0 15px 0; /* قللنا المسافة بين الفقرات */
+    text-align: center;
+}
+
+.cta-container {
+    margin-top: 20px; /* مسافة بسيطة فوق الزرار */
+}
+
+.cta-text {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+.about-section {
+    padding: 150px 20px; /* الـ 150px دي بتضمن إنه يبعد عن الـ Menu اللي فوق */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.about-content {
+    max-width: 800px;
+    width: 90%;
+    margin: 20px 0;
+}
+
+.about-text {
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 20px; /* مسافة مريحة بين كل فقرة والتانية */
+}
+
+.cta-container {
+    margin-top: 30px;
+    width: 100%;
+}
+
+/* عشان نضمن إن الـ Menu متغطيش على حاجة، اتأكد إنها في الـ CSS واخدة z-index عالي */
+.navbar { 
+    position: relative; /* أو fixed بس تأكد إن السكشن تحتها */
+    z-index: 1000;
+}
+
+.about-section {
+    padding: 100px 5%; /* الـ 5% دي بتسيب مسافة من الجوانب على الموبايل */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* بيسنتر كل حاجة في النص */
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box; /* بيمنع إن أي حاجة تخرج بره حدود الشاشة */
+}
+
+.floating-title {
+    font-size: clamp(2rem, 8vw, 4rem); /* العنوان بيكبر ويصغر حسب الشاشة */
+    color: #c5a059;
+    margin-bottom: 20px;
+}
+
+.about-content {
+    width: 100%;
+    max-width: 800px; /* بيحدد أقصى عرض للكمبيوتر */
+}
+
+.about-text {
+    font-size: clamp(1rem, 4vw, 1.3rem); /* النص بيكبر ويصغر أوتوماتيك */
+    color: #fff;
+    line-height: 1.6;
+    margin: 0 auto;
+    padding: 0 10px; /* مسافة أمان للنص على الموبايل */
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 1rem;
+    white-space: nowrap; /* بيمنع الزرار إنه يتقسم لسطرين */
+}
+/* الجملة المتوهجة */
+.fading-tagline {
+    font-size: 1rem;
+    color: #c5a059; /* لون ذهبي */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    /* الموشن بتاع التوهج */
+    animation: breathing 3s ease-in-out infinite;
+}
+
+@keyframes breathing {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+.main-title {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.sub-title {
+    font-size: 1.5rem;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+.fading-tagline {
+    font-size: 0.85rem;
+    font-weight: 600;
+    /* لون أزرق نيون/سماوي هادي */
+    color: #00d4ff; 
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    
+    /* إضافة التوهج (Neon Glow) */
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+    
+    /* الأنيميشن بتاع التوهج */
+    animation: breathing 3s ease-in-out infinite;
+}
+
+@keyframes breathing {
+    0% { opacity: 0.4; text-shadow: 0 0 5px #00d4ff; }
+    50% { opacity: 1; text-shadow: 0 0 20px #00d4ff; }
+    100% { opacity: 0.4; text-shadow: 0 0 5px #00d4ff; }
+}
+.fading-tagline {
+    font-size: 0.85rem;
+    font-weight: 500;
+    /* لون أبيض كريمي/ذهبي مطفي هادي جداً */
+    color: #e3d2a5; 
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    
+    /* توهج خفيف جداً يخلي الكلام يلمع بذكاء */
+    text-shadow: 0 0 10px rgba(227, 210, 165, 0.3);
+    
+    /* الأنيميشن بتاع التوهج الهادي */
+    animation: breathing 4s ease-in-out infinite;
+}
+
+@keyframes breathing {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.4; }
+}
+.about-text {
+    text-align: center;      /* إجبار النص يبقى في النص */
+    max-width: 600px;        /* عشان الكلام ميبقاش طويل أوي في الشاشة */
+    width: 100%;             /* يملأ عرض الموبايل */
+    margin: 0 auto 20px auto; /* سنترة الـ Paragraph */
+    padding: 0 5px;          /* شوية فراغ عشان الكلام ميبقاش لازق في حواف الموبايل */
+}
+
+/* حاوية الزرار */
+.cta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+/* السكشن الأساسي مع تأثير الـ Fade-in */
+.contact-container {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    padding: 100px 5%;
+}
+
+/* الكلاس ده هنضيفه بالـ JS لما السكشن يظهر */
+.contact-container.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ستايل جديد للألوان (Dark Minimal) */
+input, textarea {
+    background: #121212; /* أسود غامق جداً */
+    border: 1px solid #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* زرار الإرسال (لون ذهبي هادي جداً بدل البرتقالي) */
+button {
+    background: #c5a059; /* لون دهبي متناسق مع السكشن اللي قبله */
+    color: #000;
+    font-weight: bold;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e3d2a5; /* لمسة تفتيح بسيطة عند الماوس */
+}
+.contact-container {
+    padding: 80px 20px;
+    text-align: center;
+    background: #000;
+}
+
+.fading-tagline {
+    color: #e3d2a5;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.contact-title {
+    color: #fff;
+    font-size: 3rem;
+    margin-bottom: 40px;
+}
+
+.contact-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* عشان الموبايل ينزل العناصر تحت بعضها */
+    justify-content: center;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contact-info, .contact-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.info-card {
+    background: #111;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: #fff;
+    border: 1px solid #222;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, textarea {
+    background: #111;
+    border: 1px solid #333;
+    padding: 15px;
+    color: #fff;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background: #e3d2a5;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.social-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.3) rotate(10deg); /* بيكبر الأيقونة وبيميلها يمين وشمال */
+    animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+    0% { transform: scale(1.3) rotate(10deg); }
+    50% { transform: scale(1.3) rotate(-10deg); }
+    100% { transform: scale(1.3) rotate(10deg); }
+}
+/* ستايل النص الأساسي */
+.hero-tagline {
+    font-size: 1rem;
+    color: #c5a059; /* اللون الذهبي */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    
+    /* ده الكود السحري للموشن */
+    animation:fadeInOut 3s ease-in-out infinite;
+    /* 3s: مدة الدورة الواحدة (3 ثواني) */
+    /* ease-in-out: بداية ونهاية ناعمة */
+    /* infinite: يتكرر للأبد */
+}
+
+/* تعريف الأنيميشن نفسه */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0.1; /* يبدأ مختفي تماماً (ظاهر بسيط) */
+    }
+    50% {
+        opacity: 1; /* يوصل لأقصى وضوح في نص المدة */
+    }
+    100% {
+        opacity: 0.1; /* يرجع يختفي تاني */
+    }
+}
+.navbar {
+    position: fixed; /* بتخليها ثابتة دايماً حتى لو عملت Scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* بتخليها فوق أي حاجة تانية في الصفحة */
+    background: #000; /* عشان الكلام ميبانش من وراها */
+}
+/* السكشن الرئيسي */
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* سنترة أفقية */
+    justify-content: center; /* سنترة رأسية */
+    width: 100%;
+    padding: 50px 20px;
+    box-sizing: border-box;
+}
+
+/* الحاوية اللي بتجمع الكروت والـ Form */
+.contact-wrapper {
+    display: flex;
+    flex-wrap: wrap;        /* عشان تنزل تحت بعض في الموبايل */
+    justify-content: center; /* سنترة العناصر جنب بعض */
+    gap: 40px;
+    width: 100%;
+    max-width: 1100px;      /* عرض مريح للعين */
+    margin: 0 auto;         /* حركة السنترة الأساسية */
+}
+
+/* الفورم نفسها */
+.contact-form {
+    flex: 0 1 500px;        /* بتخلي عرضها ثابت ومتوازن */
+    width: 100%;
+}
+/* الناف بار الثابت */
+.navbar {
+    position: fixed; /* بيثبت الناف بار في مكانها مهما عملت سكرول */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px; /* طول الناف بار */
+    background-color: #000; /* خلفية سوداء */
+    display: flex;
+    justify-content: space-between; /* اللوجو في طرف واللينكات في طرف */
+    align-items: center; /* سنترة العناصر عمودياً */
+    padding: 0 50px;
+    z-index: 1000; /* بيخليها فوق أي حاجة تانية في الصفحة */
+    box-sizing: border-box;
+}
+
+/* السنترة للينكات في النص */
+.nav-links {
+    display: flex;
+    gap: 40px; /* المسافة بين الهوم والأبوت والكونتاكت */
+    align-items: center;
+}
+
+/* عشان نزيح الناف بار لليمين شوية لو حاسس إنها مش متسنترة */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* بيخلي الموقع كله في إطار واحد */
+    margin: 0 auto; /* سنترة الناف بار نفسها في نص الشاشة */
+}
+/* أضف ده للـ CSS لو لسه الناف بار مش متسنترة */
+/* تنسيق الناف بار */
+.navbar {
+    position: fixed;   /* تثبيت الناف بار */
+    top: 0;
+    left: 0;
+    width: 100%;       /* تاخد عرض الشاشة كله */
+    height: 70px;
+    background: #000;  /* خلفية سوداء */
+    display: flex;
+    justify-content: space-around; /* توزيع العناصر (تسنتر اللينكات) */
+    align-items: center;
+    z-index: 1000;     /* تظهر فوق أي حاجة تانية */
+    border-bottom: 1px solid #333; /* خط خفيف للفصل */
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;         /* المسافة بين اللينكات */
+    list-style: none;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* عشان المحتوى اللي تحت مايستخباش ورا الناف بار */
+body {
+    padding-top: 70px;
+}
+/* تثبيت الناف بار بدون ما تاكل أي حاجة */
+.navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 70px !important;
+    background: #000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* دي بتجبر كل اللي جواها يروحوا النص */
+    z-index: 9999 !important;
+}
+
+/* عشان نضمن الـ Logo يفضل في الطرف، واللينكات في النص */
+.logo {
+    position: absolute !important;
+    left: 5% !important; /* ثابتة في الشمال */
+    color: #e3d2a5 !important;
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+}
+
+.nav-links {
+    display: flex !important;
+    list-style: none !important;
+    gap: 40px !important;
+}
+/* تنسيق الناف بار الجديدة كلياً */
+/* 1. الغاء النقط وترتيب اللينكات في صف واحد */
+.nav-menu {
+    display: flex !important;      /* بيخليهم جنب بعض */
+    list-style: none !important;    /* بيشيل النقط السوداء */
+    gap: 30px !important;           /* المسافة بين اللينكات */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 2. تظبيط شكل اللينكات */
+.nav-menu li a {
+    text-decoration: none !important;
+    color: #fff !important;         /* اللون الأبيض */
+    font-weight: bold !important;
+}
+
+/* تنسيق الناف بار (الملمومة والمسنترة) */
+.aipex-nav {
+    position: fixed !important;
+    top: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    max-width: 1000px !important;
+    background: rgba(10, 10, 10, 0.85) !important; /* خلفية سوداء شفافة */
+    backdrop-filter: blur(12px) !important; /* تغبيش احترافي */
+    padding: 12px 40px !important;
+    border-radius: 50px !important; /* حواف دائرية */
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    z-index: 9999 !important;
+    border: 1px solid rgba(184, 134, 11, 0.3) !important; /* إطار ذهبي مطفي */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(184, 134, 11, 0.2) !important; /* توهج ذهبي هادي */
+    box-sizing: border-box !important;
+}
+
+/* اللوجو */
+.brand-logo {
+    color: #d4af37 !important; /* ذهبي مطفي */
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5) !important; /* توهج للوجو */
+}
+
+/* اللينكات */
+.nav-menu {
+    display: flex !important;
+    list-style: none !important;
+    gap: 30px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.nav-menu a {
+    color: #fff !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease !important;
+    opacity: 0.8 !important;
+}
+
+.nav-menu a:hover {
+    color: #d4af37 !important; /* اللينك يبقى ذهبي لما تقف عليه */
+    opacity: 1 !important;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.6) !important;
+}
+
+/* عشان المحتوى اللي تحت مايستخباش ورا الناف بار */
+#home {
+    padding-top: 120px !important; 
+}
+/* تعريف حركة الاهتزاز */
+@keyframes nav-wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-2deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* تطبيق الحركة على اللينكات */
+.nav-menu a {
+    display: inline-block !important; /* مهم جداً عشان الـ transform يشتغل */
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+}
+
+/* تفعيل الاهتزاز عند الوقوف بالماوس */
+.nav-menu a:hover {
+    animation: nav-wiggle 0.4s ease-in-out !important;
+    color: #d4af37 !important; /* اللون الذهبي المطفى */
+    cursor: pointer !important;
+}
+/* تنسيق الموبايل (الشاشات الأصغر من 768 بيكسل) */
+@media (max-width: 768px) {
+    .aipex-nav {
+        width: 95% !important; /* أصغر شوية في الموبايل */
+        padding: 10px 15px !important; /* تقليل البادنج عشان الكلام ميزحمش */
+        border-radius: 30px !important; /* تصغير الكيرف شوية */
+    }
+
+    .brand-logo {
+        font-size: 1.1rem !important; /* تصغير اللوجو */
+    }
+
+    .nav-menu {
+        gap: 15px !important; /* تقليل المسافة بين اللينكات */
+    }
+
+    .nav-menu a {
+        font-size: 0.8rem !important; /* تصغير حجم الخط في الموبايل */
+    }
+}
+.footer {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    background: #000 !important;
+    color: #666 !important; /* لون رمادي غامق عشان ميبقاش صارخ */
+    font-size: 0.9rem !important;
+    border-top: 1px solid rgba(184, 134, 11, 0.2) !important; /* خط ذهبي رفيع فوق الفوتر */
+    margin-top: 50px !important;
+}
+
+/* اختيارية: لو عايز الاسم (AYMAN) يظهر بلون ذهبي زي اللوجو */
+.footer p {
+    letter-spacing: 1px !important;
+}
