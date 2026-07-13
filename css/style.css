@@ -1921,3 +1921,17 @@ body {
 html {
     scroll-behavior: auto !important;
 }
+/* إجبار الصفحة تفضل ظاهرة ومكانها ومفيش أي جافا سكريبت يخفيها أو يطيرها فوق */
+body {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important;
+}
+
+/* لو فيه أي لودر أو شاشة انتقالية سودة بتظهر غصب عننا بنموتها هنا */
+.loader, .preloader, .page-transition, #loader {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
