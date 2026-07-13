@@ -1,27 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const cursor = document.querySelector(".custom-cursor");
-    if (!cursor) return;
 
-    let hasTouch = false;
-
-    // أول ما المستخدم يلمس الشاشة (موبايل أو لابتوب تاتش) نلغي الكورسور تماماً فوراً
-    document.addEventListener("touchstart", function() {
-        hasTouch = true;
-        cursor.style.setProperty("display", "none", "important");
-    }, { passive: true });
-
-    // عند حركة الماوس الحقيقية (كمبيوتر) نظهر الكورسور ونبدأ نحركه
-    document.addEventListener("mousemove", function(e) {
-        if (hasTouch) return; // لو تم اكتشاف لمس للشاشة من قبل، لا تفعل شيء
-
-        // إظهار الكورسور فوراً باستخدام inline style important يتغلب على الـ CSS
-        cursor.style.setProperty("display", "block", "important");
-
-        requestAnimationFrame(() => {
-            cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
-        });
-    });
-});
 // تأثير الـ Hover
 const elements = document.querySelectorAll('a, button');
 elements.forEach(el => {
