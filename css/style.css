@@ -1957,3 +1957,23 @@ body {
     animation: wiggleEffect 0.5s ease-in-out !important;
 }
 /* جعل خلفيات كل الأقسام شفافة عشان الـ Particles تظهر وراها في كل الصفحات */
+/* إخفاء دائرة الماوس تماماً على أي جهاز افتراضياً (موبايل، تابلت، إلخ) */
+.custom-cursor {
+    display: none !important;
+}
+
+/* إظهار الدائرة وتفعيلها فقط على الأجهزة التي تستخدم ماوس حقيقي (الكمبيوتر) */
+@media (pointer: fine) {
+    .custom-cursor {
+        display: block !important;
+        position: fixed;
+        width: 20px; /* أو الحجم اللي أنت كاتبوا عندك */
+        height: 20px;
+        border: 2px solid #dfcda4; /* لون الدائرة الدهبي */
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 10000;
+        transition: transform 0.1s ease;
+    }
+}
