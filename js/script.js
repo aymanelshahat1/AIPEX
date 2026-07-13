@@ -1,23 +1,22 @@
-/* كود تشغيل وإدارة دائرة الماوس المخصصة (فقط للكمبيوتر) */
 document.addEventListener("DOMContentLoaded", function() {
     const cursor = document.querySelector(".custom-cursor");
 
-    // الكشف عن أجهزة اللمس (الموبايل والتابلت)
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+    // الكشف لو الجهاز تاتش (موبايل/تابلت) أو الشاشة صغيرة أصغر من 1024px
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    const isMobileScreen = window.innerWidth < 1024;
 
-    if (isTouchDevice) {
-        // لو موبايل: امسح العنصر تماماً من الصفحة
+    if (isTouchDevice || isMobileScreen) {
+        // لو موبايل أو تاتش: امسح الدائرة تماماً من الصفحة ومفيش أي كود حركة هيشتغل
         if (cursor) {
             cursor.remove(); 
         }
     } else {
-        // لو كمبيوتر: قم بتفعيل وإظهار الدائرة
+        // لو كمبيوتر حقيقي بشاشة كبيرة: اظهر الدائرة وشغل الحركة
         if (cursor) {
-            cursor.style.display = "block";
+            cursor.style.setProperty("display", "block", "important"); // إظهار الدائرة
             
             document.addEventListener("mousemove", (e) => {
                 requestAnimationFrame(() => {
-                    // تحريك الدائرة بالـ transform لضمان أفضل أداء ونعومة
                     cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
                 });
             });
