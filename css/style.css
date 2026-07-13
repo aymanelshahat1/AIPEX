@@ -2009,8 +2009,31 @@ body {
     }
 }
 body {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="%23dfcda4"/></svg>') 6 6, default !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="%23dfcda4" stroke-width="1.5"/></svg>') 8 8, default !important;
 }
 a, button, .get-started-btn, .our-projects-btn {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="%23dfcda4" stroke="black" stroke-width="1"/></svg>') 6 6, pointer !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%23dfcda4" opacity="0.7"/></svg>') 8 8, pointer !important;
+}
+/* سنترة أيقونات التواصل الاجتماعي في منتصف الشاشة تماماً */
+.social-icons {
+    display: flex !important;
+    justify-content: center !important; /* السنترة الأفقية */
+    align-items: center !important;     /* السنترة الرأسية */
+    gap: 20px !important;               /* المسافة بين الأيقونات وبعضها */
+    margin: 30px auto !important;       /* سنترة الحاوية نفسها وإعطائها مساحة من فوق وتحت */
+    width: 100% !important;             /* مالي العرض بالكامل لضمان السنترة */
+}
+
+/* شكل الأيقونات الذهبي الأنيق ليناسب روح موقعك */
+.social-icons a {
+    color: #dfcda4 !important; /* اللون الذهبي */
+    font-size: 24px !important; /* حجم الأيقونة */
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+}
+
+/* تأثير خفيف عند تمرير الماوس فوق الأيقونة */
+.social-icons a:hover {
+    color: #ffffff !important; /* تتحول للأبيض بنعومة */
+    transform: translateY(-3px) !important; /* تترفع لفوق حركة خفيفة */
 }
