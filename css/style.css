@@ -2008,12 +2008,9 @@ body {
         display: none !important; 
     }
 }
-/* تطبيق الماوس الذهبي على كل الموقع */
 body {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23dfcda4"><path d="M7 2l12 11.2-5.8.8 3.8 6.6-2.6 1.4-3.8-6.6-4.6 4.4v-17.8z"/></svg>') 0 0, default !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="%23dfcda4"/></svg>') 6 6, default !important;
 }
-
-/* تطبيق الماوس الذهبي على الأزرار والروابط عند الوقوف عليها (Pointer) */
-a, button, .get-started-btn, .our-projects-btn, .brand-logo {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23dfcda4"><path d="M7 2l12 11.2-5.8.8 3.8 6.6-2.6 1.4-3.8-6.6-4.6 4.4v-17.8z"/></svg>') 0 0, pointer !important;
+a, button, .get-started-btn, .our-projects-btn {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="%23dfcda4" stroke="black" stroke-width="1"/></svg>') 6 6, pointer !important;
 }
