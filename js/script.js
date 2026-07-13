@@ -1,27 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cursor = document.querySelector(".custom-cursor");
+    if (!cursor) return;
 
-    // الكشف لو الجهاز تاتش (موبايل/تابلت) أو الشاشة صغيرة أصغر من 1024px
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-    const isMobileScreen = window.innerWidth < 1024;
+    let hasTouch = false;
 
-    if (isTouchDevice || isMobileScreen) {
-        // لو موبايل أو تاتش: امسح الدائرة تماماً من الصفحة ومفيش أي كود حركة هيشتغل
-        if (cursor) {
-            cursor.remove(); 
-        }
-    } else {
-        // لو كمبيوتر حقيقي بشاشة كبيرة: اظهر الدائرة وشغل الحركة
-        if (cursor) {
-            cursor.style.setProperty("display", "block", "important"); // إظهار الدائرة
-            
-            document.addEventListener("mousemove", (e) => {
-                requestAnimationFrame(() => {
-                    cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
-                });
-            });
-        }
-    }
+    // أول ما المستخدم يلمس الشاشة (موبايل أو لابتوب تاتش) نلغي الكورسور تماماً فوراً
+    document.addEventListener("touchstart", function() {
+        hasTouch = true;
+        cursor.style.setProperty("display", "none", "important");
+    }, { passive: true });
+
+    // عند حركة الماوس الحقيقية (كمبيوتر) نظهر الكورسور ونبدأ نحركه
+    document.addEventListener("mousemove", function(e) {
+        if (hasTouch) return; // لو تم اكتشاف لمس للشاشة من قبل، لا تفعل شيء
+
+        // إظهار الكورسور فوراً باستخدام inline style important يتغلب على الـ CSS
+        cursor.style.setProperty("display", "block", "important");
+
+        requestAnimationFrame(() => {
+            cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
+        });
+    });
 });
 // تأثير الـ Hover
 const elements = document.querySelectorAll('a, button');
