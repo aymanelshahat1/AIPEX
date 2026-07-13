@@ -202,27 +202,39 @@ Experienced in managing the full product lifecycle from conceptual design to ass
 </section>
 <!-- Footer Section -->
 <!-- Footer Section -->
-
-    <script src="js/script.js"></script>
-
-    <!-- <script src="script.js"></script> -->
-     <script>
-// الكود ده بيشتغل أول ما الصفحة تظهر أو لما ترجع لها بزرار الـ Back
-window.addEventListener('pageshow', function (event) {
-    // لو راجع من الكاش أو الـ Back زرار
-    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        // بنجبر الصفحة وكل العناصر تظهر فوراً ونلغي أي إخفاء
-        document.body.style.opacity = '1';
-        document.body.style.visibility = 'visible';
-        
-        // لو عندك عنصر معين هو اللي بيعمل الشاشة السودة (زي الـ Loader أو الـ Overlay) بنخفيه
-        var loader = document.querySelector('.loader') || document.querySelector('.preloader') || document.querySelector('.page-transition');
-        if (loader) {
-            loader.style.display = 'none';
+    <script>
+// 1. أول ما تدوس على أي لينك، هنلغي الجرية غصب عن أي ملف JS
+document.addEventListener('click', function(e) {
+    var link = e.target.closest('a');
+    if (link) {
+        var href = link.getAttribute('href');
+        // لو رايح لصفحة تانية مش هاشتاج، هنخليه يروح فوراً من غير تأخير
+        if (href && !href.startsWith('#')) {
+            e.stopPropagation(); // بيوقف أي كود جافا سكريبت تاني تبع اللينك ده
+            window.location.href = href;
         }
+    }
+}, true); // الـ true دي بتخلي الكود بتاعنا يتنفذ أول واحد قبل أي كود تاني في الموقع
+
+// 2. أول ما ترجع بالـ Back، بنجبر الصفحة تظهر فوراً وتلغي السواد والـ transform لفوق
+window.addEventListener('pageshow', function(event) {
+    // بنجبر الـ body يرجع طبيعي وظاهر 100%
+    document.body.style.setProperty('opacity', '1', 'important');
+    document.body.style.setProperty('transform', 'none', 'important');
+    document.body.style.setProperty('transition', 'none', 'important');
+    document.body.style.setProperty('visibility', 'visible', 'important');
+    
+    // لو فيه أي لودر أو شاشة سودا بنخفيها فوراً
+    var blackScreen = document.querySelector('.loader') || document.querySelector('.preloader') || document.querySelector('.page-transition');
+    if (blackScreen) {
+        blackScreen.style.setProperty('display', 'none', 'important');
     }
 });
 </script>
+    <script src="js/script.js"></script>
+
+    <!-- <script src="script.js"></script> -->
+     
      
 </body>
 </html>
