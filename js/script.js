@@ -1,11 +1,29 @@
-const cursor = document.querySelector('.custom-cursor');
+/* كود تشغيل وإدارة دائرة الماوس المخصصة (فقط للكمبيوتر) */
+document.addEventListener("DOMContentLoaded", function() {
+    const cursor = document.querySelector(".custom-cursor");
 
-document.addEventListener('mousemove', (e) => {
-    // نغير الـ left والـ top مباشرة بدل الـ transform إذا كان هناك تعارض
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+    // الكشف عن أجهزة اللمس (الموبايل والتابلت)
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+
+    if (isTouchDevice) {
+        // لو موبايل: امسح العنصر تماماً من الصفحة
+        if (cursor) {
+            cursor.remove(); 
+        }
+    } else {
+        // لو كمبيوتر: قم بتفعيل وإظهار الدائرة
+        if (cursor) {
+            cursor.style.display = "block";
+            
+            document.addEventListener("mousemove", (e) => {
+                requestAnimationFrame(() => {
+                    // تحريك الدائرة بالـ transform لضمان أفضل أداء ونعومة
+                    cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
+                });
+            });
+        }
+    }
 });
-
 // تأثير الـ Hover
 const elements = document.querySelectorAll('a, button');
 elements.forEach(el => {
