@@ -48,14 +48,8 @@ document.querySelectorAll('a').forEach(link => {
         }
 
         // لو اللينك مش بيبدأ بـ # (يعني صفحة تانية)، شغل الأنيميشن
-        e.preventDefault();
-        document.body.style.transition = "0.5s";
-        document.body.style.transform = "translateY(-100%)";
-        document.body.style.opacity = "0";
-
-        setTimeout(() => {
-            window.location.href = href;
-        }, 500);
+        // لو اللينك مش بيبدأ بـ # (يعني صفحة تانية)، انقل علطول من غير أنيميشن
+        window.location.href = href;
     });
 });
 
