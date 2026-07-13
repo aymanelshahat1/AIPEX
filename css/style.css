@@ -1918,3 +1918,6 @@ body {
 .footer p {
     letter-spacing: 1px !important;
 }
+html {
+    scroll-behavior: auto !important;
+}
