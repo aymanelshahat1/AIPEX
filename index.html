@@ -206,6 +206,23 @@ Experienced in managing the full product lifecycle from conceptual design to ass
     <script src="js/script.js"></script>
 
     <!-- <script src="script.js"></script> -->
+     <script>
+// الكود ده بيشتغل أول ما الصفحة تظهر أو لما ترجع لها بزرار الـ Back
+window.addEventListener('pageshow', function (event) {
+    // لو راجع من الكاش أو الـ Back زرار
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        // بنجبر الصفحة وكل العناصر تظهر فوراً ونلغي أي إخفاء
+        document.body.style.opacity = '1';
+        document.body.style.visibility = 'visible';
+        
+        // لو عندك عنصر معين هو اللي بيعمل الشاشة السودة (زي الـ Loader أو الـ Overlay) بنخفيه
+        var loader = document.querySelector('.loader') || document.querySelector('.preloader') || document.querySelector('.page-transition');
+        if (loader) {
+            loader.style.display = 'none';
+        }
+    }
+});
+</script>
      
 </body>
 </html>
