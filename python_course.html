@@ -29,13 +29,13 @@
             pointer-events: none;
         }
 
-        /* الـ Navbar المتجاوب بالكامل مع الشاشات والموبايل */
+        /* الـ Navbar المتجاوب بالكامل بدون أي تداخل */
         header {
             position: fixed;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95%;
+            width: 90%;
             max-width: 1200px;
             z-index: 1000;
         }
@@ -44,57 +44,62 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 25px; /* صغرنا الحشو الداخلي */
+            flex-wrap: nowrap !important; /* ممنوع منعاً باتاً العناصر تنزل تحت بعضها */
+            padding: 12px 30px;
             background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(223, 205, 164, 0.25);
             border-radius: 50px;
             box-shadow: 0 4px 30px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
         }
 
         .logo {
             font-weight: 900;
-            font-size: 20px; /* صغرنا اللوجو شوية */
+            font-size: 22px;
             color: #dfcda4;
             text-decoration: none;
             letter-spacing: 1px;
+            white-space: nowrap; /* ممنوع اللوجو يتقسم على سطرين */
         }
 
         .nav-links {
             display: flex;
-            gap: 15px; /* مسافة متناسقة للموبايل */
+            gap: 20px;
+            align-items: center;
+            flex-wrap: nowrap !important; /* ممنوع اللينكات تكسر السطر */
         }
 
         .nav-links a {
             color: #ffffff;
             text-decoration: none;
             font-weight: 600;
-            font-size: 12px; /* خط متناسق مع التليفون */
+            font-size: 13px;
             transition: color 0.3s;
-            padding: 5px 10px;
+            white-space: nowrap; /* يمنع الكلمة الواحدة تتقسم */
         }
 
         .nav-links a:hover {
             color: #dfcda4;
         }
 
-        /* شاشات الموبايل الصغيرة جداً */
-        @media (max-width: 480px) {
+        /* تنسيق خاص جداً وشيك للموبايل عشان نضمن الثبات التام */
+        @media (max-width: 600px) {
+            header {
+                width: 95%;
+                top: 15px;
+            }
             nav {
-                padding: 10px 15px;
-                border-radius: 30px;
+                padding: 10px 20px;
             }
             .logo {
-                font-size: 18px;
+                font-size: 18px; /* صغرنا اللوجو على قد الموبايل */
             }
             .nav-links {
-                gap: 5px;
+                gap: 12px; /* مسافات محكمة تمنع الخروج برة الإطار */
             }
             .nav-links a {
-                font-size: 11px;
-                padding: 4px 6px;
+                font-size: 11px; /* خط ناعم ومقروء للموبايل */
             }
         }
 
@@ -103,7 +108,7 @@
             position: relative;
             z-index: 2;
             max-width: 1200px;
-            margin: 140px auto 60px auto;
+            margin: 150px auto 60px auto;
             padding: 0 20px;
             text-align: center;
         }
@@ -170,7 +175,6 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // لو واجه المتصفح مشكلة في تحميل الـ CDN، الكود ده مجهز لإعادة المحاولة ومصمم ليشتغل فوراً تلقائياً
         function loadParticles() {
             if (typeof particlesJS !== 'undefined') {
                 particlesJS('particles-js', {
@@ -197,9 +201,7 @@
             }
         }
         
-        // تشغيل الخلفية بمجرد تحميل الصفحة بالكامل لمنع أي تعارض
         window.addEventListener('load', loadParticles);
-        // تجربة تشغيل احتياطية سريعة
         setTimeout(loadParticles, 500);
     </script>
 
