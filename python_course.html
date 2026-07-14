@@ -29,77 +29,70 @@
             pointer-events: none;
         }
 
-        /* الـ Navbar المتجاوب بالكامل بدون أي تداخل */
-        header {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1200px;
-            z-index: 1000;
+        /* الـ Navbar الأساسي بنفس كود وتصميم صفحتك الرئيسية بالظبط للكمبيوتر */
+        .aipex-nav {
+            position: fixed !important;
+            top: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 90% !important;
+            max-width: 1200px !important;
+            z-index: 1000 !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 15px 40px !important;
+            background: rgba(0, 0, 0, 0.6) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(223, 205, 164, 0.25) !important;
+            border-radius: 50px !important;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5) !important;
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: nowrap !important; /* ممنوع منعاً باتاً العناصر تنزل تحت بعضها */
-            padding: 12px 30px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(223, 205, 164, 0.25);
-            border-radius: 50px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+        .brand-logo {
+            font-weight: 900 !important;
+            font-size: 24px !important;
+            color: #dfcda4 !important;
+            text-decoration: none !important;
+            letter-spacing: 1px !important;
         }
 
-        .logo {
-            font-weight: 900;
-            font-size: 22px;
-            color: #dfcda4;
-            text-decoration: none;
-            letter-spacing: 1px;
-            white-space: nowrap; /* ممنوع اللوجو يتقسم على سطرين */
+        .nav-menu {
+            display: flex !important;
+            gap: 30px !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: nowrap !important; /* ممنوع اللينكات تكسر السطر */
+        .nav-menu li a {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            transition: color 0.3s !important;
         }
 
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 13px;
-            transition: color 0.3s;
-            white-space: nowrap; /* يمنع الكلمة الواحدة تتقسم */
+        .nav-menu li a:hover {
+            color: #dfcda4 !important;
         }
 
-        .nav-links a:hover {
-            color: #dfcda4;
-        }
-
-        /* تنسيق خاص جداً وشيك للموبايل عشان نضمن الثبات التام */
+        /* التعديل الذكي والآمن للموبايل فقط بدون التأثير على نسخة اللاب */
         @media (max-width: 600px) {
-            header {
-                width: 95%;
-                top: 15px;
+            .aipex-nav {
+                width: 95% !important;
+                padding: 10px 20px !important; /* صغرنا الحشو عشان يلم العناصر */
+                top: 15px !important;
             }
-            nav {
-                padding: 10px 20px;
+            .brand-logo {
+                font-size: 18px !important; /* صغرنا حجم اللوجو ع الموبايل عشان نوفر مساحة */
             }
-            .logo {
-                font-size: 18px; /* صغرنا اللوجو على قد الموبايل */
+            .nav-menu {
+                gap: 15px !important; /* قللنا المسافات بين اللينكات عشان تكفي بالعرض */
             }
-            .nav-links {
-                gap: 12px; /* مسافات محكمة تمنع الخروج برة الإطار */
-            }
-            .nav-links a {
-                font-size: 11px; /* خط ناعم ومقروء للموبايل */
+            .nav-menu li a {
+                font-size: 11px !important; /* صغرنا حجم اللينكات شوية ع الموبايل عشان متتداخلش */
             }
         }
 
@@ -145,16 +138,14 @@
 
     <div id="particles-js"></div>
 
-    <header>
-        <nav>
-            <a href="index.html" class="logo">AIPEX</a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#contact">Contact</a>
-            </div>
-        </nav>
-    </header>
+    <nav class="aipex-nav">
+        <a href="index.html" class="brand-logo">AIPEX</a>
+        <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
 
     <main class="course-page-container">
         <h1 class="course-title">&lt;Python 3 for <span>Web & Automation</span>/&gt;</h1>
