@@ -88,11 +88,34 @@
             font-size: 13px;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 120px;
-            white-space: nowrap; /* يمنع نزول النص لسطر جديد تلقائياً */
+            white-space: nowrap;
         }
 
         .designer-name {
-            color: #ffffff !important; /* خليناه بلون أبيض عادي */
+            color: #ffffff !important;
+        }
+
+        /* محتوى الكورس */
+        .course-page-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 150px auto 60px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .course-title {
+            font-size: clamp(20px, 4.5vw, 42px); /* ضبطنا الحجم المرن للابتوب والموبايل */
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            white-space: nowrap; /* يمنع نزول العنوان لسطر جديد نهائياً */
+        }
+
+        .course-title span {
+            color: #dfcda4;
         }
 
         /* تعديلات الموبايل فقط (أقل من 600px) */
@@ -117,28 +140,11 @@
                 padding: 30px 10px !important;
                 margin-top: 80px !important;
             }
-        }
-
-        /* محتوى الكورس */
-        .course-page-container {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 150px auto 60px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .course-title {
-            font-size: clamp(24px, 5vw, 42px);
-            font-weight: 900;
-            color: #ffffff;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .course-title span {
-            color: #dfcda4;
+            /* حجم خط مخصص ومثالي لعنوان الكورس على شاشات الموبايل الصغيرة */
+            .course-title {
+                font-size: clamp(14px, 4.5vw, 20px) !important;
+                letter-spacing: 0.5px !important;
+            }
         }
 
         /* المربع بخلفية سوداء كاملة وتأثير حواف ذهبية عند الاقتراب */
