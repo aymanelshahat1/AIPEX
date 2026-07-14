@@ -78,7 +78,24 @@
             color: #dfcda4 !important;
         }
 
-        /* تعديل الموبايل فقط دون أي تأثير على اللاب توب */
+        /* الفوتر الافتراضي للشاشات الكبيرة */
+        .site-footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 120px;
+            white-space: nowrap; /* يمنع نزول النص لسطر جديد تلقائياً */
+        }
+
+        .designer-name {
+            color: #ffffff !important; /* خليناه بلون أبيض عادي */
+        }
+
+        /* تعديلات الموبايل فقط (أقل من 600px) */
         @media (max-width: 600px) {
             .aipex-nav {
                 width: 95% !important;
@@ -93,6 +110,12 @@
             }
             .nav-menu li a {
                 font-size: 11px !important;
+            }
+            /* تصغير خط الفوتر لضمان ظهوره كاملاً في سطر واحد على الموبايل */
+            .site-footer {
+                font-size: 10px !important; 
+                padding: 30px 10px !important;
+                margin-top: 80px !important;
             }
         }
 
@@ -120,7 +143,7 @@
 
         /* المربع بخلفية سوداء كاملة وتأثير حواف ذهبية عند الاقتراب */
         .content-box {
-            background: #000000 !important; /* خلفية سودة تماماً */
+            background: #000000 !important;
             border: 1px solid rgba(223, 205, 164, 0.15);
             border-radius: 20px;
             padding: 60px 20px;
@@ -142,9 +165,9 @@
         .coming-soon-text {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-style: italic; /* لجعل الخط مائل بالظبط */
-            font-size: clamp(18px, 3.5vw, 28px); /* حجم متجاوب تماماً */
-            color: #ffffff !important; /* لون أبيض سادة */
+            font-style: italic;
+            font-size: clamp(18px, 3.5vw, 28px);
+            color: #ffffff !important;
             letter-spacing: 3px;
             text-transform: uppercase;
             transition: all 0.4s ease;
@@ -156,7 +179,7 @@
         .content-box:hover .coming-soon-text {
             color: #ffffff !important;
             text-shadow: 0 0 10px rgba(223, 205, 164, 0.6), 0 0 20px rgba(223, 205, 164, 0.3);
-            transform: scale(1.02); /* هزة خفيفة تدي حياة للتصميم */
+            transform: scale(1.02);
         }
     </style>
 </head>
@@ -184,8 +207,8 @@
         </div>
     </main>
 
-    <footer style="position: relative; z-index: 2; text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.3); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 120px;">
-        © 2026 AIPEX. All Rights Reserved. Designed by <span style="color: #dfcda4;">Ayman Elshahat</span>
+    <footer class="site-footer">
+        © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
