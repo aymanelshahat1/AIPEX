@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIPEX - Python Course</title>
     <link rel="stylesheet" href="css/style.css?v=1.3">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Montserrat:wght@400;600;800;900&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -29,7 +29,7 @@
             pointer-events: none;
         }
 
-        /* الـ Navbar الأساسي بنفس كود وتصميم صفحتك الرئيسية بالظبط للكمبيوتر */
+        /* الـ Navbar الأصلي للكمبيوتر */
         .aipex-nav {
             position: fixed !important;
             top: 20px !important;
@@ -78,21 +78,21 @@
             color: #dfcda4 !important;
         }
 
-        /* التعديل الذكي والآمن للموبايل فقط بدون التأثير على نسخة اللاب */
+        /* تعديل الموبايل فقط دون أي تأثير على اللاب توب */
         @media (max-width: 600px) {
             .aipex-nav {
                 width: 95% !important;
-                padding: 10px 20px !important; /* صغرنا الحشو عشان يلم العناصر */
+                padding: 10px 20px !important;
                 top: 15px !important;
             }
             .brand-logo {
-                font-size: 18px !important; /* صغرنا حجم اللوجو ع الموبايل عشان نوفر مساحة */
+                font-size: 18px !important;
             }
             .nav-menu {
-                gap: 15px !important; /* قللنا المسافات بين اللينكات عشان تكفي بالعرض */
+                gap: 15px !important;
             }
             .nav-menu li a {
-                font-size: 11px !important; /* صغرنا حجم اللينكات شوية ع الموبايل عشان متتداخلش */
+                font-size: 11px !important;
             }
         }
 
@@ -118,19 +118,45 @@
             color: #dfcda4;
         }
 
+        /* المربع بخلفية سوداء كاملة وتأثير حواف ذهبية عند الاقتراب */
         .content-box {
-            background: rgba(20, 20, 20, 0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: #000000 !important; /* خلفية سودة تماماً */
             border: 1px solid rgba(223, 205, 164, 0.15);
             border-radius: 20px;
-            padding: 50px 20px;
+            padding: 60px 20px;
             min-height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .content-box:hover {
+            border-color: rgba(223, 205, 164, 0.4);
+            box-shadow: 0 10px 40px rgba(223, 205, 164, 0.08);
+        }
+
+        /* النص المائل بنفس ستايل صورتك مع توهج ذهبي خفيف */
+        .coming-soon-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-style: italic; /* لجعل الخط مائل بالظبط */
+            font-size: clamp(18px, 3.5vw, 28px); /* حجم متجاوب تماماً */
+            color: #ffffff !important; /* لون أبيض سادة */
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            cursor: default;
+            user-select: none;
+        }
+
+        /* التوهج الذهبي الخفيف عند الاقتراب */
+        .content-box:hover .coming-soon-text {
+            color: #ffffff !important;
+            text-shadow: 0 0 10px rgba(223, 205, 164, 0.6), 0 0 20px rgba(223, 205, 164, 0.3);
+            transform: scale(1.02); /* هزة خفيفة تدي حياة للتصميم */
         }
     </style>
 </head>
@@ -154,9 +180,7 @@
         </p>
         
         <div class="content-box">
-            <p style="color: #dfcda4; font-size: clamp(16px, 2vw, 20px); font-weight: 800; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; text-shadow: 0 0 10px rgba(223, 205, 164, 0.3);">
-                COURSES CONTENT COMING SOON...
-            </p>
+            <span class="coming-soon-text">COURSES CONTENT COMING SOON</span>
         </div>
     </main>
 
