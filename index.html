@@ -369,261 +369,308 @@ particlesJS("particles-js", {
 </script>
 <!-- Login / Sign Up Modal (Popup) -->
 <div id="loginModal" style="display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center; backdrop-filter: blur(8px); box-sizing: border-box;">
-    <div style="background-color: #0b0b0b; padding: 35px 30px; border-radius: 16px; border: 1px solid #dfcda4; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(223, 205, 164, 0.25); box-sizing: border-box;">
-        
-        <!-- زرار القفل (X) -->
-        <span id="closeModalBtn" style="position: absolute; top: 15px; right: 20px; color: #aaaaaa; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.3s;">&times;</span>
-        
-        <!-- أيقونة القفل -->
-        <i class="fa-solid fa-user-shield" style="color: #dfcda4; font-size: 42px; margin-bottom: 15px; display: block;"></i>
-        
-        <!-- 1. فورم تسجيل الدخول (Sign In) -->
-        <div id="signInArea" style="display: block;">
-            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Sign In</h2>
-            <form id="loginForm" style="display: flex; flex-direction: column; gap: 12px;">
-                <input type="email" id="loginEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 12px; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">SIGN IN</button>
-            </form>
-            <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
-                Don't have an account? <a href="#" id="toSignUp" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Create Account</a>
-            </p>
-        </div>
-
-        <!-- 2. فورم إنشاء حساب جديد (Create Account) -->
-        <div id="signUpArea" style="display: none;">
-            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Create Account</h2>
-            <form id="registerForm" style="display: flex; flex-direction: column; gap: 12px;">
-                <input type="text" id="registerName" placeholder="Full Name" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <input type="tel" id="registerPhone" placeholder="Phone Number" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <input type="email" id="registerEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <input type="password" id="registerPassword" placeholder="Create Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 12px; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">REGISTER</button>
-            </form>
-            <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
-                Already have an account? <a href="#" id="toSignIn" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Sign In</a>
-            </p>
-        </div>
-
-        <!-- رسائل الخطأ والنجاح -->
-        <p id="loginError" style="color: #ff4a4a; font-size: 13px; margin-top: 15px; display: none; font-family: 'Montserrat', sans-serif;"></p>
-        <p id="loginSuccess" style="color: #2ec4b6; font-size: 13px; margin-top: 15px; display: none; font-family: 'Montserrat', sans-serif;"></p>
-    </div>
-</div>
-
-<!-- الكود السحري: دمج الجافا سكريبت والـ Firebase معاً لمنع الكاش تماماً -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    // استدعاء مكتبة الـ Firestore
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAwSnEn0cpNkXC4EtMkoB5ZnRhv-QE_Tpo",
-      authDomain: "aipex-6588b.firebaseapp.com",
-      projectId: "aipex-6588b",
-      storageBucket: "aipex-6588b.firebasestorage.app",
-      messagingSenderId: "320792692639",
-      appId: "1:320792692639:web:4e8e2d6a2b8458ff14dfaa"
-    };
-
-    // تهيئة الفايربيز والـ Firestore
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app); // ربط قاعدة البيانات
-
-    // العناصر
-    const modal = document.getElementById('loginModal');
-    const loginBtn = document.getElementById('loginBtn'); 
-    const closeBtn = document.getElementById('closeModalBtn');
-    
-    const signInArea = document.getElementById('signInArea');
-    const signUpArea = document.getElementById('signUpArea');
-    const toSignUpLink = document.getElementById('toSignUp');
-    const toSignInLink = document.getElementById('toSignIn');
-
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const loginError = document.getElementById('loginError');
-    const loginSuccess = document.getElementById('loginSuccess');
-
-    // عناصر الـ Sidebar
-    const sidebar = document.getElementById('userSidebar');
-    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const sidebarAvatar = document.getElementById('sidebarAvatar');
-    const sidebarUserName = document.getElementById('sidebarUserName');
-    const sidebarUserEmail = document.getElementById('sidebarUserEmail');
-    const sidebarUserPhone = document.getElementById('sidebarUserPhone');
-
-    // فتح وغلق المودال والـ Sidebar
-    if (loginBtn) {
-        loginBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (auth.currentUser) {
-                sidebar.style.right = '0px';
-            } else {
-                modal.style.display = 'flex';
-            }
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
-    }
-
-    if (closeSidebarBtn) {
-        closeSidebarBtn.addEventListener('click', () => {
-            sidebar.style.right = '-320px';
-        });
-    }
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) { 
-            modal.style.display = 'none'; 
-        }
-        if (sidebar && !sidebar.contains(e.target) && e.target !== loginBtn && !loginBtn.contains(e.target)) {
-            sidebar.style.right = '-320px';
-        }
-    });
-
-    // التبديل بين الفورم
-    if (toSignUpLink) {
-        toSignUpLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            signInArea.style.display = 'none';
-            signUpArea.style.display = 'block';
-            loginError.style.display = 'none';
-        });
-    }
-
-    if (toSignInLink) {
-        toSignInLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            signUpArea.style.display = 'none';
-            signInArea.style.display = 'block';
-            loginError.style.display = 'none';
-        });
-    }
-
-    // تسجيل الدخول (Sign In)
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    loginError.style.display = 'none';
-                    loginForm.reset();
-                    modal.style.display = 'none';
-                })
-                .catch((error) => {
-                    loginError.textContent = "Incorrect email or password.";
-                    loginError.style.display = 'block';
-                });
-        });
-    }
-
-    // إنشاء الحساب وحفظ البيانات في الـ Firestore
-    if (registerForm) {
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('registerName').value;
-            const phone = document.getElementById('registerPhone').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-
-                    // 💾 حفظ الاسم والتليفون في الـ Firestore تحت الـ UID الخاص بالمستخدم
-                    return setDoc(doc(db, "users", user.uid), {
-                        fullName: name,
-                        phoneNumber: phone,
-                        email: email,
-                        createdAt: new Date().toISOString()
-                    });
-                })
-                .then(() => {
-                    loginError.style.display = 'none';
-                    loginSuccess.textContent = `Welcome! Account created successfully.`;
-                    loginSuccess.style.display = 'block';
-                    registerForm.reset();
-                    setTimeout(() => {
-                        loginSuccess.style.display = 'none';
-                        modal.style.display = 'none';
-                    }, 2000);
-                })
-                .catch((error) => {
-                    loginError.textContent = error.message.replace("Firebase: ", "");
-                    loginError.style.display = 'block';
-                });
-        });
-    }
-
-    // تسجيل الخروج
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth).then(() => {
-                window.location.reload();
-            });
-        });
-    }
-
-    // مراقبة حالة تسجيل الدخول وتحديث شكل الهيدر وجلب البيانات من الـ Firestore لايف
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            let tempName = user.email.split('@')[0];
-            let tempPhone = "Not provided";
-
-            // جلب البيانات المخزنة من الـ Firestore للمستخدم الحالي
-            try {
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-                
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    tempName = userData.fullName || tempName;
-                    tempPhone = userData.phoneNumber || tempPhone;
-                }
-            } catch (error) {
-                console.log("Error fetching user data:", error);
-            }
-
-            const firstLetter = tempName.charAt(0).toUpperCase();
+        <div style="background-color: #0b0b0b; padding: 35px 30px; border-radius: 16px; border: 1px solid #dfcda4; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(223, 205, 164, 0.25); box-sizing: border-box;">
             
-            // 1. تحديث زر الـ Login لدائرة البروفايل بأول حرف
-            if (loginBtn) {
-                loginBtn.innerHTML = `
-                    <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background-color: #dfcda4; color: #000; border-radius: 50%; font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 15px; box-shadow: 0 0 10px rgba(223, 205, 164, 0.4); cursor: pointer; transition: transform 0.2s;">${firstLetter}</span>
-                `;
-                loginBtn.style.border = 'none';
-                loginBtn.style.background = 'transparent';
-                loginBtn.style.padding = '0';
-            }
+            <span id="closeModalBtn" style="position: absolute; top: 15px; right: 20px; color: #aaaaaa; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.3s;">&times;</span>
+            
+            <i class="fa-solid fa-user-shield" style="color: #dfcda4; font-size: 42px; margin-bottom: 15px; display: block;"></i>
+            
+            <div id="signInArea" style="display: block;">
+                <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Sign In</h2>
+                <form id="loginForm" style="display: flex; flex-direction: column; gap: 12px;">
+                    <input type="email" id="loginEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                    <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                    <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 12px; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">SIGN IN</button>
+                </form>
+                <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
+                    Don't have an account? <a href="#" id="toSignUp" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Create Account</a>
+                </p>
+            </div>
 
-            // 2. تعبئة بيانات الـ Sidebar الحقيقية المخزنة في الـ Firestore
-            if (sidebarAvatar) sidebarAvatar.textContent = firstLetter;
-            if (sidebarUserName) sidebarUserName.textContent = tempName.toUpperCase();
-            if (sidebarUserEmail) sidebarUserEmail.textContent = user.email;
-            if (sidebarUserPhone) sidebarUserPhone.textContent = tempPhone;
+            <div id="signUpArea" style="display: none;">
+                <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Create Account</h2>
+                <form id="registerForm" style="display: flex; flex-direction: column; gap: 12px;">
+                    <input type="text" id="registerName" placeholder="Full Name" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                    <input type="tel" id="registerPhone" placeholder="Phone Number" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                    <input type="email" id="registerEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                    <input type="password" id="registerPassword" placeholder="Create Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                    <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 12px; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">REGISTER</button>
+                </form>
+                <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
+                    Already have an account? <a href="#" id="toSignIn" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Sign In</a>
+                </p>
+            </div>
 
-        } else {
-            if (loginBtn) {
-                loginBtn.innerHTML = "Login";
-                loginBtn.style.color = "#dfcda4";
-                loginBtn.style.background = ""; 
-                loginBtn.style.padding = "";
+            <p id="loginError" style="color: #ff4a4a; font-size: 13px; margin-top: 15px; display: none; font-family: 'Montserrat', sans-serif; line-height: 1.4;"></p>
+            <p id="loginSuccess" style="color: #2ec4b6; font-size: 13px; margin-top: 15px; display: none; font-family: 'Montserrat', sans-serif;"></p>
+        </div>
+    </div>
+
+
+    <div id="userSidebar" style="position: fixed; top: 0; right: -320px; width: 320px; height: 100%; background-color: #0b0b0b; border-left: 1px solid #dfcda4; z-index: 999999; transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 40px 25px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: -10px 0 30px rgba(0,0,0,0.5);">
+        
+        <div>
+            <span id="closeSidebarBtn" style="position: absolute; top: 20px; left: 20px; color: #aaaaaa; font-size: 24px; font-weight: bold; cursor: pointer; transition: color 0.3s;">&times;</span>
+            
+            <div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
+                <div id="sidebarAvatar" style="width: 70px; height: 70px; background-color: #dfcda4; color: #000; border-radius: 50%; font-family: 'Orbitron', sans-serif; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 0 0 15px rgba(223, 205, 164, 0.3);">U</div>
+                <h3 id="sidebarUserName" style="font-family: 'Orbitron', sans-serif; color: #ffffff; font-size: 18px; margin: 0; letter-spacing: 1px;">User Name</h3>
+            </div>
+            
+            <hr style="border: 0; border-top: 1px solid #333; margin-bottom: 25px;">
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; font-family: 'Montserrat', sans-serif;">
+                <div>
+                    <label style="color: #777; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Email Address</label>
+                    <p id="sidebarUserEmail" style="color: #ffffff; margin: 5px 0 0 0; font-size: 14px; word-break: break-all;">user@example.com</p>
+                </div>
+                <div>
+                    <label style="color: #777; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Phone Number</label>
+                    <p id="sidebarUserPhone" style="color: #ffffff; margin: 5px 0 0 0; font-size: 14px;">+20 123456789</p>
+                </div>
+                
+                <hr style="border: 0; border-top: 1px solid #222; margin: 10px 0;">
+                
+                <a href="#" style="display: flex; align-items: center; gap: 12px; color: #dfcda4; text-decoration: none; font-size: 15px; font-weight: bold; padding: 12px 15px; border-radius: 8px; background-color: rgba(223, 205, 164, 0.05); border: 1px solid rgba(223, 205, 164, 0.15); transition: all 0.3s;">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Your Courses</span>
+                </a>
+            </div>
+        </div>
+        
+        <button id="logoutBtn" style="width: 100%; background: transparent; border: 1px solid #ff4a4a; color: #ff4a4a; padding: 12px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: bold; letter-spacing: 1px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>LOGOUT</span>
+        </button>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+          apiKey: "AIzaSyAwSnEn0cpNkXC4EtMkoB5ZnRhv-QE_Tpo",
+          authDomain: "aipex-6588b.firebaseapp.com",
+          projectId: "aipex-6588b",
+          storageBucket: "aipex-6588b.firebasestorage.app",
+          messagingSenderId: "320792692639",
+          appId: "1:320792692639:web:4e8e2d6a2b8458ff14dfaa"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // ربط عناصر واجهة المستخدم
+        const modal = document.getElementById('loginModal');
+        const loginBtn = document.getElementById('loginBtn'); 
+        const closeBtn = document.getElementById('closeModalBtn');
+        
+        const signInArea = document.getElementById('signInArea');
+        const signUpArea = document.getElementById('signUpArea');
+        const toSignUpLink = document.getElementById('toSignUp');
+        const toSignInLink = document.getElementById('toSignIn');
+
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginError = document.getElementById('loginError');
+        const loginSuccess = document.getElementById('loginSuccess');
+
+        // عناصر الـ Sidebar
+        const sidebar = document.getElementById('userSidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const sidebarAvatar = document.getElementById('sidebarAvatar');
+        const sidebarUserName = document.getElementById('sidebarUserName');
+        const sidebarUserEmail = document.getElementById('sidebarUserEmail');
+        const sidebarUserPhone = document.getElementById('sidebarUserPhone');
+
+        // فتح وغلق المودال أو الـ Sidebar عند الضغط على زرار الهيدر
+        if (loginBtn) {
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (auth.currentUser) {
+                    // لو مسجل دخول يفتح الـ Sidebar بسلاسه
+                    sidebar.style.right = '0px';
+                } else {
+                    modal.style.display = 'flex';
+                }
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+        }
+
+        if (closeSidebarBtn) {
+            closeSidebarBtn.addEventListener('click', () => {
+                sidebar.style.right = '-320px';
+            });
+        }
+
+        // غلق المودال أو الـ Sidebar عند الضغط في أي مكان خارجي
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) { 
+                modal.style.display = 'none'; 
             }
-            if (sidebar) {
+            if (sidebar && !sidebar.contains(e.target) && e.target !== loginBtn && !loginBtn.contains(e.target)) {
                 sidebar.style.right = '-320px';
             }
+        });
+
+        // التبديل بين شاشتي الدخول وإنشاء حساب جديد
+        if (toSignUpLink) {
+            toSignUpLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                signInArea.style.display = 'none';
+                signUpArea.style.display = 'block';
+                loginError.style.display = 'none';
+            });
         }
-    });
-</script>
+
+        if (toSignInLink) {
+            toSignInLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                signUpArea.style.display = 'none';
+                signInArea.style.display = 'block';
+                loginError.style.display = 'none';
+            });
+        }
+
+        // 🔐 تسجيل الدخول (Sign In)
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        loginError.style.display = 'none';
+                        loginForm.reset();
+                        modal.style.display = 'none';
+                    })
+                    .catch((error) => {
+                        loginError.textContent = "Incorrect email or password.";
+                        loginError.style.display = 'block';
+                    });
+                });
+        }
+
+        // 📝 إنشاء الحساب (Register) + تحسين رسائل الأخطاء وتجنب كلمة AUTH
+        if (registerForm) {
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const phone = document.getElementById('registerPhone').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+
+                        // حفظ البيانات بشكل فوري في الـ Firestore تحت الـ User ID الفريد
+                        return setDoc(doc(db, "users", user.uid), {
+                            fullName: name,
+                            phoneNumber: phone,
+                            email: email,
+                            createdAt: new Date().toISOString()
+                        });
+                    })
+                    .then(() => {
+                        loginError.style.display = 'none';
+                        loginSuccess.textContent = `Welcome! Account created successfully.`;
+                        loginSuccess.style.display = 'block';
+                        registerForm.reset();
+                        setTimeout(() => {
+                            loginSuccess.style.display = 'none';
+                            modal.style.display = 'none';
+                        }, 2000);
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        console.error("Signup error code:", errorCode);
+                        
+                        // تخصيص رسائل خطأ احترافية باللغة الإنجليزية وتجنب كلمة AUTH تماماً
+                        if (errorCode === 'auth/email-already-in-use') {
+                            loginError.textContent = "This email address is already in use.";
+                        } else if (errorCode === 'auth/weak-password') {
+                            loginError.textContent = "Password should be at least 6 characters.";
+                        } else if (errorCode === 'auth/invalid-email') {
+                            loginError.textContent = "Please enter a valid email address.";
+                        } else {
+                            loginError.textContent = "An error occurred during registration. Please try again.";
+                        }
+                        
+                        loginError.style.display = 'block';
+                    });
+            });
+        }
+
+        // 🚪 تسجيل الخروج من الـ Sidebar الجانبي
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.reload();
+                });
+            });
+        }
+
+        // 👤 مراقبة حالة المستخدم وتحديث واجهة المستخدم والدائرة والـ Sidebar لايف
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                let tempName = user.email.split('@')[0];
+                let tempPhone = "Not provided";
+
+                // جلب اسم المستخدم ورقم هاتفه المخزنين في الـ Firestore Database
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+                    
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        tempName = userData.fullName || tempName;
+                        tempPhone = userData.phoneNumber || tempPhone;
+                    }
+                } catch (error) {
+                    console.log("Error retrieving user Firestore profile:", error);
+                }
+
+                const firstLetter = tempName.charAt(0).toUpperCase();
+                
+                // 1. تحويل زرار الهيدر لدائرة شيك بداخلها أول حرف من الاسم فقط وبدون نصوص زائدة
+                if (loginBtn) {
+                    loginBtn.innerHTML = `
+                        <span style="display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background-color: #dfcda4; color: #000; border-radius: 50%; font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 16px; box-shadow: 0 0 10px rgba(223, 205, 164, 0.4); cursor: pointer; transition: transform 0.2s;">${firstLetter}</span>
+                    `;
+                    loginBtn.style.border = 'none';
+                    loginBtn.style.background = 'transparent';
+                    loginBtn.style.padding = '0';
+                }
+
+                // 2. تحديث بيانات الـ Sidebar بمعلومات المستخدم المسترجعة
+                if (sidebarAvatar) sidebarAvatar.textContent = firstLetter;
+                if (sidebarUserName) sidebarUserName.textContent = tempName.toUpperCase();
+                if (sidebarUserEmail) sidebarUserEmail.textContent = user.email;
+                if (sidebarUserPhone) sidebarUserPhone.textContent = tempPhone;
+
+            } else {
+                // في حالة تسجيل الخروج، يرجع الزر لشكله الكلاسيكي
+                if (loginBtn) {
+                    loginBtn.innerHTML = "Login";
+                    loginBtn.className = "login-btn";
+                    loginBtn.style = ""; 
+                }
+                if (sidebar) {
+                    sidebar.style.right = '-320px';
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
