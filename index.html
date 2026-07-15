@@ -643,13 +643,17 @@ particlesJS("particles-js", {
                 const firstLetter = tempName.charAt(0).toUpperCase();
                 
                 // 1. تحويل زرار الهيدر لدائرة شيك بداخلها أول حرف من الاسم فقط وبدون نصوص زائدة
+                // 1. تحويل زرار الهيدر لدائرة شيك بداخلها أول حرف من الاسم وصغيرة ومتسنترة بالملي
                 if (loginBtn) {
                     loginBtn.innerHTML = `
-                        <span style="display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background-color: #dfcda4; color: #000; border-radius: 50%; font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 16px; box-shadow: 0 0 10px rgba(223, 205, 164, 0.4); cursor: pointer; transition: transform 0.2s;">${firstLetter}</span>
+                        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background-color: #dfcda4; color: #000; border-radius: 50%; font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 13px; box-shadow: 0 0 8px rgba(223, 205, 164, 0.4); cursor: pointer; transition: transform 0.2s; vertical-align: middle;">${firstLetter}</span>
                     `;
                     loginBtn.style.border = 'none';
                     loginBtn.style.background = 'transparent';
                     loginBtn.style.padding = '0';
+                    loginBtn.style.display = 'inline-flex';
+                    loginBtn.style.alignItems = 'center';
+                    loginBtn.style.height = '100%'; /* عشان تضمن السنترة العمودية مع الـ nav */
                 }
 
                 // 2. تحديث بيانات الـ Sidebar بمعلومات المستخدم المسترجعة
