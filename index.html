@@ -20,7 +20,9 @@
     <ul class="nav-menu">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li>
+            <a href="#" id="loginBtn" class="btn-login">Login</a>
+        </li>
     </ul>
 </nav>
     
@@ -365,5 +367,41 @@ particlesJS("particles-js", {
   "retina_detect": true
 });
 </script>
+<div id="loginModal" class="login-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        
+        <i class="fa-solid fa-user-shield" style="color: #dfcda4; font-size: 36px; margin-bottom: 15px;"></i>
+        
+        <div id="signInArea">
+            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px;">Sign In</h2>
+            <form id="loginForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="email" id="loginEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; outline: none; box-sizing: border-box;">
+                <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; outline: none; box-sizing: border-box;">
+                <button type="submit" class="btn-login" style="width: 100%; justify-content: center; padding: 12px; margin-top: 10px; border-radius: 8px;">SIGN IN</button>
+            </form>
+            <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
+                Don't have an account? <a href="#" id="toSignUp" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Create Account</a>
+            </p>
+        </div>
+
+        <div id="signUpArea" style="display: none;">
+            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px;">Create Account</h2>
+            <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="email" id="registerEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; outline: none; box-sizing: border-box;">
+                <input type="password" id="registerPassword" placeholder="Create Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; outline: none; box-sizing: border-box;">
+                <button type="submit" class="btn-login" style="width: 100%; justify-content: center; padding: 12px; margin-top: 10px; border-radius: 8px;">REGISTER</button>
+            </form>
+            <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
+                Already have an account? <a href="#" id="toSignIn" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Sign In</a>
+            </p>
+        </div>
+
+        <p id="loginError" style="color: #ff4a4a; font-size: 13px; margin-top: 15px; display: none;"></p>
+        <p id="loginSuccess" style="color: #2ec4b6; font-size: 13px; margin-top: 15px; display: none;"></p>
+    </div>
+</div>
+
+<script type="module" src="js/auth.js"></script>
 </body>
 </html>
