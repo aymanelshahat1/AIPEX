@@ -36,3 +36,38 @@ if (loginForm) {
         loginForm.reset(); // تصفير الفورم
     });
 }
+// معالجة إنشاء حساب جديد (Sign Up)
+if (registerForm) {
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // استلام البيانات الجديدة
+        const name = document.getElementById('registerName').value;
+        const phone = document.getElementById('registerPhone').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // هنا نقدر نحفظ الاسم والتليفون في Firebase Firestore أو Database لاحقاً
+                console.log("User registered:", name, phone, email);
+                
+                if (loginError) loginError.style.display = 'none';
+                if (loginSuccess) {
+                    loginSuccess.textContent = `Welcome ${name}! Account created successfully.`;
+                    loginSuccess.style.display = 'block';
+                }
+                registerForm.reset();
+                setTimeout(() => {
+                    if (loginSuccess) loginSuccess.style.display = 'none';
+                    if (loginModal) loginModal.style.display = 'none';
+                }, 2000);
+            })
+            .catch((error) => {
+                if (loginError) {
+                    loginError.textContent = error.message.replace("Firebase: ", "");
+                    loginError.style.display = 'block';
+                }
+            });
+    });
+}

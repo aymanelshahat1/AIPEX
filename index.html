@@ -367,34 +367,37 @@ particlesJS("particles-js", {
   "retina_detect": true
 });
 </script>
-<!-- Login Modal (Popup) -->
 <div id="loginModal" style="display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center; backdrop-filter: blur(8px); box-sizing: border-box;">
-    <div style="background-color: #0b0b0b; padding: 40px 30px; border-radius: 16px; border: 1px solid #dfcda4; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(223, 205, 164, 0.25); box-sizing: border-box;">
+    <div style="background-color: #0b0b0b; padding: 35px 30px; border-radius: 16px; border: 1px solid #dfcda4; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(223, 205, 164, 0.25); box-sizing: border-box;">
         
         <span id="closeModalBtn" style="position: absolute; top: 15px; right: 20px; color: #aaaaaa; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.3s;">&times;</span>
         
-        <i class="fa-solid fa-user-shield" style="color: #dfcda4; font-size: 42px; margin-bottom: 20px; display: block;"></i>
+        <i class="fa-solid fa-user-shield" style="color: #dfcda4; font-size: 42px; margin-bottom: 15px; display: block;"></i>
         
         <div id="signInArea" style="display: block;">
-            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 25px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Sign In</h2>
-            <form id="loginForm" style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="email" id="loginEmail" placeholder="Email Address" required style="width: 100%; padding: 14px 16px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 14px 16px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 14px; margin-top: 10px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">SIGN IN</button>
+            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Sign In</h2>
+            <form id="loginForm" style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="email" id="loginEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                <input type="password" id="loginPassword" placeholder="Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 12px; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">SIGN IN</button>
             </form>
-            <p style="color: #aaa; font-size: 13px; margin-top: 20px;">
+            <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
                 Don't have an account? <a href="#" id="toSignUp" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Create Account</a>
             </p>
         </div>
 
         <div id="signUpArea" style="display: none;">
-            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 25px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Create Account</h2>
-            <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="email" id="registerEmail" placeholder="Email Address" required style="width: 100%; padding: 14px 16px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <input type="password" id="registerPassword" placeholder="Create Password" required style="width: 100%; padding: 14px 16px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
-                <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 14px; margin-top: 10px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">REGISTER</button>
+            <h2 style="font-family: 'Orbitron', sans-serif; color: #ffffff; margin-bottom: 20px; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">Create Account</h2>
+            <form id="registerForm" style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="text" id="registerName" placeholder="Full Name" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                <input type="tel" id="registerPhone" placeholder="Phone Number" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                
+                <input type="email" id="registerEmail" placeholder="Email Address" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                <input type="password" id="registerPassword" placeholder="Create Password" required style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #444; background: transparent; color: #fff; font-family: 'Montserrat', sans-serif; outline: none; box-sizing: border-box; font-size: 14px;">
+                
+                <button type="submit" style="width: 100%; background: #dfcda4; color: #000; font-weight: bold; border: none; padding: 12px; margin-top: 8px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 14px;">REGISTER</button>
             </form>
-            <p style="color: #aaa; font-size: 13px; margin-top: 20px;">
+            <p style="color: #aaa; font-size: 13px; margin-top: 15px;">
                 Already have an account? <a href="#" id="toSignIn" style="color: #dfcda4; text-decoration: none; font-weight: bold;">Sign In</a>
             </p>
         </div>
@@ -407,7 +410,7 @@ particlesJS("particles-js", {
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const modal = document.getElementById('loginModal');
-        const loginBtn = document.getElementById('loginBtn'); // زر الـ Login في الهيدر
+        const loginBtn = document.getElementById('loginBtn'); 
         const closeBtn = document.getElementById('closeModalBtn');
         
         const signInArea = document.getElementById('signInArea');
@@ -415,29 +418,25 @@ particlesJS("particles-js", {
         const toSignUpLink = document.getElementById('toSignUp');
         const toSignInLink = document.getElementById('toSignIn');
 
-        // 1. فتح المودال عند الضغط على زر Login
         if (loginBtn) {
             loginBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                modal.style.display = 'flex'; // استخدام flex للسنترة
+                modal.style.display = 'flex';
             });
         }
 
-        // 2. قفل المودال عند الضغط على X
         if (closeBtn) {
             closeBtn.addEventListener('click', function() {
                 modal.style.display = 'none';
             });
         }
 
-        // 3. قفل المودال عند الضغط خارج المربع الأسود
         window.addEventListener('click', function(e) {
             if (e.target === modal) {
                 modal.style.display = 'none';
             }
         });
 
-        // 4. سحر التبديل لـ Create Account
         if (toSignUpLink) {
             toSignUpLink.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -447,7 +446,6 @@ particlesJS("particles-js", {
             });
         }
 
-        // 5. سحر التبديل لـ Sign In
         if (toSignInLink) {
             toSignInLink.addEventListener('click', function(e) {
                 e.preventDefault();
