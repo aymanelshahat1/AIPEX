@@ -415,8 +415,9 @@ particlesJS("particles-js", {
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    // استدعاء مكتبة الـ Firestore
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // إعدادات الـ Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyAwSnEn0cpNkXC4EtMkoB5ZnRhv-QE_Tpo",
       authDomain: "aipex-6588b.firebaseapp.com",
@@ -426,9 +427,10 @@ particlesJS("particles-js", {
       appId: "1:320792692639:web:4e8e2d6a2b8458ff14dfaa"
     };
 
+    // تهيئة الفايربيز والـ Firestore
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const adminEmail = "aymanelshahat35@gmail.com"; 
+    const db = getFirestore(app); // ربط قاعدة البيانات
 
     // العناصر
     const modal = document.getElementById('loginModal');
@@ -445,15 +447,21 @@ particlesJS("particles-js", {
     const loginError = document.getElementById('loginError');
     const loginSuccess = document.getElementById('loginSuccess');
 
-    // فتح وغلق المودال
+    // عناصر الـ Sidebar
+    const sidebar = document.getElementById('userSidebar');
+    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const sidebarAvatar = document.getElementById('sidebarAvatar');
+    const sidebarUserName = document.getElementById('sidebarUserName');
+    const sidebarUserEmail = document.getElementById('sidebarUserEmail');
+    const sidebarUserPhone = document.getElementById('sidebarUserPhone');
+
+    // فتح وغلق المودال والـ Sidebar
     if (loginBtn) {
         loginBtn.addEventListener('click', function(e) {
             e.preventDefault();
             if (auth.currentUser) {
-                // لو مسجل دخول وضغط على الدائرة.. يعمل تسجيل خروج
-                signOut(auth).then(() => {
-                    window.location.reload();
-                });
+                sidebar.style.right = '0px';
             } else {
                 modal.style.display = 'flex';
             }
@@ -464,11 +472,22 @@ particlesJS("particles-js", {
         closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
     }
 
+    if (closeSidebarBtn) {
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebar.style.right = '-320px';
+        });
+    }
+
     window.addEventListener('click', (e) => {
-        if (e.target === modal) { modal.style.display = 'none'; }
+        if (e.target === modal) { 
+            modal.style.display = 'none'; 
+        }
+        if (sidebar && !sidebar.contains(e.target) && e.target !== loginBtn && !loginBtn.contains(e.target)) {
+            sidebar.style.right = '-320px';
+        }
     });
 
-    // التبديل بين الشاشات
+    // التبديل بين الفورم
     if (toSignUpLink) {
         toSignUpLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -507,18 +526,30 @@ particlesJS("particles-js", {
         });
     }
 
-    // إنشاء الحساب (Create Account)
+    // إنشاء الحساب وحفظ البيانات في الـ Firestore
     if (registerForm) {
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('registerName').value;
+            const phone = document.getElementById('registerPhone').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
 
             createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // 💾 حفظ الاسم والتليفون في الـ Firestore تحت الـ UID الخاص بالمستخدم
+                    return setDoc(doc(db, "users", user.uid), {
+                        fullName: name,
+                        phoneNumber: phone,
+                        email: email,
+                        createdAt: new Date().toISOString()
+                    });
+                })
                 .then(() => {
                     loginError.style.display = 'none';
-                    loginSuccess.textContent = `Welcome ${name}! Account created.`;
+                    loginSuccess.textContent = `Welcome! Account created successfully.`;
                     loginSuccess.style.display = 'block';
                     registerForm.reset();
                     setTimeout(() => {
@@ -533,30 +564,62 @@ particlesJS("particles-js", {
         });
     }
 
-    // 🟢 السحر: تحويل زر الـ Login لدائرة البروفايل بأول حرف من الاسم عند تسجيل الدخول
-    onAuthStateChanged(auth, (user) => {
+    // تسجيل الخروج
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.reload();
+            });
+        });
+    }
+
+    // مراقبة حالة تسجيل الدخول وتحديث شكل الهيدر وجلب البيانات من الـ Firestore لايف
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // بنجيب أول حرف من الجزء الأول للإيميل
-            const firstLetter = user.email.split('@')[0].charAt(0).toUpperCase();
+            let tempName = user.email.split('@')[0];
+            let tempPhone = "Not provided";
+
+            // جلب البيانات المخزنة من الـ Firestore للمستخدم الحالي
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    tempName = userData.fullName || tempName;
+                    tempPhone = userData.phoneNumber || tempPhone;
+                }
+            } catch (error) {
+                console.log("Error fetching user data:", error);
+            }
+
+            const firstLetter = tempName.charAt(0).toUpperCase();
             
+            // 1. تحديث زر الـ Login لدائرة البروفايل بأول حرف
             if (loginBtn) {
-                // بنحول الزرار لدائرة ذهبية شيك متناسقة مع ألوان موقعك وبجواها الحرف
                 loginBtn.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background-color: #dfcda4; color: #000; border-radius: 50%; font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 14px; box-shadow: 0 0 10px rgba(223, 205, 164, 0.4);">${firstLetter}</span>
-                        <span style="font-size: 12px; color: #ff4a4a; font-family: 'Montserrat', sans-serif;">(Logout)</span>
-                    </div>
+                    <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background-color: #dfcda4; color: #000; border-radius: 50%; font-weight: bold; font-family: 'Orbitron', sans-serif; font-size: 15px; box-shadow: 0 0 10px rgba(223, 205, 164, 0.4); cursor: pointer; transition: transform 0.2s;">${firstLetter}</span>
                 `;
-                // بنشيل أي خلفية أو ستايل قديم للينك عشان تظهر الدائرة صافية
                 loginBtn.style.border = 'none';
                 loginBtn.style.background = 'transparent';
+                loginBtn.style.padding = '0';
             }
+
+            // 2. تعبئة بيانات الـ Sidebar الحقيقية المخزنة في الـ Firestore
+            if (sidebarAvatar) sidebarAvatar.textContent = firstLetter;
+            if (sidebarUserName) sidebarUserName.textContent = tempName.toUpperCase();
+            if (sidebarUserEmail) sidebarUserEmail.textContent = user.email;
+            if (sidebarUserPhone) sidebarUserPhone.textContent = tempPhone;
+
         } else {
             if (loginBtn) {
-                // لو خرج.. بيرجع الزرار "Login" الكلاسيكي بلونه البيج
                 loginBtn.innerHTML = "Login";
                 loginBtn.style.color = "#dfcda4";
                 loginBtn.style.background = ""; 
+                loginBtn.style.padding = "";
+            }
+            if (sidebar) {
+                sidebar.style.right = '-320px';
             }
         }
     });
