@@ -156,8 +156,9 @@ Experienced in managing the full product lifecycle from conceptual design to ass
             <div class="card-top">
                 <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
                 <p class="code-text">&lt;Python 3 for Web & Automation/&gt;</p>
-            <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: inline-block; text-align: center; cursor: pointer;">START LEARNING</a>
-        <div class="course-card">
+            </div>
+                <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
+            </div>
             <div class="card-top">
                 <img src="assets/images/nnn.png" alt="SolidWorks" class="course-image">
                 <p class="code-text">&lt; SolidWorks for Engineering &gt;</p>
@@ -673,16 +674,23 @@ particlesJS("particles-js", {
             }
         });
         // ⚡ دالة التوجيه السريعة والذكية للكورسات
-    // ⚡ فحص فوري وحماية روابط الكورسات بأقصى سرعة
+   // ⚡ الفحص الفوري والمضمون لحالة تسجيل الدخول
+    let userLoggedIn = false;
+
+    // الفايربيز هيغير قيمة المتغير ده فوراً أول ما يتأكد من حالة المستخدم
+    onAuthStateChanged(auth, (user) => {
+        userLoggedIn = !!user; // هتكون true لو مسجل، و false لو مش مسجل
+    });
+
+    // حماية الروابط وتوجيهها بشكل صحيح ومضمون
     document.querySelectorAll('.course-link').forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault(); // وقف الانتقال التلقائي مؤقتاً لحين الفحص
+            e.preventDefault(); // وقف الانتقال التلقائي فوراً
             
             const targetPage = this.getAttribute('href');
-            const user = auth.currentUser; // جلب حالة تسجيل الدخول من الذاكرة فوراً
 
-            if (user) {
-                // لو مسجل دخول، وديه لصفحة الكورس فوراً
+            if (userLoggedIn) {
+                // لو مسجل دخول فعلاً، وديه لصفحة الكورس
                 window.location.href = targetPage;
             } else {
                 // لو مش مسجل، ابعته لصفحة الـ login.html
