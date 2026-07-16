@@ -617,16 +617,19 @@ particlesJS("particles-js", {
 
         // 🚪 تسجيل الخروج من الـ Sidebar الجانبي
         if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                signOut(auth).then(() => {
-                    window.location.reload();
-                });
+           logoutBtn.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                // ⚡ امسح حالة تسجيل الدخول من المتصفح فوراً عند الخروج
+                localStorage.removeItem('isLoggedIn');
+                window.location.reload();
             });
+        });
         }
 
         // 👤 مراقبة حالة المستخدم وتحديث واجهة المستخدم والدائرة والـ Sidebar لايف
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                localStorage.setItem('isLoggedIn', 'true');
                 let tempName = user.email.split('@')[0];
                 let tempPhone = "Not provided";
 
@@ -689,32 +692,24 @@ particlesJS("particles-js", {
 
    // ⚡ الفحص المباشر والمضمون لحالة تسجيل الدخول عند الضغط
     // ⚡ دالة الفحص الذكي والانتظار حتى جاهزية حالة تسجيل الدخول
-    document.querySelectorAll('.course-link').forEach(link => {
-        link.addEventListener('click', async function(e) {
-            e.preventDefault(); // وقف الانتقال مؤقتاً لحين انتهاء الفحص
-            
-            const targetPage = this.getAttribute('href');
-
-            try {
-                // الانتظار حتى يتأكد الفايربيز تماماً من حالة المستخدم الحالية (سواء مسجل أو لأ)
-                await auth.authStateReady(); 
+   <!-- ⚡ الفحص الفوري والمباشر من الذاكرة المحلية عند الضغط -->
+    <script>
+        document.querySelectorAll('.course-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // وقف الانتقال التلقائي
                 
-                const user = auth.currentUser;
+                const targetPage = this.getAttribute('href');
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-                if (user) {
-                    // مسجل دخول فعلاً؟ وديه للكورس فوراً وبدون أي تأخير
+                if (isLoggedIn === 'true') {
+                    // مسجل دخول فعلاً؟ وديه لصفحة الكورس فوراً
                     window.location.href = targetPage;
                 } else {
                     // مش مسجل؟ ابعته لصفحة اللوجن
                     window.location.href = "login.html";
                 }
-            } catch (error) {
-                console.error("Auth check failed:", error);
-                // كخطة بديلة (Fallback) لو حصل مشكلة في الفحص، وديه لصفحة الـ Login للأمان
-                window.location.href = "login.html";
-            }
+            });
         });
-    });
     </script>
 
 </body>
