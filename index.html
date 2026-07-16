@@ -687,18 +687,21 @@ particlesJS("particles-js", {
         userLoggedIn = !!user; // هتكون true لو مسجل، و false لو مش مسجل
     });
 
-    // حماية الروابط وتوجيهها بشكل صحيح ومضمون
+   // ⚡ الفحص المباشر والمضمون لحالة تسجيل الدخول عند الضغط
     document.querySelectorAll('.course-link').forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault(); // وقف الانتقال التلقائي فوراً
+            e.preventDefault(); // نوقف الانتقال التلقائي الأول عشان نضمن الفحص
             
             const targetPage = this.getAttribute('href');
+            
+            // بنجيب حالة المستخدم الحالية مباشرة من الفايربيز في لحظة الضغط
+            const user = auth.currentUser;
 
-            if (userLoggedIn) {
-                // لو مسجل دخول فعلاً، وديه لصفحة الكورس
+            if (user) {
+                // لو مسجل دخول فعلاً.. اتفضل ادخل
                 window.location.href = targetPage;
             } else {
-                // لو مش مسجل، ابعته لصفحة الـ login.html
+                // لو مش مسجل دخول.. ممنوع ووديه للـ login فوراً
                 window.location.href = "login.html";
             }
         });
