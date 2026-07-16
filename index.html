@@ -156,9 +156,7 @@ Experienced in managing the full product lifecycle from conceptual design to ass
             <div class="card-top">
                 <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
                 <p class="code-text">&lt;Python 3 for Web & Automation/&gt;</p>
-            </div>
-            <button onclick="navigateToCourse('python_course.html')" class="btn-gold-outline" style="text-decoration: none; display: inline-block; text-align: center; background: transparent; cursor: pointer; width: 100%;">START LEARNING</button>
-        </div>
+            <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: inline-block; text-align: center; cursor: pointer;">START LEARNING</a>
         <div class="course-card">
             <div class="card-top">
                 <img src="assets/images/nnn.png" alt="SolidWorks" class="course-image">
@@ -675,15 +673,23 @@ particlesJS("particles-js", {
             }
         });
         // ⚡ دالة التوجيه السريعة والذكية للكورسات
-    window.navigateToCourse = function(coursePage) {
-        // auth.currentUser بيجيب المستخدم الحالي لحظياً من الذاكرة بدون أي انتظار
-        const user = auth.currentUser;
-        if (user) {
-            window.location.href = coursePage;
-        } else {
-            window.location.href = "login.html";
-        }
-    };
+    // ⚡ فحص فوري وحماية روابط الكورسات بأقصى سرعة
+    document.querySelectorAll('.course-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // وقف الانتقال التلقائي مؤقتاً لحين الفحص
+            
+            const targetPage = this.getAttribute('href');
+            const user = auth.currentUser; // جلب حالة تسجيل الدخول من الذاكرة فوراً
+
+            if (user) {
+                // لو مسجل دخول، وديه لصفحة الكورس فوراً
+                window.location.href = targetPage;
+            } else {
+                // لو مش مسجل، ابعته لصفحة الـ login.html
+                window.location.href = "login.html";
+            }
+        });
+    });
     </script>
 
 </body>
