@@ -696,23 +696,25 @@ particlesJS("particles-js", {
     <!-- ⚡ الفحص الفوري والمضمون عند تحميل كامل عناصر الصفحة -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.course-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault(); // وقف الانتقال التلقائي فوراً
-                    
-                    const targetPage = this.getAttribute('href');
-                    const isLoggedIn = localStorage.getItem('isLoggedIn');
+        console.log("🔥 سكريبت الفحص اشتغل تمام!"); // سطر كشف 1
+        
+        document.querySelectorAll('.course-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                
+                const targetPage = this.getAttribute('href');
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                
+                console.log("🔒 الحالة المتخزنة حالياً هي:", isLoggedIn); // سطر كشف 2
 
-                    if (isLoggedIn === 'true') {
-                        // لو مسجل دخول فعلاً، وديه لصفحة الكورس فوراً
-                        window.location.href = targetPage;
-                    } else {
-                        // لو مش مسجل، ابعته لصفحة اللوجن
-                        window.location.href = "login.html";
-                    }
-                });
+                if (isLoggedIn === 'true') {
+                    window.location.href = targetPage;
+                } else {
+                    window.location.href = "login.html";
+                }
             });
         });
+    });
     </script>
 
 </body>
