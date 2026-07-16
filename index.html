@@ -695,27 +695,16 @@ particlesJS("particles-js", {
    <!-- ⚡ الفحص الفوري والمباشر من الذاكرة المحلية عند الضغط -->
     <!-- ⚡ الفحص الفوري والمضمون عند تحميل كامل عناصر الصفحة -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-        console.log("🔥 سكريبت الفحص اشتغل تمام!"); // سطر كشف 1
-        
+    document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.course-link').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault(); 
+                e.preventDefault(); // وقف الانتقال تماماً
                 
-                const targetPage = this.getAttribute('href');
-                const isLoggedIn = localStorage.getItem('isLoggedIn');
-                
-                console.log("🔒 الحالة المتخزنة حالياً هي:", isLoggedIn); // سطر كشف 2
-
-                if (isLoggedIn === 'true') {
-                    window.location.href = targetPage;
-                } else {
-                    window.location.href = "login.html";
-                }
+                // 🚨 رسالة اختبار فورية
+                alert("🚨 الكود لقط الضغطة تمام! والمسار اللي رايح له هو: " + this.getAttribute('href'));
             });
         });
     });
-    </script>
-
+</script>
 </body>
 </html>
