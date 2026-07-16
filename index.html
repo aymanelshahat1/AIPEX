@@ -688,20 +688,29 @@ particlesJS("particles-js", {
     });
 
    // ⚡ الفحص المباشر والمضمون لحالة تسجيل الدخول عند الضغط
+    // ⚡ دالة الفحص الذكي والانتظار حتى جاهزية حالة تسجيل الدخول
     document.querySelectorAll('.course-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault(); // نوقف الانتقال التلقائي الأول عشان نضمن الفحص
+        link.addEventListener('click', async function(e) {
+            e.preventDefault(); // وقف الانتقال مؤقتاً لحين انتهاء الفحص
             
             const targetPage = this.getAttribute('href');
-            
-            // بنجيب حالة المستخدم الحالية مباشرة من الفايربيز في لحظة الضغط
-            const user = auth.currentUser;
 
-            if (user) {
-                // لو مسجل دخول فعلاً.. اتفضل ادخل
-                window.location.href = targetPage;
-            } else {
-                // لو مش مسجل دخول.. ممنوع ووديه للـ login فوراً
+            try {
+                // الانتظار حتى يتأكد الفايربيز تماماً من حالة المستخدم الحالية (سواء مسجل أو لأ)
+                await auth.authStateReady(); 
+                
+                const user = auth.currentUser;
+
+                if (user) {
+                    // مسجل دخول فعلاً؟ وديه للكورس فوراً وبدون أي تأخير
+                    window.location.href = targetPage;
+                } else {
+                    // مش مسجل؟ ابعته لصفحة اللوجن
+                    window.location.href = "login.html";
+                }
+            } catch (error) {
+                console.error("Auth check failed:", error);
+                // كخطة بديلة (Fallback) لو حصل مشكلة في الفحص، وديه لصفحة الـ Login للأمان
                 window.location.href = "login.html";
             }
         });
