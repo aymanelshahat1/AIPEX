@@ -157,7 +157,7 @@ Experienced in managing the full product lifecycle from conceptual design to ass
                 <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
                 <p class="code-text">&lt;Python 3 for Web & Automation/&gt;</p>
             </div>
-            <a href="python_course.html" class="btn-gold-outline" style="text-decoration: none; display: inline-block; text-align: center;">START LEARNING</a>
+            <button onclick="navigateToCourse('python_course.html')" class="btn-gold-outline" style="text-decoration: none; display: inline-block; text-align: center; background: transparent; cursor: pointer; width: 100%;">START LEARNING</button>
         </div>
         <div class="course-card">
             <div class="card-top">
@@ -674,6 +674,16 @@ particlesJS("particles-js", {
                 }
             }
         });
+        // ⚡ دالة التوجيه السريعة والذكية للكورسات
+    window.navigateToCourse = function(coursePage) {
+        // auth.currentUser بيجيب المستخدم الحالي لحظياً من الذاكرة بدون أي انتظار
+        const user = auth.currentUser;
+        if (user) {
+            window.location.href = coursePage;
+        } else {
+            window.location.href = "login.html";
+        }
+    };
     </script>
 
 </body>
