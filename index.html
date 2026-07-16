@@ -158,7 +158,7 @@ Experienced in managing the full product lifecycle from conceptual design to ass
                 <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
                 <p class="code-text">&lt;Python 3 for Web & Automation/&gt;</p>
             </div>
-            <a href="python_course.html" onclick="return checkAccess(event)" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
+            <a href="python_course.html" onclick="event.preventDefault(); if(checkAccess()) { window.location.href=this.href; }" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
         </div>
 
         <div class="course-card">
@@ -691,17 +691,14 @@ particlesJS("particles-js", {
     });
     </script>
 <script>
-    // 🔒 فحص الأمان في الخلفية بدون التأثير على التصميم والشكل
-    function checkAccess(event) {
+    // 🔒 فحص حالة الدخول المباشر
+    function checkAccess() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
 
         if (isLoggedIn === 'true') {
-            // لو مسجل.. هيدخله علطول بنفس التنسيق
-            return true;
+            return true; // مسموح بالدخول
         } else {
-            // مش مسجل؟ هيوقف الانتقال ويوديه لوجن فوراً
-            event.preventDefault();
-            window.location.href = "login.html";
+            window.location.href = "login.html"; // مش مسجل؟ شوت على اللوجن فوراً
             return false;
         }
     }
