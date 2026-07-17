@@ -546,8 +546,13 @@ particlesJS("particles-js", {
 
         // 🔐 تسجيل الدخول (Sign In)
         if (loginForm) {
-            loginForm.addEventListener('submit', (e) => {
+            loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        if (loginSubmitBtn) {
+            loginSubmitBtn.disabled = true;
+            loginSubmitBtn.innerText = 'SIGNING IN...';
+        }
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
 
@@ -560,6 +565,10 @@ particlesJS("particles-js", {
                     .catch((error) => {
                         loginError.textContent = "Incorrect email or password.";
                         loginError.style.display = 'block';
+                        if (loginSubmitBtn) {
+                loginSubmitBtn.disabled = false;
+                loginSubmitBtn.innerText = 'SIGN IN';
+            }
                     });
                 });
         }
