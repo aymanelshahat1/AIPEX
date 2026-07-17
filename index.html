@@ -689,6 +689,17 @@ particlesJS("particles-js", {
     onAuthStateChanged(auth, (user) => {
         userLoggedIn = !!user; // هتكون true لو مسجل، و false لو مش مسجل
     });
+    // 👇 حط الكود ده هنا بالظبط في السطر 691 قبل قفلة الـ script
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('showLogin') === 'true') {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.style.display = 'flex'; // إظهار المودال فوراً
+            
+            // مسح الكلمة من الرابط عشان لو عمل ريفريش المودال ميفتحش تاني لوحده
+            window.history.replaceState(null, '', window.location.pathname);
+        }
+    }
     </script>
 
 </body>
