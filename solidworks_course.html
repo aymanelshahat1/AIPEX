@@ -208,9 +208,46 @@
             مرحباً بك في كورس السوليد وركس الشامل لـ التصميم والنمذجة ثلاثية الأبعاد.
         </p>
         
-        <div class="content-box">
-            <span class="coming-soon-text">COURSES CONTENT COMING SOON</span>
-        </div>
+        <!-- 1️⃣ لوحة الأدمن (مخفية تلقائياً) -->
+    <div id="adminPanel" style="display: none; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+            Admin Control Panel
+        </h3>
+        <form id="addVideoForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: end;">
+            <div style="grid-column: span 2;">
+                <label style="color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;">Video Title</label>
+                <input type="text" id="videoTitle" placeholder="e.g., Lesson 1: Introduction" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #111; color: #fff; box-sizing: border-box;">
+            </div>
+            <div style="grid-column: span 2;">
+                <label style="color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;">YouTube Video URL</label>
+                <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #111; color: #fff; box-sizing: border-box;">
+            </div>
+            <button type="submit" style="grid-column: span 2; background: #dfcda4; color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s;">
+                ADD VIDEO TO COURSE
+            </button>
+        </form>
+        <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none;"></p>
+    </div>
+
+    <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل (مخفية تلقائياً) -->
+    <div id="loginPrompt" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03);">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">
+            🔒 CONTENT LOCKED
+        </h3>
+        <p style="color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 14px; margin: 15px 0 25px 0; line-height: 1.6; text-transform: uppercase; letter-spacing: 0.5px;">
+            Please sign in to unlock and access the lectures for this course.
+        </p>
+        <button onclick="window.openLoginModal()" class="btn-gold-outline" style="background: transparent; border: 1px solid #dfcda4; color: #dfcda4; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px 30px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;">
+            SIGN IN / REGISTER
+        </button>
+    </div>
+
+    <!-- 3️⃣ شبكة الفيديوهات الاستعراضية للأفلام والكورسات -->
+    <div id="videosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; width: 100%; box-sizing: border-box;">
+        <p id="noVideosMessage" style="color: #dfcda4; text-align: center; grid-column: 1 / -1; font-size: 14px; font-family: 'Montserrat', sans-serif; margin-top: 40px; background: #000; border: 1px solid #dfcda4; border-radius: 8px; padding: 12px 20px; display: inline-block; box-sizing: border-box; text-transform: uppercase; font-weight: 500; letter-spacing: 1px;">
+            &lt;Lectures are currently being prepared. Check back soon!/&gt;
+        </p>
+    </div>
     </main>
 
     <footer class="site-footer">
@@ -248,6 +285,78 @@
         window.addEventListener('load', loadParticles);
         setTimeout(loadParticles, 500);
     </script>
+<!-- 👇 حط كود الجافا سكريبت ده تحت خالص قبل قفلة الـ body مباشرة في solidworks_course.html -->
+    <script type="module">
+        // استيراد مكتبات الفايربيز الأساسية (تأكد إن المسارات دي مظبوطة حسب مشروعك)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // كود الـ Config بتاع الفايربيز بتاعك هنا (لو كنت حاطه في ملف خارجي أو فوق)
+        // const app = initializeApp(firebaseConfig);
+        // const db = getFirestore(app);
+
+        // 1️⃣ كود جلب فيديوهات السوليدوركس (تأكد من اسم الـ Collection عندك)
+        const videosGrid = document.getElementById('videosGrid');
+        const noVideosMessage = document.getElementById('noVideosMessage');
+
+        // هنا بنادي على كوليكشن فيديوهات السوليدوركس
+        // const videosQuery = query(collection(db, "solidworks_videos"), orderBy("createdAt", "asc"));
+        // onSnapshot(videosQuery, (snapshot) => {
+        //     if (videosGrid) videosGrid.innerHTML = '';
+        //     if (snapshot.empty) {
+        //         if (videosGrid) videosGrid.appendChild(noVideosMessage);
+        //         return;
+        //     }
+        //     snapshot.forEach((doc) => {
+        //         const data = doc.data();
+        //         const videoCard = document.createElement('div');
+        //         videoCard.style.cssText = "background: #0b0b0b; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.3s;";
+        //         videoCard.innerHTML = `
+        //             <div style="position: relative; width: 100%; padding-top: 56.25%;">
+        //                 <iframe src="${data.videoUrl}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        //             </div>
+        //             <div style="padding: 15px 20px;">
+        //                 <h4 style="font-size: 15px; color: #fff; margin: 0; font-weight: 600; line-height: 1.4;">${data.title}</h4>
+        //             </div>
+        //         `;
+        //         if (videosGrid) videosGrid.appendChild(videoCard);
+        //     });
+        // });
+
+        // 2️⃣ كود فحص الصلاحيات والحجب الذكي
+        document.addEventListener("DOMContentLoaded", function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+
+            const adminPanel = document.getElementById('adminPanel');
+            const loginPrompt = document.getElementById('loginPrompt');
+            const videosGrid = document.getElementById('videosGrid');
+
+            if (isLoggedIn === 'true') {
+                if (videosGrid) videosGrid.style.display = 'grid';
+                if (loginPrompt) loginPrompt.style.display = 'none';
+
+                if (userRole === 'admin') {
+                    if (adminPanel) adminPanel.style.display = 'block';
+                } else {
+                    if (adminPanel) adminPanel.style.display = 'none';
+                }
+            } else {
+                if (videosGrid) videosGrid.style.display = 'none';
+                if (adminPanel) adminPanel.style.display = 'none';
+                if (loginPrompt) loginPrompt.style.display = 'block';
+            }
+        });
+
+        // دالة فتح المودال والتحويل للرئيسية
+        window.openLoginModal = function() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'flex';
+            } else {
+                window.location.href = 'index.html?showLogin=true';
+            }
+        }
+    </script>
 </body>
 </html>
