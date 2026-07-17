@@ -689,14 +689,20 @@ particlesJS("particles-js", {
         userLoggedIn = !!user; // هتكون true لو مسجل، و false لو مش مسجل
     });
     </script>
-<script>
-    // 🔒 الدالة الذكية لحماية أزرار الكورسات
-    function checkAuth() {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+<script type="module">
+    // 🔒 الدالة الحديدية لفحص الدخول وفتح المودال المنبثق
+    window.checkAuth = function() {
+        const localCheck = localStorage.getItem('isLoggedIn');
+        
+        if (localCheck === 'true') {
+            // لو مسجل دخول يفتح صفحة الكورس عادي
             window.location.href = 'python_course.html';
         } else {
-            window.location.href = 'login.html';
+            // لو مش مسجل.. يفتح الـ Pop-up اللي في الـ index فوراً!
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.style.display = 'flex'; 
+            }
         }
     }
 </script>
