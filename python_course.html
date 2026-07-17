@@ -6,8 +6,8 @@
         (function() {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             if (isLoggedIn !== 'true') {
-                // مش مسجل دخول؟ امسح الصفحة من تاريخ المتصفح وشوته على اللوجن فوراً
-                window.location.replace("login.html");
+                // 📂 ضفنا نقطتين وسلاش عشان نخرج للفولدر الرئيسي اللي فيه الـ login.html
+                window.location.replace("../login.html");
             }
         })();
     </script>
