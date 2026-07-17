@@ -2038,3 +2038,8 @@ a, button, .get-started-btn, .our-projects-btn {
     transform: translateY(-3px) !important; /* تترفع لفوق حركة خفيفة */
 }
 /* --- Login Modal (Popup) Styles --- */
+/* إجبار أزرار الكورسات إنها تقبل الكليك ويظهر شكل الإيد */
+.course-link, .btn-gold-outline {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
