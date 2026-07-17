@@ -1,3 +1,13 @@
+// 🚫 حجب وإخفاء جميع أخطاء الموقع والـ Console تماماً من أول سطر
+window.onerror = function (message, source, lineno, colno, error) {
+    return true; 
+};
+
+if (window.console) {
+    window.console.error = function() {};
+    window.console.warn = function() {};
+    window.console.log = function() {};
+}
 
 // تأثير الـ Hover
 const elements = document.querySelectorAll('a, button');
