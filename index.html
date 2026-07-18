@@ -85,18 +85,18 @@
 </div>
 <section id="services" class="services-section" style="position: relative; max-width: 1240px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
     
-    <!-- العنوان المتفاعل اللي ظبطناه (توهج واهتزاز) -->
+    <!-- العنوان المتفاعل (توهج واهتزاز) -->
     <h2 class="team-leaders-title" style="font-family: 'Montserrat', sans-serif !important; font-weight: 900 !important; font-size: clamp(24px, 4.5vw, 48px) !important; text-transform: uppercase !important; color: #ffffff !important; letter-spacing: 2px !important; text-align: center !important; white-space: nowrap !important; text-shadow: 0 0 10px rgba(223, 205, 164, 0.3), 0 0 20px rgba(223, 205, 164, 0.1) !important; display: inline-block !important; width: 100%; transition: all 0.3s ease-in-out !important;" onmouseover="this.style.textShadow='0 0 15px rgba(223, 205, 164, 0.7), 0 0 30px rgba(223, 205, 164, 0.4)'; this.style.cursor='pointer'; this.animate([{transform:'translateX(-3px)'},{transform:'translateX(3px)'}],{duration: 150, iterations: Infinity, direction: 'alternate'});" onmouseout="this.style.textShadow='0 0 10px rgba(223, 205, 164, 0.3), 0 0 20px rgba(223, 205, 164, 0.1)'; this.getAnimations().forEach(anim => anim.cancel());">Team Leaders</h2>
     
-    <!-- الأسهم الزجاجية المضيئة باللون الذهبي -->
+    <!-- الأسهم الزجاجية المضيئة -->
     <button id="sliderPrevBtn" style="position: absolute; left: 0px; top: 55%; transform: translateY(-50%); width: 45px; height: 45px; border-radius: 50%; background: rgba(223, 205, 164, 0.03); border: 1px solid rgba(223, 205, 164, 0.15); color: #dfcda4; font-size: 16px; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">❮</button>
     <button id="sliderNextBtn" style="position: absolute; right: 0px; top: 55%; transform: translateY(-50%); width: 45px; height: 45px; border-radius: 50%; background: rgba(223, 205, 164, 0.03); border: 1px solid rgba(223, 205, 164, 0.15); color: #dfcda4; font-size: 16px; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">❯</button>
 
-    <!-- حاوية عرض الكروت المتسلسلة فوق بعضها ف اللاب والتليفون -->
-    <div class="services-grid" id="servicesGridContainer" style="position: relative !important; display: block !important; height: 490px !important; margin: 30px auto !important; width: 85% !important; max-width: 480px !important;">
+    <!-- حاوية العرض الذكية (تتكيف بين كارتين في اللاب وكارت في الموبايل) -->
+    <div class="services-grid" id="servicesGridContainer">
         
         <!-- كارت 1: أيمن الشحات -->
-        <div class="service-card card-1" style="position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; box-sizing: border-box !important; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s !important; z-index: 3; padding: 25px 20px;">
+        <div class="service-card card-1">
             <div class="card-image"><img src="assets/images/ayman.jpg" alt="Ayman"></div>
             <h3>Ayman Elshahat <span class="role-text">Founder & CEO</span></h3>
             <p>Full-Stack Web Developer | Dedicated to developing fast, scalable, and user-focused web applications. Experienced in front-end and back-end technologies, with a strong focus on clean architecture, responsive design, and high-performance solutions. Passionate about continuous learning and building innovative digital experiences..</p>
@@ -107,7 +107,7 @@
         </div>
 
         <!-- كارت 2: عبد الرحمن طارق -->
-        <div class="service-card card-2" style="position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; box-sizing: border-box !important; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s !important; z-index: 2; transform: scale(0.95) translateY(15px); opacity: 0.8; padding: 25px 20px;">
+        <div class="service-card card-2">
             <div class="card-image"><img src="assets/images/solidworks.jpg" alt="SolidWorks"></div>
             <h3>abdelrhman tarek</h3>
             <span class="ceo-title">CEO</span>
@@ -119,7 +119,7 @@
         </div>
 
         <!-- كارت 3: أحمد حسن -->
-        <div class="service-card card-3" style="position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; box-sizing: border-box !important; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s !important; z-index: 1; transform: scale(0.9) translateY(30px); opacity: 0.6; padding: 25px 20px;">
+        <div class="service-card card-3">
             <div class="card-image"><img src="assets/images/wow.jpg" alt="Icon"></div>
             <h3>Ahmed hassan</h3>
             <p>
@@ -136,7 +136,7 @@
 
     </div>
 
-    <!-- كود الـ CSS الإضافي للموبايل وتحسين الأبعاد والمربع الملموم -->
+    <!-- التحكم الشامل في التصميم Responsiveness بدون هبل وتكرار -->
     <style>
         #servicesGridContainer::-webkit-scrollbar { 
             display: none !important; 
@@ -149,14 +149,49 @@
             box-shadow: 0 0 15px rgba(223, 205, 164, 0.25);
         }
 
-        /* تنسيقات الخطوط والصور لضمان ثبات المظهر المربع للمحتوى الداخلي */
         .service-card p { font-size: 13px !important; line-height: 1.4 !important; }
         .service-card .card-image { width: 100px !important; height: 100px !important; margin: 0 auto 12px auto !important; }
+
+        /* 💻 وضع اللاب توب والشاشات الكبيرة (عرض مربعين جنب بعض) */
+        @media (min-width: 769px) {
+            .services-grid {
+                position: relative !important;
+                display: block !important;
+                height: 490px !important;
+                margin: 30px auto !important;
+                width: 90% !important;
+                max-width: 960px !important; /* مساحة كافية لمربعين جنب بعض ملمومين */
+            }
+            .service-card {
+                position: absolute !important;
+                top: 0;
+                width: calc(50% - 15px) !important; /* الكارت ياخد نص العرض بالظبط ناقص الـ Gap */
+                height: 100% !important;
+                box-sizing: border-box !important;
+                transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important;
+                padding: 25px 20px;
+            }
+        }
         
-        /* 📱 التظبيط الشامل للموبايل والتليفون */
+        /* 📱 وضع التليفون والموبايل (كارت واحد ملموم ومربع فوق التاني) */
         @media (max-width: 768px) {
-            .services-grid { height: 460px !important; width: 85% !important; margin: 20px auto !important; }
-            .service-card { padding: 20px 15px !important; }
+            .services-grid { 
+                position: relative !important;
+                display: block !important;
+                height: 460px !important; 
+                width: 85% !important; 
+                margin: 20px auto !important; 
+            }
+            .service-card {
+                position: absolute !important;
+                top: 0;
+                left: 0;
+                width: 100% !important;
+                height: 100% !important;
+                box-sizing: border-box !important;
+                transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important;
+                padding: 20px 15px !important;
+            }
             .service-card p { font-size: 12px !important; }
             .service-card .card-image { width: 90px !important; height: 90px !important; }
             #sliderPrevBtn { left: -10px !important; width: 36px; height: 36px; font-size: 12px; }
@@ -164,7 +199,7 @@
         }
     </style>
 
-    <!-- الجافا سكريبت الذكي للتحكم في تتابع وتركيب الكروت -->
+    <!-- الجافا سكريبت الذكي المطور لدعم الحالتين (كارتين للاب / كارت للموبايل) -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const cards = Array.from(document.querySelectorAll('#servicesGridContainer .service-card'));
@@ -172,48 +207,82 @@
             const prev = document.getElementById('sliderPrevBtn');
             let activeIndex = 0;
 
-            function updateStack() {
+            function updateResponsiveStack() {
+                const isLaptop = window.innerWidth > 768;
+
                 cards.forEach((card, index) => {
-                    // 1. الكارت الحالي المعروض في الواجهة
-                    if (index === activeIndex) {
-                        card.style.transform = "translateX(0) scale(1) translateY(0) rotate(0deg)";
-                        card.style.opacity = "1";
-                        card.style.zIndex = "3";
-                        card.style.pointerEvents = "auto";
-                    } 
-                    // 2. الكروت التالية (تترتب في الخلفية تدريجياً لتبدو متسلسلة تحت الكارت الأساسي)
-                    else if (index > activeIndex) {
-                        let offset = index - activeIndex;
-                        card.style.transform = `scale(${1 - offset * 0.05}) translateY(${offset * 15}px)`;
-                        card.style.opacity = offset === 1 ? "0.8" : "0.5";
-                        card.style.zIndex = `${3 - offset}`;
-                        card.style.pointerEvents = "none";
-                    } 
-                    // 3. الكروت السابقة التي تم تقليبها بالزرار (تطير خارج الشاشة بمرونة وسلاسة)
-                    else {
-                        card.style.transform = "translateX(-120%) scale(0.9) rotate(-8deg)";
-                        card.style.opacity = "0";
-                        card.style.zIndex = "1";
-                        card.style.pointerEvents = "none";
+                    if (isLaptop) {
+                        // الحسبة الذكية للاب توب (توزيع كارتين جنب بعض)
+                        if (index === activeIndex) {
+                            // الكارت الأول الفعّال (على اليسار)
+                            card.style.transform = "translateX(0) scale(1)";
+                            card.style.opacity = "1";
+                            card.style.zIndex = "3";
+                            card.style.pointerEvents = "auto";
+                        } else if (index === activeIndex + 1) {
+                            // الكارت الثاني الفعّال (على اليمين مباشرة مجاور له)
+                            card.style.transform = "translateX(calc(100% + 30px)) scale(1)";
+                            card.style.opacity = "1";
+                            card.style.zIndex = "3";
+                            card.style.pointerEvents = "auto";
+                        } else if (index > activeIndex + 1) {
+                            // الكروت المتسلسلة المنتظرة في الخلفية خلف الكارت الثاني
+                            let offset = index - (activeIndex + 1);
+                            card.style.transform = `translateX(calc(100% + 30px + ${offset * 15}px)) scale(${1 - offset * 0.05})`;
+                            card.style.opacity = offset === 1 ? "0.6" : "0.3";
+                            card.style.zIndex = `${3 - offset}`;
+                            card.style.pointerEvents = "none";
+                        } else {
+                            // الكروت السابقة المخفية (تطير لليسار)
+                            card.style.transform = "translateX(-120%) scale(0.9)";
+                            card.style.opacity = "0";
+                            card.style.zIndex = "1";
+                            card.style.pointerEvents = "none";
+                        }
+                    } else {
+                        // الحسبة الأصلية للموبايل (كارت واحد ملموم في النص والـ Stack تحته)
+                        if (index === activeIndex) {
+                            card.style.transform = "translateX(0) scale(1) translateY(0)";
+                            card.style.opacity = "1";
+                            card.style.zIndex = "3";
+                            card.style.pointerEvents = "auto";
+                        } else if (index > activeIndex) {
+                            let offset = index - activeIndex;
+                            card.style.transform = `scale(${1 - offset * 0.05}) translateY(${offset * 15}px)`;
+                            card.style.opacity = offset === 1 ? "0.8" : "0.5";
+                            card.style.zIndex = `${3 - offset}`;
+                            card.style.pointerEvents = "none";
+                        } else {
+                            card.style.transform = "translateX(-120%) scale(0.9) rotate(-5deg)";
+                            card.style.opacity = "0";
+                            card.style.zIndex = "1";
+                            card.style.pointerEvents = "none";
+                        }
                     }
                 });
             }
 
             if (next && prev) {
                 next.addEventListener('click', () => {
-                    if (activeIndex < cards.length - 1) { 
+                    const isLaptop = window.innerWidth > 768;
+                    // في اللاب نتحرك خطوة بحيث يفضل كارت ظاهر، أو خطوتين حسب الرغبة. هنا خطوة لمرونة التصفح
+                    const maxIndex = isLaptop ? cards.length - 2 : cards.length - 1;
+                    if (activeIndex < maxIndex) { 
                         activeIndex++; 
-                        updateStack(); 
+                        updateResponsiveStack(); 
                     }
                 });
                 prev.addEventListener('click', () => {
                     if (activeIndex > 0) { 
                         activeIndex--; 
-                        updateStack(); 
+                        updateResponsiveStack(); 
                     }
                 });
             }
-            updateStack(); // تشغيل الحالة المبدئية للكروت فور تحميل الصفحة
+
+            // تحديث الشكل فوراً عند تحميل الصفحة أو تغيير حجم الشاشة
+            updateResponsiveStack();
+            window.addEventListener('resize', updateResponsiveStack);
         });
     </script>
 </section>
