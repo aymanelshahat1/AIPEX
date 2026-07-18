@@ -320,13 +320,13 @@
     <h2 class="section-title" style="text-align: center;">OUR COURSES</h2>
     
     <div id="coursesGridContainer" style="width: 100%; position: relative;">
-        <!-- الأزرار الأصلية المحمية -->
+        <!-- الأزرار الأصلية المحمية بنفس الأسامي -->
         <button id="sliderPrevBtn" class="course-slider-btn">❮</button>
         <button id="sliderNextBtn" class="course-slider-btn">❯</button>
 
         <div class="courses-grid" id="coursesGrid">
             
-            <!-- كارت 1 -->
+            <!-- كارت 1: بايثون -->
             <div class="course-card card-1">
                 <div class="card-top">
                     <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
@@ -337,7 +337,7 @@
                 </div>
             </div>
 
-            <!-- كارت 2 -->
+            <!-- كارت 2: سوليدوركس -->
             <div class="course-card card-2">
                 <div class="card-top">
                     <img src="assets/images/nnn.png" alt="SolidWorks" class="course-image">
@@ -348,7 +348,7 @@
                 </div>
             </div>
 
-            <!-- كارت 3 -->
+            <!-- كارت 3: أوتوكاد -->
             <div class="course-card card-3">
                 <div class="card-top">
                     <img src="assets/images/aaa.jpg" alt="AutoCAD" class="course-image">
@@ -362,7 +362,9 @@
         </div>
     </div>
 
+    <!-- ==================== الـ CSS المطور بالكامل ==================== -->
     <style>
+        /* ستايل أزرار السلايدر */
         .course-slider-btn {
             position: absolute;
             top: 50%;
@@ -401,6 +403,7 @@
             box-sizing: border-box;
         }
 
+        /* الجزء العلوي الأسود بالكامل لفصل اللوجو */
         .card-top {
             background: #000000 !important;
             width: 100%;
@@ -419,6 +422,7 @@
             object-fit: contain !important;
         }
 
+        /* الجزء السفلي */
         .card-bottom {
             height: 38%;
             width: 100%;
@@ -430,7 +434,7 @@
             box-sizing: border-box;
         }
 
-        /* المربع الأصفر مع الخواص السحرية لمنع كسر السطر */
+        /* المربع الأصفر - معدل بدون نقط (No Ellipsis) */
         .code-text {
             border: 1px solid #dfcda4;
             color: #dfcda4;
@@ -441,21 +445,21 @@
             width: 100%;
             box-sizing: border-box;
             margin: 0 0 15px 0 !important;
-            white-space: nowrap !important; /* قفل السطر الواحد */
-            overflow: hidden;
-            text-overflow: ellipsis; 
+            white-space: nowrap !important; /* قفل النص على سطر واحد */
+            overflow: visible !important;   /* إخفاء النقط تماماً */
+            text-overflow: clip !important; /* قطع نضيف بدون علامات */
         }
 
         .btn-gold-outline { width: 100% !important; }
 
-        /* 💻 اللاب توب */
+        /* 💻 وضع اللاب توب المستقر */
         @media (min-width: 769px) {
             .courses-grid { height: 460px !important; width: 90% !important; max-width: 960px !important; }
             .course-card { position: absolute !important; top: 0; width: calc(50% - 15px) !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; }
             .code-text { font-size: 14px !important; }
         }
 
-        /* 📱 الموبايل (تصغير ذكي متناسق) */
+        /* 📱 وضع التليفون - ريسبونسيف بالشعرة وبخط مرن */
         @media (max-width: 768px) {
             .courses-grid { height: 360px !important; width: 78% !important; } 
             .course-card { 
@@ -467,8 +471,8 @@
             .card-top { padding: 12px; }
             .card-bottom { padding: 10px 12px; }
             
-            /* هنا الخط بيصغر أوتوماتيك مع حجم الشاشة ويفضل سطر واحد */
-            .code-text { font-size: 3.1vw !important; padding: 6px 6px !important; margin-bottom: 12px !important; }
+            /* الخط بيصغر بالنسبة للشاشة (2.8vw) فبيفضل سطر واحد كامل جوة المربع */
+            .code-text { font-size: 2.8vw !important; padding: 6px 4px !important; margin-bottom: 12px !important; }
             .btn-gold-outline { padding: 8px 0 !important; font-size: 11px !important; border-radius: 20px !important; }
 
             #coursesGridContainer #sliderPrevBtn { left: -8px !important; width: 34px; height: 34px; font-size: 11px; }
@@ -476,6 +480,7 @@
         }
     </style>
 
+    <!-- ==================== الـ JavaScript للانتقال الرايق للـ Stack ==================== -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const courseCards = Array.from(document.querySelectorAll('#coursesGrid .course-card'));
