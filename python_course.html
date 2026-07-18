@@ -212,7 +212,7 @@
 <main>
     <div class="course-content-container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; font-family: 'Montserrat', sans-serif;">
         
-        <!-- 1️⃣ لوحة الأدمن (منفصلة تماماً ومخفية/مظهرة حسب صلاحياتك) -->
+        <!-- 1️⃣ لوحة الأدمن (مستقلة تماماً) -->
         <div id="adminPanel" style="display: block; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
             <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                 Admin Control Panel
@@ -233,7 +233,7 @@
             <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none; color: #dfcda4; font-family: monospace;"></p>
         </div>
 
-        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل -->
+        <!-- 2️⃣ لوحة الحجب للمسجلين -->
         <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
             <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
                 🔒 CONTENT LOCKED
@@ -248,16 +248,14 @@
             </div>
         </div>
 
-        <!-- 3️⃣ شبكة الفيديوهات العامة المحدثة بالـ ID الجديد لتخطي كود الحجب القديم -->
+        <!-- 3️⃣ شبكة الفيديوهات العامة (تم حذف النص الملخبط منها تماماً) -->
         <div id="publicVideosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
-            <p id="noVideosMessage" class="responsive-message" style="color: #dfcda4; text-align: center; grid-column: 1 / -1; font-size: 14px; font-family: 'Montserrat', sans-serif; margin-top: 40px; background: #000; border: 1px solid #dfcda4; border-radius: 8px; padding: 12px 20px; display: inline-block; box-sizing: border-box; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; max-width: 100%;">
-                &lt;Lectures are currently being prepared. Check back soon!/&gt;
-            </p>
+            <!-- الفيديوهات هتنزل هنا علطول وبشكل مباشر -->
         </div>
     </div>
 </main>
 
-<!-- ==================== الـ CSS المطور للريسبونسيف والتفاعل المباشر ==================== -->
+<!-- ==================== الـ CSS المطور بالكامل للريسبونسيف والتفاعل ==================== -->
 <style>
     .video-card {
         background: #0b0b0b;
@@ -298,16 +296,14 @@
         .locked-text { font-size: 11.5px !important; margin: 12px 0 20px 0 !important; padding: 0 5px !important; }
         .responsive-btn { padding: 10px 20px !important; font-size: 12px !important; letter-spacing: 0.5px !important; width: auto !important; }
         .admin-responsive-form { display: flex !important; flex-direction: column !important; gap: 12px !important; }
-        .responsive-message { font-size: 11px !important; padding: 10px 12px !important; }
     }
 </style>
 
-<!-- ==================== الـ JavaScript المطور والمستقل تماماً ==================== -->
+<!-- ==================== الـ JavaScript السريع والمباشر بدون كود النص المحذوف ==================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const addVideoForm = document.getElementById('addVideoForm');
-    const videosGrid = document.getElementById('publicVideosGrid'); // 🔥 تم التحديث للـ ID الجديد
-    const noVideosMessage = document.getElementById('noVideosMessage');
+    const videosGrid = document.getElementById('publicVideosGrid');
     const adminStatus = document.getElementById('adminStatus');
 
     function getYoutubeId(url) {
@@ -319,15 +315,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderVideos() {
         const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
         
-        // مسح الكروت القديمة فقط
-        const oldCards = videosGrid.querySelectorAll('.video-card');
-        oldCards.forEach(card => card.remove());
+        // مسح المحتوى بالكامل لإعادة البناء النظيف
+        videosGrid.innerHTML = '';
 
         if (savedVideos.length === 0) {
-            if (noVideosMessage) noVideosMessage.style.setProperty('display', 'inline-block', 'important');
-            videosGrid.style.setProperty('display', 'block', 'important'); 
+            // لو مفيش فيديوهات خالص بتفضل مخفية
+            videosGrid.style.setProperty('display', 'none', 'important'); 
         } else {
-            if (noVideosMessage) noVideosMessage.style.setProperty('display', 'none', 'important');
+            // أول ما ينزل فيديو بيتم فرض نمط الجريد فوراً وإظهاره للكل
             videosGrid.style.setProperty('display', 'grid', 'important'); 
 
             savedVideos.forEach(video => {
@@ -385,9 +380,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // تشغيل الدالة فور تحميل الصفحة للجميع لتخطي القيود
+    // تشغيل مباشر فور فتح الصفحة
     renderVideos();
 });
+
 </script>
     <footer class="site-footer">
         © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
