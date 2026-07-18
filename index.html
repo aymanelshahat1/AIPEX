@@ -137,11 +137,14 @@
     </div>
 
     <!-- كود الـ CSS الإضافي للموبايل وتحسين شكل الأزرار -->
+    <!-- 👇 استبدل الـ <style> والـ <script> القدام بالنسخة المظبوطة دي: -->
     <style>
         /* إخفاء شريط التمرير الافتراضي */
-        #servicesGridContainer::-webkit-scrollbar { display: none; }
+        #servicesGridContainer::-webkit-scrollbar { 
+            display: none; 
+        }
         
-        /* تأثير الإضاءة عند تحويم الماوس فوق الأسهم الجذابة */
+        /* تأثير الإضاءة الفخم عند تحويم الماوس فوق الأسهم */
         #sliderPrevBtn:hover, #sliderNextBtn:hover {
             background: rgba(223, 205, 164, 0.15) !important;
             border-color: rgba(223, 205, 164, 0.4) !important;
@@ -149,16 +152,30 @@
             box-shadow: 0 0 15px rgba(223, 205, 164, 0.25);
         }
 
-        /* 📱 تحويل العرض ليكون كارت واحد يملأ الشاشة بالكامل في التليفون والموبايل */
+        /* 📱 تظبيط الموبايل والتليفون 100% بدون أي أجزاء متأكلة */
         @media (max-width: 768px) {
-            #servicesGridContainer { gap: 15px !important; }
-            .service-card { flex: 0 0 100% !important; }
-            #sliderPrevBtn { left: 0px !important; width: 38px; height: 38px; }
-            #sliderNextBtn { right: 0px !important; width: 38px; height: 38px; }
+            #servicesGridContainer { 
+                display: flex !important;
+                grid-template-columns: none !important; /* إلغاء الجريد القديم تماماً */
+                gap: 20px !important; 
+                padding: 10px 0 !important;
+            }
+            
+            /* إجبار الكارت يملأ الشاشة بالملي بدون زيادة أو نقصان */
+            #servicesGridContainer .service-card { 
+                flex: 0 0 100% !important; 
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+            }
+            
+            /* تظبيط مقاس الأسهم في الموبايل */
+            #sliderPrevBtn { left: 5px !important; width: 38px; height: 38px; }
+            #sliderNextBtn { right: 5px !important; width: 38px; height: 38px; }
         }
     </style>
 
-    <!-- كود جافا سكريبت بسيط جداً ومباشر للتحريك من خلال الأزرار -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const grid = document.getElementById('servicesGridContainer');
@@ -167,18 +184,20 @@
 
             if (next && prev && grid) {
                 next.addEventListener('click', () => {
-                    const cardWidth = grid.querySelector('.service-card').offsetWidth + 30;
+                    // حساب عرض الكارت الفعلي حالياً + الـ Gap عشان النقلة تيجي مظبوطة بالملي
+                    const cardWidth = grid.querySelector('.service-card').offsetWidth + 20;
                     grid.scrollLeft += cardWidth;
                 });
 
                 prev.addEventListener('click', () => {
-                    const cardWidth = grid.querySelector('.service-card').offsetWidth + 30;
+                    const cardWidth = grid.querySelector('.service-card').offsetWidth + 20;
                     grid.scrollLeft -= cardWidth;
                 });
             }
         });
     </script>
-</section><section id="courses" class="courses-section">
+</section>
+<section id="courses" class="courses-section">
     <h2 class="section-title">OUR COURSES</h2>
    <div class="courses-grid">
         
