@@ -212,7 +212,7 @@
 <main>
     <div class="course-content-container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; font-family: 'Montserrat', sans-serif;">
         
-        <!-- 1️⃣ لوحة الأدمن (مخفية تلقائياً - تظهر بربطها مع نظام الـ Auth عندك) -->
+        <!-- 1️⃣ لوحة الأدمن (منفصلة تماماً ومخفية/مظهرة حسب صلاحياتك) -->
         <div id="adminPanel" style="display: block; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
             <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                 Admin Control Panel
@@ -233,7 +233,7 @@
             <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none; color: #dfcda4; font-family: monospace;"></p>
         </div>
 
-        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل -->
+        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل (تتحكم فيها بالـ Auth) -->
         <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
             <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
                 🔒 CONTENT LOCKED
@@ -242,14 +242,14 @@
                 Please sign in to unlock and access the lectures for this course.
             </p>
             <div style="display: flex; justify-content: center; width: 100%;">
-                <button onclick="window.openLoginModal ? window.openLoginModal() : alert('Login Modal Function')" class="btn-gold-outline responsive-btn" style="background: transparent; border: 1px solid #dfcda4; color: #dfcda4; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px 30px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; max-width: 100%; box-sizing: border-box;">
+                <button onclick="window.openLoginModal ? window.openLoginModal() : alert('Login Modal')" class="btn-gold-outline responsive-btn" style="background: transparent; border: 1px solid #dfcda4; color: #dfcda4; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px 30px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; max-width: 100%; box-sizing: border-box;">
                     SIGN IN / REGISTER
                 </button>
             </div>
         </div>
 
-        <!-- 3️⃣ شبكة الفيديوهات (الـ display بيتحول تلقائي لـ grid لما ينزل فيديو) -->
-        <div id="videosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+        <!-- 3️⃣ شبكة الفيديوهات العامة (مستقلة تماماً عشان تظهر للكل) -->
+        <div id="videosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
             <p id="noVideosMessage" class="responsive-message" style="color: #dfcda4; text-align: center; grid-column: 1 / -1; font-size: 14px; font-family: 'Montserrat', sans-serif; margin-top: 40px; background: #000; border: 1px solid #dfcda4; border-radius: 8px; padding: 12px 20px; display: inline-block; box-sizing: border-box; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; max-width: 100%;">
                 &lt;Lectures are currently being prepared. Check back soon!/&gt;
             </p>
@@ -257,9 +257,8 @@
     </div>
 </main>
 
-<!-- ==================== الـ CSS المطور لضبط الريسبونسيف بالشعرة ==================== -->
+<!-- ==================== الـ CSS المطور للريسبونسيف والتفاعل ==================== -->
 <style>
-    /* ستايل كارت الفيديو الجديد اللي هيتولد بالـ JavaScript */
     .video-card {
         background: #0b0b0b;
         border: 1px solid rgba(223, 205, 164, 0.15);
@@ -268,58 +267,42 @@
         display: flex;
         flex-direction: column;
         box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        pointer-events: auto !important; /* لضمان استقبال النقر */
     }
     .video-wrapper {
         position: relative;
-        padding-bottom: 56.25%; /* نسبة 16:9 شاشات الفيديو */
+        padding-bottom: 56.25%;
         height: 0;
+        width: 100%;
+        pointer-events: auto !important; 
     }
     .video-wrapper iframe {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
         border: none;
+        z-index: 10;
+        pointer-events: auto !important; /* فك قفل كليك اليوتيوب */
     }
     .video-info {
         padding: 15px;
+        z-index: 5;
     }
     .video-info h4 {
         margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.4;
     }
 
-    /* الشاشات الصغيرة والتليفونات (Media Query) */
+    /* شاشات الموبايل بالشعرة */
     @media (max-width: 600px) {
-        .responsive-locked-card {
-            width: 100% !important;
-            padding: 30px 15px !important;
-        }
-        .locked-title {
-            font-size: 4.5vw !important; /* حجم مرن يعتمد على عرض الشاشة من غير ما ينزل سطر */
-            letter-spacing: 0.5px !important;
-        }
-        .locked-text {
-            font-size: 11.5px !important;
-            margin: 12px 0 20px 0 !important;
-            padding: 0 5px !important;
-        }
-        .responsive-btn {
-            padding: 10px 20px !important;
-            font-size: 12px !important;
-            letter-spacing: 0.5px !important;
-            width: auto !important;
-        }
-        .admin-responsive-form {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 12px !important;
-        }
-        .responsive-message {
-            font-size: 11px !important;
-            padding: 10px 12px !important;
-        }
+        .responsive-locked-card { width: 100% !important; padding: 30px 15px !important; }
+        .locked-title { font-size: 4.5vw !important; letter-spacing: 0.5px !important; }
+        .locked-text { font-size: 11.5px !important; margin: 12px 0 20px 0 !important; padding: 0 5px !important; }
+        .responsive-btn { padding: 10px 20px !important; font-size: 12px !important; letter-spacing: 0.5px !important; width: auto !important; }
+        .admin-responsive-form { display: flex !important; flex-direction: column !important; gap: 12px !important; }
+        .responsive-message { font-size: 11px !important; padding: 10px 12px !important; }
     }
 </style>
 
-<!-- ==================== الـ JavaScript المطور والمضمون لحل مشكلة عدم الظهور ==================== -->
+<!-- ==================== الـ JavaScript المطور والمستقل للتشغيل التلقائي للكل ==================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const addVideoForm = document.getElementById('addVideoForm');
@@ -327,19 +310,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const noVideosMessage = document.getElementById('noVideosMessage');
     const adminStatus = document.getElementById('adminStatus');
 
-    // دالة لاستخراج الـ ID بتاع فيديو اليوتيوب
     function getYoutubeId(url) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // دالة بناء ورسم الفيديوهات على الشاشة
-   // دالة بناء ورسم الفيديوهات المحدثة لتبلغ الاستجابة للنقر
     function renderVideos() {
         const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
         
-        // تنظيف الكروت القديمة
+        // إزالة الكروت القديمة فقط دون المساس بالرسالة الأساسية
         const oldCards = videosGrid.querySelectorAll('.video-card');
         oldCards.forEach(card => card.remove());
 
@@ -350,20 +330,16 @@ document.addEventListener("DOMContentLoaded", function () {
             if (noVideosMessage) noVideosMessage.style.setProperty('display', 'none', 'important');
             videosGrid.style.setProperty('display', 'grid', 'important'); 
 
-            // توليد الكروت الجديدة مع السماح بالنقر والتشغيل المباشر
             savedVideos.forEach(video => {
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
-                // 🔥 ضفنا pointer-events: auto هنا عشان نضمن إن الكارت بيستقبل الضغط
-                videoCard.style.cssText = "pointer-events: auto !important; cursor: pointer;"; 
                 
                 videoCard.innerHTML = `
-                    <div class="video-wrapper" style="pointer-events: auto !important;">
+                    <div class="video-wrapper">
                         <iframe 
-                            src="https://www.youtube.com/embed/${video.embedId}?rel=0&showinfo=0&autoplay=0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen
-                            style="pointer-events: auto !important; z-index: 50;">
+                            src="https://www.youtube.com/embed/${video.embedId}?rel=0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
                         </iframe>
                     </div>
                     <div class="video-info">
@@ -374,10 +350,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
-    // الاستماع لحدث الضغط على زرار الإضافة
+
     if (addVideoForm) {
         addVideoForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // منع الريفرش
+            e.preventDefault();
 
             const titleInput = document.getElementById('videoTitle');
             const urlInput = document.getElementById('videoUrl');
@@ -389,16 +365,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!embedId) {
                 adminStatus.style.display = 'block';
                 adminStatus.style.color = '#ff6b6b';
-                adminStatus.innerText = "<Invalid YouTube URL! Check the link./>";
+                adminStatus.innerText = "<Invalid YouTube URL!/>";
                 return;
             }
 
-            // الحفظ في الـ LocalStorage
             const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
             savedVideos.push({ title, embedId });
             localStorage.setItem('course_videos', JSON.stringify(savedVideos));
 
-            // تصفير الخانات وإشعارات النجاح
             titleInput.value = '';
             urlInput.value = '';
             adminStatus.style.display = 'block';
@@ -407,16 +381,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
 
-            // 🔥 تحديث الشاشة فوراً
             renderVideos();
         });
     }
 
-    // تشغيل الدالة فور تحميل الصفحة
+    // 🔥 تشغيل الدالة فوراً للكل (أدمن أو طالب) بمجرد فتح الصفحة
     renderVideos();
 });
 </script>
-
     <footer class="site-footer">
         © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
     </footer>
