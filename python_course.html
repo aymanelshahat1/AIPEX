@@ -584,6 +584,83 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = 'index.html?showLogin=true';
         }
     }
+    document.addEventListener("DOMContentLoaded", function () {
+    let videosGrid = document.getElementById('publicVideosGrid');
+    const adminPanel = document.getElementById('adminPanel');
+
+    // دالة مسح الفيديو سحابياً
+    window.deleteVideo = function(videoId) {
+        if (confirm("هل أنت متأكد من حذف هذا الفيديو نهائياً؟")) {
+            db.collection('videos').doc(videoId).delete()
+                .then(() => {
+                    console.log("Video successfully deleted from Cloud!");
+                })
+                .catch((error) => {
+                    console.error("Error removing video: ", error);
+                });
+        }
+    };
+
+    function initializeVideoListener() {
+        // إعادة محاولة جلب العنصر لو كان فيه تأخير في الـ DOM
+        if (!videosGrid) {
+            videosGrid = document.getElementById('publicVideosGrid');
+        }
+
+        if (!videosGrid) {
+            console.warn("Retrying... publicVideosGrid not found yet.");
+            return;
+        }
+
+        if (typeof db !== 'undefined') {
+            db.collection('videos').orderBy('createdAt', 'asc').onSnapshot((snapshot) => {
+                videosGrid.innerHTML = ''; 
+
+                if (snapshot.empty) {
+                    videosGrid.style.setProperty('display', 'none', 'important');
+                    return;
+                }
+
+                videosGrid.style.setProperty('display', 'grid', 'important');
+
+                snapshot.forEach((doc) => {
+                    const video = doc.data();
+                    const videoId = doc.id;
+                    
+                    const videoCard = document.createElement('div');
+                    videoCard.className = 'video-card';
+                    
+                    // زرار الحذف بيظهر فقط لو لوحة الأدمن (adminPanel) موجودة في الصفحة
+                    const deleteBtnHtml = adminPanel ? 
+                        `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: bold; transition: 0.3s; width: 100%;">DELETE VIDEO</button>` 
+                        : '';
+
+                    videoCard.innerHTML = `
+                        <div class="video-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/${video.embedId}?rel=0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="video-info">
+                            <h4 style="margin: 0; color: #fff; font-size: 14px;">${video.title}</h4>
+                            ${deleteBtnHtml}
+                        </div>
+                    `;
+                    videosGrid.appendChild(videoCard);
+                });
+            }, (error) => {
+                console.error("Firebase Snapshot Error: ", error);
+            });
+        }
+    }
+
+    // تشغيل فوري مع محاولة احتياطية بعد ثانية لو المتصفح علق
+    initializeVideoListener();
+    setTimeout(initializeVideoListener, 1000);
+});
 </script>
+
 </body>
 </html>
