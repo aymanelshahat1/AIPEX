@@ -316,7 +316,6 @@
         });
 </script>
 </section>
-
 <section id="courses" class="courses-section" style="position: relative; overflow: hidden; padding: 40px 0;">
     <h2 class="section-title" style="text-align: center;">OUR COURSES</h2>
     
@@ -327,7 +326,7 @@
         <button id="sliderPrevBtn" class="course-slider-btn">❮</button>
         <button id="sliderNextBtn" class="course-slider-btn">❯</button>
 
-        <!-- الكورسات بتاعتك بنفس الكلاسات القديمة والـ Structure الصح من صورتك -->
+        <!-- الكورسات بتاعتك بنفس الكلاسات القديمة والـ Structure الصح -->
         <div class="courses-grid" id="coursesGrid">
             
             <!-- كارت 1: بايثون -->
@@ -360,7 +359,7 @@
         </div>
     </div>
 
-    <!-- ==================== الـ CSS المطور لتصغير الكارت بالكامل ككتلة واحدة ==================== -->
+    <!-- ==================== الـ CSS المطور لضبط الحجم وحماية التصميم من الانهيار ==================== -->
     <style>
         /* ستايل أزرار السلايدر المحمية */
         .course-slider-btn {
@@ -389,19 +388,19 @@
         #coursesGridContainer #sliderPrevBtn { left: 5%; }
         #coursesGridContainer #sliderNextBtn { right: 5%; }
 
-        /* ستايل الكروت الأصلي بناءً على الصورة بالملي */
+        /* تنسيق الكروت المرن عشان يلم كل العناصر جواه */
         .courses-grid { position: relative; display: block; margin: 0 auto; }
         
         .course-card {
             background: #111111;
             border: 1px solid rgba(223, 205, 164, 0.15);
             border-radius: 24px;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
             box-sizing: border-box;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
         .card-top {
@@ -409,18 +408,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            flex: 1;
         }
 
-        /* جعل الصورة مفرودة بالكامل زي التصميم الأصلي */
+        /* حماية اللوجو: يظهر كامل ومياكلش مساحة الكارت */
         .course-image {
-            width: 100% !important;
-            height: auto !important;
+            max-width: 85% !important;
+            height: 160px !important; /* الارتفاع المثالي في اللاب توب ليظهر بالكامل */
             object-fit: contain !important;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        /* ضبط المربع الأصفر المحيط بالنص الداخلي */
+        /* المربع الأصفر الأصلي */
         .code-text {
             border: 1px solid #dfcda4;
             color: #dfcda4;
@@ -428,20 +428,23 @@
             border-radius: 6px;
             font-family: monospace;
             text-align: center;
-            width: 90%;
+            width: 100%;
             box-sizing: border-box;
+            margin-bottom: 25px;
         }
 
-        /* 💻 وضع اللاب توب الكود القديم السليم */
+        .btn-gold-outline {
+            width: 100% !important;
+        }
+
+        /* 💻 وضع اللاب توب الأصلي المتناسق */
         @media (min-width: 769px) {
-            .courses-grid { height: 480px !important; width: 90% !important; max-width: 960px !important; }
+            .courses-grid { height: 490px !important; width: 90% !important; max-width: 960px !important; }
             .course-card { position: absolute !important; top: 0; width: calc(50% - 15px) !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; }
-            .code-text { font-size: 14px; }
         }
 
-        /* 📱 وضع التليفون - تصغير ريسبونسيف متناسق بالكامل (Scale-Down) */
+        /* 📱 وضع التليفون - تصغير ريسبونسيف ذكي (كل الكتلة بتصغر بنسبة وتناسب) */
         @media (max-width: 768px) {
-            /* صغرنا المربع الكبير كلو كنسبة وتناسب عشان يظبط ف التليفون */
             .courses-grid { height: 390px !important; width: 78% !important; } 
             .course-card { 
                 position: absolute !important; 
@@ -451,12 +454,12 @@
                 height: 100% !important; 
                 transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; 
                 border-radius: 20px;
-                padding: 15px; /* صغرنا الحواف الداخلية */
+                padding: 20px 15px; 
             }
             
-            /* تصغير المربع النصي والصورة والزرار معاً بنفس النسبة */
-            .course-image { margin-bottom: 10px; }
-            .code-text { font-size: 11px !important; padding: 6px 8px !important; width: 95%; margin: 5px 0 !important; }
+            /* تصغير اللوجو والمربع والزرار مع بعض عشان يحافظوا على نفس الشكل */
+            .course-image { height: 110px !important; margin-bottom: 15px; }
+            .code-text { font-size: 11.5px !important; padding: 6px 8px !important; margin-bottom: 15px; }
             .btn-gold-outline { padding: 8px 0 !important; font-size: 11px !important; border-radius: 20px !important; }
 
             #coursesGridContainer #sliderPrevBtn { left: -8px !important; width: 34px; height: 34px; font-size: 11px; }
@@ -464,7 +467,7 @@
         }
     </style>
 
-    <!-- ==================== الـ JavaScript لعمل حركة الـ Stack والـ الانتقال الرايق ==================== -->
+    <!-- ==================== الـ JavaScript لعمل حركة الـ Stack والانتقال ==================== -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const courseCards = Array.from(document.querySelectorAll('#coursesGrid .course-card'));
@@ -500,7 +503,6 @@
                             card.style.pointerEvents = "none";
                         }
                     } else {
-                        // نظام السلايدر الرايق للموبايل (الانتقال المتراكب)
                         if (index === courseActiveIndex) {
                             card.style.transform = "translateX(0) scale(1) translateY(0)";
                             card.style.opacity = "1";
