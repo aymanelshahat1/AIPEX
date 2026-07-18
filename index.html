@@ -165,7 +165,20 @@
         }
 
         .service-card p { font-size: 13px !important; line-height: 1.4 !important; }
-        .service-card .card-image { width: 100px !important; height: 100px !important; margin: 0 auto 12px auto !important; }
+        
+        /* 🛠️ تعديل حماية وحجم الصور داخل الكروت لمنع انضغاطها نهائياً */
+        .service-card .card-image { 
+            width: 100px !important; 
+            height: 100px !important; 
+            margin: 0 auto 12px auto !important; 
+            border-radius: 50% !important;
+            overflow: hidden !important;
+        }
+        .service-card .card-image img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important; /* يحافظ على أبعاد الصورة دائرية */
+        }
 
         /* 💻 وضع اللاب توب والشاشات الكبيرة (عرض مربعين جنب بعض) */
         @media (min-width: 769px) {
@@ -188,12 +201,12 @@
             }
         }
         
-        /* 📱 وضع التليفون والموبايل (كارت واحد ملموم ومربع فوق التاني) */
+        /* 📱 وضع التليفون والموبايل (منع المط والمحافظة على المربع المتناسق) */
         @media (max-width: 768px) {
             .services-grid { 
                 position: relative !important;
                 display: block !important;
-                height: 460px !important; 
+                height: 400px !important; /* 🛠️ قللنا الارتفاع الإجمالي هنا عشان نلم طول الكارت */
                 width: 85% !important; 
                 margin: 20px auto !important; 
             }
@@ -206,16 +219,24 @@
                 box-sizing: border-box !important;
                 transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important;
                 padding: 20px 15px !important;
+                /* 🛠️ توزيع المحتوى عمودياً بانتظام لمنع ملامسة الحواف */
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
             }
-            .service-card p { font-size: 12px !important; }
+            .service-card p { 
+                font-size: 11.5px !important; /* تصغير خط الفقرة سنة صغيرة ليناسب المربع الملموم */
+                margin-bottom: 5px !important;
+            }
+            .service-card h3 { font-size: 16px !important; margin: 5px 0 !important; }
             .service-card .card-image { width: 90px !important; height: 90px !important; }
             #sliderPrevBtn { left: -10px !important; width: 36px; height: 36px; font-size: 12px; }
             #sliderNextBtn { right: -10px !important; width: 36px; height: 36px; font-size: 12px; }
         }
-    </style>
+</style>
 
-    <!-- الجافا سكريبت الذكي المطور لدعم الحالتين (كارتين للاب / كارت للموبايل) -->
-    <script>
+<!-- الجافا سكريبت الذكي المطور لدعم الحالتين (كارتين للاب / كارت للموبايل) بدون أي تغيير في منطقه -->
+<script>
         document.addEventListener("DOMContentLoaded", function () {
             const cards = Array.from(document.querySelectorAll('#servicesGridContainer .service-card'));
             const next = document.getElementById('sliderNextBtn');
@@ -229,26 +250,22 @@
                     if (isLaptop) {
                         // الحسبة الذكية للاب توب (توزيع كارتين جنب بعض)
                         if (index === activeIndex) {
-                            // الكارت الأول الفعّال (على اليسار)
                             card.style.transform = "translateX(0) scale(1)";
                             card.style.opacity = "1";
                             card.style.zIndex = "3";
                             card.style.pointerEvents = "auto";
                         } else if (index === activeIndex + 1) {
-                            // الكارت الثاني الفعّال (على اليمين مباشرة مجاور له)
                             card.style.transform = "translateX(calc(100% + 30px)) scale(1)";
                             card.style.opacity = "1";
                             card.style.zIndex = "3";
                             card.style.pointerEvents = "auto";
                         } else if (index > activeIndex + 1) {
-                            // الكروت المتسلسلة المنتظرة في الخلفية خلف الكارت الثاني
                             let offset = index - (activeIndex + 1);
                             card.style.transform = `translateX(calc(100% + 30px + ${offset * 15}px)) scale(${1 - offset * 0.05})`;
                             card.style.opacity = offset === 1 ? "0.6" : "0.3";
                             card.style.zIndex = `${3 - offset}`;
                             card.style.pointerEvents = "none";
                         } else {
-                            // الكروت السابقة المخفية (تطير لليسار)
                             card.style.transform = "translateX(-120%) scale(0.9)";
                             card.style.opacity = "0";
                             card.style.zIndex = "1";
@@ -280,7 +297,6 @@
             if (next && prev) {
                 next.addEventListener('click', () => {
                     const isLaptop = window.innerWidth > 768;
-                    // في اللاب نتحرك خطوة بحيث يفضل كارت ظاهر، أو خطوتين حسب الرغبة. هنا خطوة لمرونة التصفح
                     const maxIndex = isLaptop ? cards.length - 2 : cards.length - 1;
                     if (activeIndex < maxIndex) { 
                         activeIndex++; 
@@ -295,11 +311,10 @@
                 });
             }
 
-            // تحديث الشكل فوراً عند تحميل الصفحة أو تغيير حجم الشاشة
             updateResponsiveStack();
             window.addEventListener('resize', updateResponsiveStack);
         });
-    </script>
+</script>
 </section>
 <section id="courses" class="courses-section">
     <h2 class="section-title">OUR COURSES</h2>
