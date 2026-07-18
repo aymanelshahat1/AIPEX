@@ -83,73 +83,102 @@
 
 </div>
 </div>
-</section>
-<section id="services" class="services-section">
-    <h2 class="team-leaders-title" style="font-family: 'Montserrat', sans-serif !important; font-weight: 900 !important; font-size: clamp(24px, 4.5vw, 48px) !important; text-transform: uppercase !important; color: #ffffff !important; letter-spacing: 2px !important; text-align: center !important; white-space: nowrap !important; text-shadow: 0 0 10px rgba(223, 205, 164, 0.3), 0 0 20px rgba(223, 205, 164, 0.1) !important;">Team Leaders</h2>
-    <div class="services-grid">
-        <div class="service-card card-1">
-            <div class="card-image"><img src="assets/images/ayman.jpg" alt="Ayman"></div>
-            <h3>Ayman Elshahat 
-    <span class="role-text">Founder & CEO</span></h3>
-            <p>Full-Stack Web Developer | Dedicated to developing fast, scalable, and user-focused web applications. Experienced in front-end and back-end technologies, with a strong focus on clean architecture, responsive design, and high-performance solutions. Passionate about continuous learning and building innovative digital experiences..</p>
-    <div class="social-links">
-    <a href="https://wa.me/201114030295" target="_blank" class="social-icon whatsapp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+<section id="services" class="services-section" style="position: relative; max-width: 1240px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
     
-    <a href="https://www.facebook.com/aymanelshahat350" target="_blank" class="social-icon facebook">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-   
-</div>
+    <!-- العنوان الأصلي بتاعك -->
+    <h2 class="team-leaders-title" style="font-family: 'Montserrat', sans-serif !important; font-weight: 900 !important; font-size: clamp(24px, 4.5vw, 48px) !important; text-transform: uppercase !important; color: #ffffff !important; letter-spacing: 2px !important; text-align: center !important; white-space: nowrap !important; text-shadow: 0 0 10px rgba(223, 205, 164, 0.3), 0 0 20px rgba(223, 205, 164, 0.1) !important;">Team Leaders</h2>
+    
+    <!-- الأسهم الزجاجية المضيئة باللون الذهبي -->
+    <button id="sliderPrevBtn" style="position: absolute; left: -15px; top: 55%; transform: translateY(-50%); width: 45px; height: 45px; border-radius: 50%; background: rgba(223, 205, 164, 0.03); border: 1px solid rgba(223, 205, 164, 0.15); color: #dfcda4; font-size: 16px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">❮</button>
+    <button id="sliderNextBtn" style="position: absolute; right: -15px; top: 55%; transform: translateY(-50%); width: 45px; height: 45px; border-radius: 50%; background: rgba(223, 205, 164, 0.03); border: 1px solid rgba(223, 205, 164, 0.15); color: #dfcda4; font-size: 16px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">❯</button>
+
+    <!-- حاوية الـ Grid الأصلية بتاعتك مع إضافة خواص الانتقال والسحب الذكي -->
+    <div class="services-grid" id="servicesGridContainer" style="display: flex !important; overflow-x: auto !important; scroll-behavior: smooth !important; gap: 30px !important; padding: 20px 5px !important; scroll-snap-type: x mandatory !important; scrollbar-width: none; -ms-overflow-style: none; cursor: grab;">
+        
+        <!-- كارت 1: أيمن الشحات -->
+        <div class="service-card card-1" style="flex: 0 0 calc(50% - 15px) !important; scroll-snap-align: start !important; box-sizing: border-box;">
+            <div class="card-image"><img src="assets/images/ayman.jpg" alt="Ayman"></div>
+            <h3>Ayman Elshahat <span class="role-text">Founder & CEO</span></h3>
+            <p>Full-Stack Web Developer | Dedicated to developing fast, scalable, and user-focused web applications. Experienced in front-end and back-end technologies, with a strong focus on clean architecture, responsive design, and high-performance solutions. Passionate about continuous learning and building innovative digital experiences..</p>
+            <div class="social-links">
+                <a href="https://wa.me/201114030295" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/aymanelshahat350" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
         </div>
-        <div class="service-card card-2">
+
+        <!-- كارت 2: عبد الرحمن طارق -->
+        <div class="service-card card-2" style="flex: 0 0 calc(50% - 15px) !important; scroll-snap-align: start !important; box-sizing: border-box;">
             <div class="card-image"><img src="assets/images/solidworks.jpg" alt="SolidWorks"></div>
             <h3>abdelrhman tarek</h3>
             <span class="ceo-title">CEO</span>
-            <p>SolidWorks Specialist & Mechanical Designer
-Creating precise mechanical models aligned with manufacturing standards and structural integrity.
-Experienced in managing the full product lifecycle from conceptual design to assembly implementation</p>
-        <div class="social-links">
-    <!-- رابط الواتساب (تم تحديثه بالرقم) -->
-    <a href="https://wa.me/201065861098" target="_blank" class="social-icon whatsapp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    
-    <!-- رابط الفيسبوك (تم تحديثه بالرابط) -->
-    <a href="https://www.facebook.com/abd.el.rahman.tarek.507084" target="_blank" class="social-icon facebook">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-</div>
+            <p>SolidWorks Specialist & Mechanical Designer Creating precise mechanical models aligned with manufacturing standards and structural integrity. Experienced in managing the full product lifecycle from conceptual design to assembly implementation</p>
+            <div class="social-links">
+                <a href="https://wa.me/201065861098" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/abd.el.rahman.tarek.507084" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
         </div>
-        <div class="service-card card-3">
+
+        <!-- كارت 3: أحمد حسن -->
+        <div class="service-card card-3" style="flex: 0 0 calc(50% - 15px) !important; scroll-snap-align: start !important; box-sizing: border-box;">
             <div class="card-image"><img src="assets/images/wow.jpg" alt="Icon"></div>
             <h3>Ahmed hassan</h3>
             <p>
-        <strong>Professional CAD Drafter & Designer</strong><br>
-        Delivering integrated engineering design solutions using AutoCAD with high quality and fast turnaround times.<br>
-        Experienced in managing and developing complex engineering drawings, ensuring implementation accuracy and minimizing errors in final project stages.
-    </p>
-        <div class="social-links">
-    <!-- واتساب -->
-    <a href="https://wa.me/201202322465" target="_blank" class="social-icon whatsapp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    
-    <!-- فيسبوك -->
-    <a href="https://www.facebook.com/Ahmedhassan.3d" target="_blank" class="social-icon facebook">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-    
-    <!-- لينكد إن -->
-    <a href="http://linkedin.com/in/ahmedhassann94" target="_blank" class="social-icon linkedin">
-        <i class="fab fa-linkedin-in"></i>
-    </a>
-</div>
+                <strong>Professional CAD Drafter & Designer</strong><br>
+                Delivering integrated engineering design solutions using AutoCAD with high quality and fast turnaround times.<br>
+                Experienced in managing and developing complex engineering drawings, ensuring implementation accuracy and minimizing errors in final project stages.
+            </p>
+            <div class="social-links">
+                <a href="https://wa.me/201202322465" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/Ahmedhassan.3d" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="http://linkedin.com/in/ahmedhassann94" target="_blank" class="social-icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+            </div>
         </div>
+
     </div>
-</section>
-<section id="courses" class="courses-section">
+
+    <!-- كود الـ CSS الإضافي للموبايل وتحسين شكل الأزرار -->
+    <style>
+        /* إخفاء شريط التمرير الافتراضي */
+        #servicesGridContainer::-webkit-scrollbar { display: none; }
+        
+        /* تأثير الإضاءة عند تحويم الماوس فوق الأسهم الجذابة */
+        #sliderPrevBtn:hover, #sliderNextBtn:hover {
+            background: rgba(223, 205, 164, 0.15) !important;
+            border-color: rgba(223, 205, 164, 0.4) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(223, 205, 164, 0.25);
+        }
+
+        /* 📱 تحويل العرض ليكون كارت واحد يملأ الشاشة بالكامل في التليفون والموبايل */
+        @media (max-width: 768px) {
+            #servicesGridContainer { gap: 15px !important; }
+            .service-card { flex: 0 0 100% !important; }
+            #sliderPrevBtn { left: 0px !important; width: 38px; height: 38px; }
+            #sliderNextBtn { right: 0px !important; width: 38px; height: 38px; }
+        }
+    </style>
+
+    <!-- كود جافا سكريبت بسيط جداً ومباشر للتحريك من خلال الأزرار -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const grid = document.getElementById('servicesGridContainer');
+            const next = document.getElementById('sliderNextBtn');
+            const prev = document.getElementById('sliderPrevBtn');
+
+            if (next && prev && grid) {
+                next.addEventListener('click', () => {
+                    const cardWidth = grid.querySelector('.service-card').offsetWidth + 30;
+                    grid.scrollLeft += cardWidth;
+                });
+
+                prev.addEventListener('click', () => {
+                    const cardWidth = grid.querySelector('.service-card').offsetWidth + 30;
+                    grid.scrollLeft -= cardWidth;
+                });
+            }
+        });
+    </script>
+</section><section id="courses" class="courses-section">
     <h2 class="section-title">OUR COURSES</h2>
    <div class="courses-grid">
         
