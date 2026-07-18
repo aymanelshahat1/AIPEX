@@ -209,101 +209,207 @@
             مرحباً بك في كورس البايثون الشامل. هنا هتلاقي كل المحاضرات والتطبيقات العملي.
         </p>
         
-<div class="course-content-container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; font-family: 'Montserrat', sans-serif;">
-    
-    <!-- 1️⃣ لوحة الأدمن (مخفية تلقائياً) -->
-    <div id="adminPanel" style="display: none; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
-        <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-            Admin Control Panel
-        </h3>
-        <!-- الـ Form هنا تم إضافة كلاس وريدج ريسبونسيف عشان يتحول لعمود واحد في الموبايل -->
-        <form id="addVideoForm" class="admin-responsive-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: end;">
-            <div style="grid-column: span 2;">
-                <label style="color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;">Video Title</label>
-                <input type="text" id="videoTitle" placeholder="e.g., Lesson 1: Introduction" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #111; color: #fff; box-sizing: border-box;">
-            </div>
-            <div style="grid-column: span 2;">
-                <label style="color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;">YouTube Video URL</label>
-                <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #111; color: #fff; box-sizing: border-box;">
-            </div>
-            <button type="submit" style="grid-column: span 2; background: #dfcda4; color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s;">
-                ADD VIDEO TO COURSE
-            </button>
-        </form>
-        <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none;"></p>
-    </div>
+<main>
+    <div class="course-content-container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; font-family: 'Montserrat', sans-serif;">
+        
+        <!-- 1️⃣ لوحة الأدمن (مخفية تلقائياً - تظهر بربطها مع نظام الـ Auth عندك) -->
+        <div id="adminPanel" style="display: block; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
+            <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                Admin Control Panel
+            </h3>
+            <form id="addVideoForm" class="admin-responsive-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: end;">
+                <div style="grid-column: span 2;">
+                    <label style="color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;">Video Title</label>
+                    <input type="text" id="videoTitle" placeholder="e.g., Lesson 1: Introduction" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #111; color: #fff; box-sizing: border-box;">
+                </div>
+                <div style="grid-column: span 2;">
+                    <label style="color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;">YouTube Video URL</label>
+                    <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #111; color: #fff; box-sizing: border-box;">
+                </div>
+                <button type="submit" style="grid-column: span 2; background: #dfcda4; color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s;">
+                    ADD VIDEO TO COURSE
+                </button>
+            </form>
+            <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none; color: #dfcda4; font-family: monospace;"></p>
+        </div>
 
-    <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل (مخفية تلقائياً) -->
-    <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
-        <!-- العنوان مقفول على سطر واحد تماماً -->
-        <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
-            🔒 CONTENT LOCKED
-        </h3>
-        <!-- النص الوصفي مرن -->
-        <p class="locked-text" style="color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 14px; margin: 15px 0 25px 0; line-height: 1.6; text-transform: uppercase; letter-spacing: 0.5px; box-sizing: border-box;">
-            Please sign in to unlock and access the lectures for this course.
-        </p>
-        <!-- الزرار متسنتر تماماً ومحمي من الخروج عن الكارت -->
-        <div style="display: flex; justify-content: center; width: 100%;">
-            <button onclick="window.openLoginModal()" class="btn-gold-outline responsive-btn" style="background: transparent; border: 1px solid #dfcda4; color: #dfcda4; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px 30px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; max-width: 100%; box-sizing: border-box;">
-                SIGN IN / REGISTER
-            </button>
+        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل -->
+        <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
+            <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
+                🔒 CONTENT LOCKED
+            </h3>
+            <p class="locked-text" style="color: #aaa; font-family: 'Montserrat', sans-serif; font-size: 14px; margin: 15px 0 25px 0; line-height: 1.6; text-transform: uppercase; letter-spacing: 0.5px; box-sizing: border-box;">
+                Please sign in to unlock and access the lectures for this course.
+            </p>
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <button onclick="window.openLoginModal ? window.openLoginModal() : alert('Login Modal Function')" class="btn-gold-outline responsive-btn" style="background: transparent; border: 1px solid #dfcda4; color: #dfcda4; font-family: 'Orbitron', sans-serif; font-weight: bold; padding: 12px 30px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; max-width: 100%; box-sizing: border-box;">
+                    SIGN IN / REGISTER
+                </button>
+            </div>
+        </div>
+
+        <!-- 3️⃣ شبكة الفيديوهات (الـ display بيتحول تلقائي لـ grid لما ينزل فيديو) -->
+        <div id="videosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+            <p id="noVideosMessage" class="responsive-message" style="color: #dfcda4; text-align: center; grid-column: 1 / -1; font-size: 14px; font-family: 'Montserrat', sans-serif; margin-top: 40px; background: #000; border: 1px solid #dfcda4; border-radius: 8px; padding: 12px 20px; display: inline-block; box-sizing: border-box; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; max-width: 100%;">
+                &lt;Lectures are currently being prepared. Check back soon!/&gt;
+            </p>
         </div>
     </div>
+</main>
 
-    <!-- 3️⃣ شبكة الفيديوهات -->
-    <div id="videosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
-        <p id="noVideosMessage" class="responsive-message" style="color: #dfcda4; text-align: center; grid-column: 1 / -1; font-size: 14px; font-family: 'Montserrat', sans-serif; margin-top: 40px; background: #000; border: 1px solid #dfcda4; border-radius: 8px; padding: 12px 20px; display: inline-block; box-sizing: border-box; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; max-width: 100%;">
-            &lt;Lectures are currently being prepared. Check back soon!/&gt;
-        </p>
-    </div>
-</div>
-
-<!-- ==================== الـ CSS المطور لضبط الريسبونسيف للموبايل بالشعرة ==================== -->
+<!-- ==================== الـ CSS المطور لضبط الريسبونسيف بالشعرة ==================== -->
 <style>
-    /* الشاشات الصغيرة والتليفونات */
+    /* ستايل كارت الفيديو الجديد اللي هيتولد بالـ JavaScript */
+    .video-card {
+        background: #0b0b0b;
+        border: 1px solid rgba(223, 205, 164, 0.15);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* نسبة 16:9 شاشات الفيديو */
+        height: 0;
+    }
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        border: none;
+    }
+    .video-info {
+        padding: 15px;
+    }
+    .video-info h4 {
+        margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.4;
+    }
+
+    /* الشاشات الصغيرة والتليفونات (Media Query) */
     @media (max-width: 600px) {
-        /* كارت القفل المحمي */
         .responsive-locked-card {
             width: 100% !important;
             padding: 30px 15px !important;
         }
-        
-        /* تجميد العنوان على سطر واحد في الموبايل وتصغيره نسبياً */
         .locked-title {
-            font-size: 4.5vw !important; /* حجم مرن يعتمد على عرض الشاشة */
+            font-size: 4.5vw !important; /* حجم مرن يعتمد على عرض الشاشة من غير ما ينزل سطر */
             letter-spacing: 0.5px !important;
         }
-
-        /* تصغير النص الوصفي ليناسب المربع */
         .locked-text {
             font-size: 11.5px !important;
             margin: 12px 0 20px 0 !important;
             padding: 0 5px !important;
         }
-
-        /* توسيط الزرار وتعديله ليناسب الموبايل الصغير دون انحراف */
         .responsive-btn {
             padding: 10px 20px !important;
             font-size: 12px !important;
             letter-spacing: 0.5px !important;
             width: auto !important;
         }
-
-        /* تعديل فورم الأدمن على الموبايل ليصبح رأسي ومريح للعين */
         .admin-responsive-form {
             display: flex !important;
             flex-direction: column !important;
             gap: 12px !important;
         }
-        
-        /* ضبط رسالة الكورسات الفاضية في الموبايل */
         .responsive-message {
             font-size: 11px !important;
             padding: 10px 12px !important;
         }
     }
 </style>
+
+<!-- ==================== الـ JavaScript الذكي والمسؤول عن ربط الإضافة بالشبكة ==================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const addVideoForm = document.getElementById('addVideoForm');
+    const videosGrid = document.getElementById('videosGrid');
+    const noVideosMessage = document.getElementById('noVideosMessage');
+    const adminStatus = document.getElementById('adminStatus');
+
+    // دالة لاستخراج الـ ID بتاع فيديو اليوتيوب عشان يشتغل جوة الـ Iframe صح
+    function getYoutubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    // دالة بناء ورسم الفيديوهات على الشاشة
+    function renderVideos() {
+        // هنجيب الفيديوهات المتسجلة من الـ LocalStorage (لو مفيش هيعمل مصفوفة فاضية)
+        const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
+        
+        // أولاً: تصفير الجريد مع الحفاظ على رسالة "لا توجد فيديوهات" في الذاكرة
+        videosGrid.innerHTML = '';
+        videosGrid.appendChild(noVideosMessage);
+
+        if (savedVideos.length === 0) {
+            videosGrid.style.display = 'block'; // أظهر الحاوية كـ Block عشان جملة السنتر
+            noVideosMessage.style.display = 'inline-block';
+        } else {
+            videosGrid.style.display = 'grid'; // حوّل الحاوية لـ Grid لعرض الفيديوهات ريسبونسيف
+            noVideosMessage.style.display = 'none'; // اخفي رسالة لا توجد فيديوهات
+
+            // رسم كروت الفيديوهات
+            savedVideos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/${video.embedId}" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>${video.title}</h4>
+                    </div>
+                `;
+                videosGrid.appendChild(videoCard);
+            });
+        }
+    }
+
+    // الاستماع لحدث الضغط على زرار الإضافة في الفورم
+    if (addVideoForm) {
+        addVideoForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // 🔥 أهم سطر: يمنع ريفريش الصفحة وضياع البيانات
+
+            const titleInput = document.getElementById('videoTitle');
+            const urlInput = document.getElementById('videoUrl');
+            
+            const title = titleInput.value.trim();
+            const url = urlInput.value.trim();
+            const embedId = getYoutubeId(url);
+
+            if (!embedId) {
+                adminStatus.style.display = 'block';
+                adminStatus.style.color = '#ff6b6b';
+                adminStatus.innerText = "<Invalid YouTube URL! Please check the link./>";
+                return;
+            }
+
+            // جلب المصفوفة الحالية، إضافة الفيديو الجديد، وحفظها
+            const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
+            savedVideos.push({ title, embedId });
+            localStorage.setItem('course_videos', JSON.stringify(savedVideos));
+
+            // تصفير الخانات وإظهار رسالة نجاح
+            titleInput.value = '';
+            urlInput.value = '';
+            adminStatus.style.display = 'block';
+            adminStatus.style.color = '#dfcda4';
+            adminStatus.innerText = "<Video added successfully!/>";
+
+            // إخفاء رسالة النجاح بعد 3 ثواني تلقائياً
+            setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
+
+            // 🔥 استدعاء دالة التحديث فوراً لتظهر الفيديوهات على الشاشة بدون ريفريش
+            renderVideos();
+        });
+    }
+
+    // تشغيل الدالة أول ما الصفحة تفتح عشان لو في فيديوهات متسجلة تظهر علطول
+    renderVideos();
+});
+</script>
 
     <footer class="site-footer">
         © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
