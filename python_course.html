@@ -248,17 +248,33 @@
             </div>
         </div>
 
-        <!-- 3️⃣ شبكة الفيديوهات العامة -->
-        <div id="publicVideosGrid" style="display: none !important; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
-            <!-- الفيديوهات -->
+        <!-- 3️⃣ حاوي السلايدر والمربع الشفاف بالفيديوهات -->
+        <div id="sliderWrapper" style="display: none !important; position: relative; width: 100%; align-items: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(223, 205, 164, 0.1); border-radius: 16px; padding: 30px 40px; box-sizing: border-box; backdrop-filter: blur(10px);">
+            
+            <!-- زر الحركة الشمال -->
+            <button id="prevBtn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(11, 11, 11, 0.8); border: 1px solid #dfcda4; color: #dfcda4; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 100; font-family: 'Orbitron', sans-serif; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">&lt;</button>
+            
+            <!-- المربع الداخلي اللي بيحتوي على السطر المخفي -->
+            <div id="sliderContainer" style="width: 100%; overflow: hidden;">
+                <div id="publicVideosGrid" style="display: flex !important; gap: 20px; transition: transform 0.5s ease-in-out; will-change: transform;">
+                    <!-- الفيديوهات هتنزل هنا سحابياً على شكل سطر متصل -->
+                </div>
+            </div>
+            
+            <!-- زر الحركة اليمين -->
+            <button id="nextBtn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(11, 11, 11, 0.8); border: 1px solid #dfcda4; color: #dfcda4; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 100; font-family: 'Orbitron', sans-serif; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">&gt;</button>
         </div>
+
     </div>
 </main>
 
 <style>
-    #adminPanel, #publicVideosGrid, #loginPrompt { display: none !important; }
+    /* التنسيق الافتراضي للإخفاء لمنع ومضات الـ UI */
+    #adminPanel, #sliderWrapper, #loginPrompt { display: none !important; }
     
+    /* ضبط عرض الكارت جوه السلايدر ليشغل تلت أو ربع المساحة بناءً على حجم الشاشة */
     .video-card {
+        flex: 0 0 calc(33.333% - 14px); /* الافتراضي: 3 فيديوهات في الشاشة */
         background: #0b0b0b;
         border: 1px solid rgba(223, 205, 164, 0.15);
         border-radius: 12px;
@@ -266,13 +282,22 @@
         display: flex;
         flex-direction: column;
         box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        box-sizing: border-box;
     }
+    
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 10; }
-    .video-info { padding: 15px; z-index: 5; }
-    .video-info h4 { margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.4; }
+    .video-info { padding: 15px; z-index: 5; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; }
+    .video-info h4 { margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 14px; line-height: 1.4; }
 
-    @media (max-width: 600px) {
+    /* ريسبونسيف للشاشات الكبيرة والصغيرة لضبط مساحات الفيديوهات */
+    @media (max-width: 1024px) {
+        .video-card { flex: 0 0 calc(50% - 10px); } /* فيديوهين في الشاشات المتوسطة */
+        #sliderWrapper { padding: 30px 45px; }
+    }
+    @media (max-width: 650px) {
+        .video-card { flex: 0 0 100%; } /* فيديو واحد كامل في الموبايل */
+        #sliderWrapper { padding: 25px 45px; }
         .responsive-locked-card { width: 100% !important; padding: 30px 15px !important; }
         .admin-responsive-form { display: flex !important; flex-direction: column !important; gap: 12px !important; }
     }
@@ -301,14 +326,18 @@
 
     const COURSE_ID = "python"; 
     const adminPanel = document.getElementById('adminPanel');
+    const sliderWrapper = document.getElementById('sliderWrapper');
     const videosGrid = document.getElementById('publicVideosGrid');
     const loginPrompt = document.getElementById('loginPrompt');
+    
+    // زراير السلايدر
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
-    // 🔒 متغير داخلي آمن ومستقل لتخزين حالة الأدمن الحقيقية من السيرفر
     let currentUserIsAdmin = false;
+    let currentSlideIndex = 0;
 
     window.deleteVideo = async function(videoId) {
-        // حماية برمجية إضافية حتى لو حاول شخص التلاعب بالكونسول
         if (!currentUserIsAdmin) {
             alert("⚠️ غير مسموح لك بإجراء هذه العملية.");
             return;
@@ -316,29 +345,30 @@
         if (confirm("هل أنت متأكد من حذف هذا الفيديو نهائياً؟")) {
             try {
                 await deleteDoc(doc(db, 'videos', videoId));
+                // عند الحذف نرجع خطوة للوراء بالسلايدر عشان الـ UI ميعلقش في مساحة فاضية
+                if (currentSlideIndex > 0) currentSlideIndex--;
             } catch (error) { console.error(error); }
         }
     };
 
-    // دالة لاستخراج الـ ID من يوتيوب لضمان عمل دالة الـ Add
     function getYoutubeId(url) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // إدارة الصلاحيات وحالة تسجيل الدخول
+    // إدارة الجلسات والصلاحيات
     onAuthStateChanged(auth, async (user) => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         
         if (user && isLoggedIn) {
-            videosGrid.style.setProperty('display', 'grid', 'important');
+            sliderWrapper.style.setProperty('display', 'flex', 'important');
             loginPrompt.style.setProperty('display', 'none', 'important');
             
             try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists() && userDoc.data().role === "admin") {
-                    currentUserIsAdmin = true; // تأكيد الرتبة سحابياً
+                    currentUserIsAdmin = true;
                     adminPanel.style.setProperty('display', 'block', 'important');
                 } else {
                     currentUserIsAdmin = false;
@@ -350,12 +380,11 @@
             }
         } else {
             currentUserIsAdmin = false;
-            videosGrid.style.setProperty('display', 'none', 'important');
+            sliderWrapper.style.setProperty('display', 'none', 'important');
             adminPanel.style.setProperty('display', 'none', 'important');
             loginPrompt.style.setProperty('display', 'block', 'important');
         }
         
-        // إعادة تحديث عرض الفيديوهات بعد التأكد من الرتبة الحقيقية
         renderVideos();
     });
 
@@ -395,7 +424,7 @@
         });
     }
 
-    // دالة رندر الفيديوهات المستقلة والآمنة تماماً
+    // جلب الفيديوهات ورسمها وتفعيل حركة السلايدر
     let unsubscribeVideos = null;
     function renderVideos() {
         if (unsubscribeVideos) unsubscribeVideos();
@@ -404,13 +433,15 @@
         
         unsubscribeVideos = onSnapshot(videosQuery, (snapshot) => {
             videosGrid.innerHTML = ''; 
-            if (snapshot.empty) return;
+            if (snapshot.empty) {
+                sliderWrapper.style.setProperty('display', 'none', 'important');
+                return;
+            }
             
             snapshot.forEach((videoDoc) => {
                 const video = videoDoc.data();
                 const videoId = videoDoc.id; 
                 
-                // 🔒 الاعتماد الكلي على المتغير البرمجي الصارم currentUserIsAdmin
                 const deleteBtnHtml = currentUserIsAdmin ? 
                     `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: bold; width: 100%; font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 1px;">DELETE LECTURE</button>` 
                     : '';
@@ -423,7 +454,46 @@
                 `;
                 videosGrid.appendChild(videoCard);
             });
+
+            // إعادة ضبط السلايدر للحجم الحالي بعد جلب الكروت
+            updateSliderPosition();
         });
+    }
+
+    // منطق حركة الـ Slider بالزراير
+    function updateSliderPosition() {
+        const cards = document.querySelectorAll('.video-card');
+        if (cards.length === 0) return;
+
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const gap = 20; // نفس قيمة الـ gap المعرفة في الفلكس
+        
+        // حساب الحركة الكلية بناءً على العرض والمسافات
+        const moveAmount = (cardWidth + gap) * currentSlideIndex;
+        videosGrid.style.transform = `translateX(-${moveAmount}px)`;
+    }
+
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            const cards = document.querySelectorAll('.video-card');
+            // تحديد كام كارد ظاهر في الشاشة بناءً على المقاس الحقيقي للـ wrapper
+            const visibleCardsCount = window.innerWidth <= 650 ? 1 : (window.innerWidth <= 1024 ? 2 : 3);
+            
+            if (currentSlideIndex < cards.length - visibleCardsCount) {
+                currentSlideIndex++;
+                updateSliderPosition();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSliderPosition();
+            }
+        });
+
+        // إعادة الحساب التلقائي لو المستخدم غير مقاس الشاشة أو قلب الموبايل عرضي
+        window.addEventListener('resize', updateSliderPosition);
     }
 
     window.openLoginModal = () => { window.location.href = 'index.html?showLogin=true'; };
