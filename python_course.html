@@ -213,7 +213,7 @@
     <div class="course-content-container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; font-family: 'Montserrat', sans-serif;">
         
         <!-- 1️⃣ لوحة الأدمن -->
-        <div id="adminPanel" style="display: block; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
+        <div id="adminPanel" style="display: none !important; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
             <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                 Admin Control Panel
             </h3>
@@ -234,7 +234,7 @@
         </div>
 
         <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل -->
-        <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
+        <div id="loginPrompt" class="responsive-locked-card" style="display: none !important; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
             <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
                 🔒 CONTENT LOCKED
             </h3>
@@ -248,15 +248,17 @@
             </div>
         </div>
 
-        <!-- 3️⃣ شبكة الفيديوهات العامة (مستقلة تماماً وتتغذى من Firebase) -->
-        <div id="publicVideosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
-            <!-- الفيديوهات هتنزل هنا سحابياً -->
+        <!-- 3️⃣ شبكة الفيديوهات العامة -->
+        <div id="publicVideosGrid" style="display: none !important; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
+            <!-- الفيديوهات -->
         </div>
     </div>
 </main>
 
-<!-- ==================== الـ CSS المطور بالكامل للريسبونسيف والتفاعل ==================== -->
 <style>
+    /* CSS إجباري لضمان ثبات التنسيق */
+    #adminPanel, #publicVideosGrid, #loginPrompt { display: none !important; }
+    
     .video-card {
         background: #0b0b0b;
         border: 1px solid rgba(223, 205, 164, 0.15);
@@ -265,138 +267,97 @@
         display: flex;
         flex-direction: column;
         box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        pointer-events: auto !important;
     }
-    .video-wrapper {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        width: 100%;
-        pointer-events: auto !important; 
-    }
-    .video-wrapper iframe {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        border: none;
-        z-index: 10;
-        pointer-events: auto !important;
-    }
-    .video-info {
-        padding: 15px;
-        z-index: 5;
-    }
-    .video-info h4 {
-        margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.4;
-    }
+    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 10; }
+    .video-info { padding: 15px; z-index: 5; }
+    .video-info h4 { margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.4; }
 
     @media (max-width: 600px) {
         .responsive-locked-card { width: 100% !important; padding: 30px 15px !important; }
-        .locked-title { font-size: 4.5vw !important; letter-spacing: 0.5px !important; }
-        .locked-text { font-size: 11.5px !important; margin: 12px 0 20px 0 !important; padding: 0 5px !important; }
-        .responsive-btn { padding: 10px 20px !important; font-size: 12px !important; letter-spacing: 0.5px !important; width: auto !important; }
         .admin-responsive-form { display: flex !important; flex-direction: column !important; gap: 12px !important; }
     }
 </style>
 
-<!-- ==================== الـ JavaScript المربوط بـ Firebase Firestore ==================== -->
-<script>
-// تأكد أنك قمت بعمل تهيئة لـ Firebase (db) مسبقاً في ملفك الخارجي أو أعلى الصفحة
-document.addEventListener("DOMContentLoaded", function () {
-    const addVideoForm = document.getElementById('addVideoForm');
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwSnEn0cpNkXC4EtMkoB5ZnRhv-QE_Tpo",
+      authDomain: "aipex-6588b.firebaseapp.com",
+      projectId: "aipex-6588b",
+      storageBucket: "aipex-6588b.firebasestorage.app",
+      messagingSenderId: "320792692639",
+      appId: "1:320792692639:web:4e8e2d6a2b8458ff14dfaa"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.auth = auth;
+    window.db = db;
+
+    const COURSE_ID = "python"; 
+    const adminPanel = document.getElementById('adminPanel');
     const videosGrid = document.getElementById('publicVideosGrid');
-    const adminStatus = document.getElementById('adminStatus');
+    const loginPrompt = document.getElementById('loginPrompt');
 
-    // دالة استخراج الـ ID من يوتيوب
-    function getYoutubeId(url) {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    }
+    window.deleteVideo = async function(videoId) {
+        if (confirm("هل أنت متأكد من حذف هذا الفيديو نهائياً؟")) {
+            try {
+                await deleteDoc(doc(db, 'videos', videoId));
+            } catch (error) { console.error(error); }
+        }
+    };
 
-    // 🔥 1️⃣ قراءة الفيديوهات سحابياً ومزامنتها فوراً عند أي تغيير (Real-time Listening)
-    // افترضنا اسم الكوليكشن 'videos'، قم بتغييره لاسم الكوليكشن عندك إذا لزم الأمر
-    if (typeof db !== 'undefined') {
-        db.collection('videos').orderBy('createdAt', 'asc').onSnapshot((snapshot) => {
-            videosGrid.innerHTML = ''; // مسح الشبكة لإعادة الرسم النظيف
-
-            if (snapshot.empty) {
-                videosGrid.style.setProperty('display', 'none', 'important');
-                return;
-            }
-
+    onAuthStateChanged(auth, async (user) => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (user && isLoggedIn) {
             videosGrid.style.setProperty('display', 'grid', 'important');
+            loginPrompt.style.setProperty('display', 'none', 'important');
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists() && userDoc.data().role === "admin") {
+                    adminPanel.style.setProperty('display', 'block', 'important');
+                }
+            } catch (err) { console.error(err); }
+        } else {
+            videosGrid.style.setProperty('display', 'none', 'important');
+            adminPanel.style.setProperty('display', 'none', 'important');
+            loginPrompt.style.setProperty('display', 'block', 'important');
+        }
+    });
 
-            snapshot.forEach((doc) => {
-                const video = doc.data();
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card';
-                
-                videoCard.innerHTML = `
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/${video.embedId}?rel=0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="video-info">
-                        <h4>${video.title}</h4>
-                    </div>
-                `;
-                videosGrid.appendChild(videoCard);
-            });
-        }, (error) => {
-            console.error("Error fetching videos: ", error);
-        });
-    } else {
-        console.warn("Firebase 'db' is not initialized yet. Check your Firebase SDK config.");
-    }
-
-    // 🔥 2️⃣ حفظ الفيديو الجديد مباشرة جوة السيرفر (Firestore) بدلاً من LocalStorage
-    if (addVideoForm) {
-        addVideoForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const titleInput = document.getElementById('videoTitle');
-            const urlInput = document.getElementById('videoUrl');
+    // جلب الفيديوهات
+    const videosQuery = query(collection(db, "videos"), where("courseId", "==", COURSE_ID), orderBy("createdAt", "asc"));
+    onSnapshot(videosQuery, (snapshot) => {
+        videosGrid.innerHTML = ''; 
+        if (snapshot.empty) return;
+        
+        snapshot.forEach((videoDoc) => {
+            const video = videoDoc.data();
+            const videoId = videoDoc.id; 
             
-            const title = titleInput.value.trim();
-            const url = urlInput.value.trim();
-            const embedId = getYoutubeId(url);
+            const isAdmin = localStorage.getItem('isLoggedIn') === 'true' && 
+                            localStorage.getItem('userRole') === 'admin' && 
+                            adminPanel.style.display !== 'none';
+            
+            const deleteBtnHtml = isAdmin ? `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: bold; width: 100%;">DELETE LECTURE</button>` : '';
 
-            if (!embedId) {
-                adminStatus.style.display = 'block';
-                adminStatus.style.color = '#ff6b6b';
-                adminStatus.innerText = "<Invalid YouTube URL!/>";
-                return;
-            }
-
-            if (typeof db !== 'undefined') {
-                db.collection('videos').add({
-                    title: title,
-                    embedId: embedId,
-                    createdAt: new Date() // عشان يترتبوا كرونولوجياً للطلبة
-                })
-                .then(() => {
-                    titleInput.value = '';
-                    urlInput.value = '';
-                    adminStatus.style.display = 'block';
-                    adminStatus.style.color = '#dfcda4';
-                    adminStatus.innerText = "<Video deployed to Cloud successfully!/>";
-                    setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
-                })
-                .catch((error) => {
-                    adminStatus.style.display = 'block';
-                    adminStatus.style.color = '#ff6b6b';
-                    adminStatus.innerText = "<Upload failed. Check permissions!/>";
-                    console.error("Firestore Add Error: ", error);
-                });
-            } else {
-                alert("Firebase SDK not found!");
-            }
+            const videoCard = document.createElement('div');
+            videoCard.className = 'video-card';
+            videoCard.innerHTML = `
+                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${video.embedId}?rel=0" allowfullscreen></iframe></div>
+                <div class="video-info"><h4>${video.title}</h4>${deleteBtnHtml}</div>
+            `;
+            videosGrid.appendChild(videoCard);
         });
-    }
-});
+    });
+
+    window.openLoginModal = () => { window.location.href = 'index.html?showLogin=true'; };
 </script>
     <footer class="site-footer">
         © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
