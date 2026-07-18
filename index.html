@@ -316,35 +316,219 @@
         });
 </script>
 </section>
-<section id="courses" class="courses-section">
-    <h2 class="section-title">OUR COURSES</h2>
-   <div class="courses-grid">
+
+<section id="courses" class="courses-section" style="position: relative; overflow: hidden; padding: 40px 0;">
+    <h2 class="section-title" style="text-align: center;">OUR COURSES</h2>
+    
+    <!-- حاوية السلايدر المحمية بأزرارك القديمة -->
+    <div id="coursesGridContainer" style="width: 100%; position: relative;">
         
-        <div class="course-card">
-    <div class="card-top">
-        <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
-        <p class="code-text">&lt;Python 3 for Web & Automation/&gt;</p>
-    </div>
-     <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
-     </div>
+        <!-- الأزرار الأصلية بنفس الأسامي المطلوبة -->
+        <button id="sliderPrevBtn" class="course-slider-btn">❮</button>
+        <button id="sliderNextBtn" class="course-slider-btn">❯</button>
 
-        <div class="course-card">
-            <div class="card-top">
-                <img src="assets/images/nnn.png" alt="SolidWorks" class="course-image">
-                <p class="code-text">&lt; SolidWorks for Engineering &gt;</p>
+        <!-- الكورسات بتاعتك بنفس الكلاسات القديمة بالملي -->
+        <div class="courses-grid" id="coursesGrid">
+            
+            <!-- كارت 1: بايثون -->
+            <div class="course-card card-1">
+                <div class="card-top">
+                    <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
+                    <p class="code-text">&lt;Python 3 for Web &amp; Automation/&gt;</p>
+                </div>
+                <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
             </div>
-            <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
-        </div>
 
-        <div class="course-card">
-            <div class="card-top">
-                <img src="assets/images/aaa.jpg" alt="AutoCAD" class="course-image">
-                <p class="code-text"><span>&lt;</span> AutoCAD for Engineering <span>/&gt;</span></p>
+            <!-- كارت 2: سوليدوركس -->
+            <div class="course-card card-2">
+                <div class="card-top">
+                    <img src="assets/images/nnn.png" alt="SolidWorks" class="course-image">
+                    <p class="code-text">&lt; SolidWorks for Engineering &gt;</p>
+                </div>
+                <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
             </div>
-            <a href="autocad_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
-        </div>
 
+            <!-- كارت 3: أوتوكاد -->
+            <div class="course-card card-3">
+                <div class="card-top">
+                    <img src="assets/images/aaa.jpg" alt="AutoCAD" class="course-image">
+                    <p class="code-text"><span>&lt;</span> AutoCAD for Engineering <span>/&gt;</span></p>
+                </div>
+                <a href="autocad_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
+            </div>
+
+        </div>
     </div>
+
+    <!-- ==================== الـ CSS المخصص لضبط الحجم وحماية نصوصك القديمة ==================== -->
+    <style>
+        /* ستايل أزرار الكورسات الدائرية */
+        .course-slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 1px solid rgba(223, 205, 164, 0.2);
+            color: rgba(223, 205, 164, 0.6);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .course-slider-btn:hover {
+            background: rgba(223, 205, 164, 0.15) !important;
+            border-color: rgba(223, 205, 164, 0.4) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(223, 205, 164, 0.25);
+        }
+        
+        /* ضبط أماكن أزرار الكورسات بدقة */
+        #coursesGridContainer #sliderPrevBtn { left: 5%; }
+        #coursesGridContainer #sliderNextBtn { right: 5%; }
+
+        /* تظبيط مرونة أبعاد الحاوية والكروت القديمة */
+        .courses-grid { position: relative; display: block; margin: 0 auto; }
+        
+        .course-card {
+            background: #111111;
+            border: 1px solid rgba(223, 205, 164, 0.15);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 20px 15px;
+        }
+
+        /* حماية عناصر الكارت الأصلي */
+        .card-top {
+            height: 75%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .course-image {
+            width: 90px !important;
+            height: 90px !important;
+            object-fit: contain !important; /* يحمي اللوجوهات والصور من التشويه */
+            margin-bottom: 12px;
+        }
+
+        /* 💻 وضع اللاب توب (عرض كارتين متجاورين في السلايدر) */
+        @media (min-width: 769px) {
+            .courses-grid { height: 420px !important; width: 90% !important; max-width: 960px !important; }
+            .course-card { position: absolute !important; top: 0; width: calc(50% - 15px) !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; }
+        }
+
+        /* 📱 وضع التليفون (الحجم الملموم والمحمي من تداخل النصوص) */
+        @media (max-width: 768px) {
+            .courses-grid { height: 360px !important; width: 80% !important; } /* صغرنا الحجم والمط هنا */
+            .course-card { position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; border-radius: 20px; }
+            
+            /* تظبيط حجم نصوصك عشان متتداخلش وتتنفس في الموبايل */
+            .code-text { font-size: 13px !important; line-height: 1.3 !important; margin: 5px 0 !important; }
+            .btn-gold-outline { padding: 8px 0 !important; font-size: 11.5px !important; width: 90% !important; margin: 0 auto; }
+            .course-image { width: 75px !important; height: 75px !important; }
+
+            #coursesGridContainer #sliderPrevBtn { left: -5px !important; width: 36px; height: 36px; font-size: 12px; }
+            #coursesGridContainer #sliderNextBtn { right: -5px !important; width: 36px; height: 36px; font-size: 12px; }
+        }
+    </style>
+
+    <!-- ==================== الـ JavaScript المطور لدعم السلايدر والانتقال الرايق ==================== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // سحب الكروت الخاصة بسيكشن الكورسات فقط
+            const courseCards = Array.from(document.querySelectorAll('#coursesGrid .course-card'));
+            
+            // تحديد أزرار الكورسات بدقة من الحاوية الأب منعاً لأي تضارب
+            const coursePrev = document.querySelector('#coursesGridContainer #sliderPrevBtn');
+            const courseNext = document.querySelector('#coursesGridContainer #sliderNextBtn');
+            let courseActiveIndex = 0;
+
+            function updateCourseStack() {
+                const isLaptop = window.innerWidth > 768;
+
+                courseCards.forEach((card, index) => {
+                    if (isLaptop) {
+                        // حركة اللاب توب (عرض كارتين متجاورين)
+                        if (index === courseActiveIndex) {
+                            card.style.transform = "translateX(0) scale(1)";
+                            card.style.opacity = "1";
+                            card.style.zIndex = "3";
+                            card.style.pointerEvents = "auto";
+                        } else if (index === courseActiveIndex + 1) {
+                            card.style.transform = "translateX(calc(100% + 30px)) scale(1)";
+                            card.style.opacity = "1";
+                            card.style.zIndex = "3";
+                            card.style.pointerEvents = "auto";
+                        } else if (index > courseActiveIndex + 1) {
+                            let offset = index - (courseActiveIndex + 1);
+                            card.style.transform = `translateX(calc(100% + 30px + ${offset * 15}px)) scale(${1 - offset * 0.05})`;
+                            card.style.opacity = offset === 1 ? "0.6" : "0.3";
+                            card.style.zIndex = `${3 - offset}`;
+                            card.style.pointerEvents = "none";
+                        } else {
+                            card.style.transform = "translateX(-120%) scale(0.9)";
+                            card.style.opacity = "0";
+                            card.style.zIndex = "1";
+                            card.style.pointerEvents = "none";
+                        }
+                    } else {
+                        // حركة التليفون (نظام الـ Stack المتراكب والانتقال الرايق الملموم)
+                        if (index === courseActiveIndex) {
+                            card.style.transform = "translateX(0) scale(1) translateY(0)";
+                            card.style.opacity = "1";
+                            card.style.zIndex = "3";
+                            card.style.pointerEvents = "auto";
+                        } else if (index > courseActiveIndex) {
+                            let offset = index - courseActiveIndex;
+                            card.style.transform = `scale(${1 - offset * 0.05}) translateY(${offset * 15}px)`;
+                            card.style.opacity = offset === 1 ? "0.8" : "0.5";
+                            card.style.zIndex = `${3 - offset}`;
+                            card.style.pointerEvents = "none";
+                        } else {
+                            card.style.transform = "translateX(-120%) scale(0.9) rotate(-5deg)";
+                            card.style.opacity = "0";
+                            card.style.zIndex = "1";
+                            card.style.pointerEvents = "none";
+                        }
+                    }
+                });
+            }
+
+            if (courseNext && coursePrev) {
+                courseNext.addEventListener('click', () => {
+                    const isLaptop = window.innerWidth > 768;
+                    const maxIndex = isLaptop ? courseCards.length - 2 : courseCards.length - 1;
+                    if (courseActiveIndex < maxIndex) { 
+                        courseActiveIndex++; 
+                        updateCourseStack(); 
+                    }
+                });
+                coursePrev.addEventListener('click', () => {
+                    if (courseActiveIndex > 0) { 
+                        courseActiveIndex--; 
+                        updateCourseStack(); 
+                    }
+                });
+            }
+
+            // تشغيل السلايدر وتحديثه عند تغيير حجم الشاشة
+            updateCourseStack();
+            window.addEventListener('resize', updateCourseStack);
+        });
+    </script>
 </section>
 <section id="about-section" class="about-section">
     
