@@ -233,7 +233,7 @@
             <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none; color: #dfcda4; font-family: monospace;"></p>
         </div>
 
-        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل (تتحكم فيها بالـ Auth) -->
+        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل -->
         <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
             <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
                 🔒 CONTENT LOCKED
@@ -248,8 +248,8 @@
             </div>
         </div>
 
-        <!-- 3️⃣ شبكة الفيديوهات العامة (مستقلة تماماً عشان تظهر للكل) -->
-        <div id="videosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
+        <!-- 3️⃣ شبكة الفيديوهات العامة المحدثة بالـ ID الجديد لتخطي كود الحجب القديم -->
+        <div id="publicVideosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
             <p id="noVideosMessage" class="responsive-message" style="color: #dfcda4; text-align: center; grid-column: 1 / -1; font-size: 14px; font-family: 'Montserrat', sans-serif; margin-top: 40px; background: #000; border: 1px solid #dfcda4; border-radius: 8px; padding: 12px 20px; display: inline-block; box-sizing: border-box; text-transform: uppercase; font-weight: 500; letter-spacing: 1px; max-width: 100%;">
                 &lt;Lectures are currently being prepared. Check back soon!/&gt;
             </p>
@@ -257,7 +257,7 @@
     </div>
 </main>
 
-<!-- ==================== الـ CSS المطور للريسبونسيف والتفاعل ==================== -->
+<!-- ==================== الـ CSS المطور للريسبونسيف والتفاعل المباشر ==================== -->
 <style>
     .video-card {
         background: #0b0b0b;
@@ -267,7 +267,7 @@
         display: flex;
         flex-direction: column;
         box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        pointer-events: auto !important; /* لضمان استقبال النقر */
+        pointer-events: auto !important;
     }
     .video-wrapper {
         position: relative;
@@ -281,7 +281,7 @@
         top: 0; left: 0; width: 100%; height: 100%;
         border: none;
         z-index: 10;
-        pointer-events: auto !important; /* فك قفل كليك اليوتيوب */
+        pointer-events: auto !important;
     }
     .video-info {
         padding: 15px;
@@ -302,11 +302,11 @@
     }
 </style>
 
-<!-- ==================== الـ JavaScript المطور والمستقل للتشغيل التلقائي للكل ==================== -->
+<!-- ==================== الـ JavaScript المطور والمستقل تماماً ==================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const addVideoForm = document.getElementById('addVideoForm');
-    const videosGrid = document.getElementById('videosGrid');
+    const videosGrid = document.getElementById('publicVideosGrid'); // 🔥 تم التحديث للـ ID الجديد
     const noVideosMessage = document.getElementById('noVideosMessage');
     const adminStatus = document.getElementById('adminStatus');
 
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderVideos() {
         const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
         
-        // إزالة الكروت القديمة فقط دون المساس بالرسالة الأساسية
+        // مسح الكروت القديمة فقط
         const oldCards = videosGrid.querySelectorAll('.video-card');
         oldCards.forEach(card => card.remove());
 
@@ -385,7 +385,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 🔥 تشغيل الدالة فوراً للكل (أدمن أو طالب) بمجرد فتح الصفحة
+    // تشغيل الدالة فور تحميل الصفحة للجميع لتخطي القيود
     renderVideos();
 });
 </script>
