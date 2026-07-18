@@ -323,11 +323,11 @@
     <!-- حاوية السلايدر المحمية بأزرارك القديمة -->
     <div id="coursesGridContainer" style="width: 100%; position: relative;">
         
-        <!-- الأزرار الأصلية بنفس الأسامي المطلوبة -->
+        <!-- الأزرار الأصلية بنفس الأسامي وبأحجام مرنة -->
         <button id="sliderPrevBtn" class="course-slider-btn">❮</button>
         <button id="sliderNextBtn" class="course-slider-btn">❯</button>
 
-        <!-- الكورسات بتاعتك بنفس الكلاسات القديمة بالملي -->
+        <!-- الكورسات بتاعتك بنفس الكلاسات القديمة والـ Structure الصح من صورتك -->
         <div class="courses-grid" id="coursesGrid">
             
             <!-- كارت 1: بايثون -->
@@ -360,9 +360,9 @@
         </div>
     </div>
 
-    <!-- ==================== الـ CSS المخصص لضبط الحجم وحماية نصوصك القديمة ==================== -->
+    <!-- ==================== الـ CSS المطور لتصغير الكارت بالكامل ككتلة واحدة ==================== -->
     <style>
-        /* ستايل أزرار الكورسات الدائرية */
+        /* ستايل أزرار السلايدر المحمية */
         .course-slider-btn {
             position: absolute;
             top: 50%;
@@ -385,14 +385,11 @@
             background: rgba(223, 205, 164, 0.15) !important;
             border-color: rgba(223, 205, 164, 0.4) !important;
             color: #ffffff !important;
-            box-shadow: 0 0 15px rgba(223, 205, 164, 0.25);
         }
-        
-        /* ضبط أماكن أزرار الكورسات بدقة */
         #coursesGridContainer #sliderPrevBtn { left: 5%; }
         #coursesGridContainer #sliderNextBtn { right: 5%; }
 
-        /* تظبيط مرونة أبعاد الحاوية والكروت القديمة */
+        /* ستايل الكروت الأصلي بناءً على الصورة بالملي */
         .courses-grid { position: relative; display: block; margin: 0 auto; }
         
         .course-card {
@@ -404,54 +401,73 @@
             flex-direction: column;
             justify-content: space-between;
             box-sizing: border-box;
-            padding: 20px 15px;
+            padding: 20px;
         }
 
-        /* حماية عناصر الكارت الأصلي */
         .card-top {
-            height: 75%;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
         }
 
+        /* جعل الصورة مفرودة بالكامل زي التصميم الأصلي */
         .course-image {
-            width: 90px !important;
-            height: 90px !important;
-            object-fit: contain !important; /* يحمي اللوجوهات والصور من التشويه */
-            margin-bottom: 12px;
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            border-radius: 12px;
+            margin-bottom: 15px;
         }
 
-        /* 💻 وضع اللاب توب (عرض كارتين متجاورين في السلايدر) */
+        /* ضبط المربع الأصفر المحيط بالنص الداخلي */
+        .code-text {
+            border: 1px solid #dfcda4;
+            color: #dfcda4;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            text-align: center;
+            width: 90%;
+            box-sizing: border-box;
+        }
+
+        /* 💻 وضع اللاب توب الكود القديم السليم */
         @media (min-width: 769px) {
-            .courses-grid { height: 420px !important; width: 90% !important; max-width: 960px !important; }
+            .courses-grid { height: 480px !important; width: 90% !important; max-width: 960px !important; }
             .course-card { position: absolute !important; top: 0; width: calc(50% - 15px) !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; }
+            .code-text { font-size: 14px; }
         }
 
-        /* 📱 وضع التليفون (الحجم الملموم والمحمي من تداخل النصوص) */
+        /* 📱 وضع التليفون - تصغير ريسبونسيف متناسق بالكامل (Scale-Down) */
         @media (max-width: 768px) {
-            .courses-grid { height: 360px !important; width: 80% !important; } /* صغرنا الحجم والمط هنا */
-            .course-card { position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; border-radius: 20px; }
+            /* صغرنا المربع الكبير كلو كنسبة وتناسب عشان يظبط ف التليفون */
+            .courses-grid { height: 390px !important; width: 78% !important; } 
+            .course-card { 
+                position: absolute !important; 
+                top: 0; 
+                left: 0; 
+                width: 100% !important; 
+                height: 100% !important; 
+                transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; 
+                border-radius: 20px;
+                padding: 15px; /* صغرنا الحواف الداخلية */
+            }
             
-            /* تظبيط حجم نصوصك عشان متتداخلش وتتنفس في الموبايل */
-            .code-text { font-size: 13px !important; line-height: 1.3 !important; margin: 5px 0 !important; }
-            .btn-gold-outline { padding: 8px 0 !important; font-size: 11.5px !important; width: 90% !important; margin: 0 auto; }
-            .course-image { width: 75px !important; height: 75px !important; }
+            /* تصغير المربع النصي والصورة والزرار معاً بنفس النسبة */
+            .course-image { margin-bottom: 10px; }
+            .code-text { font-size: 11px !important; padding: 6px 8px !important; width: 95%; margin: 5px 0 !important; }
+            .btn-gold-outline { padding: 8px 0 !important; font-size: 11px !important; border-radius: 20px !important; }
 
-            #coursesGridContainer #sliderPrevBtn { left: -5px !important; width: 36px; height: 36px; font-size: 12px; }
-            #coursesGridContainer #sliderNextBtn { right: -5px !important; width: 36px; height: 36px; font-size: 12px; }
+            #coursesGridContainer #sliderPrevBtn { left: -8px !important; width: 34px; height: 34px; font-size: 11px; }
+            #coursesGridContainer #sliderNextBtn { right: -8px !important; width: 34px; height: 34px; font-size: 11px; }
         }
     </style>
 
-    <!-- ==================== الـ JavaScript المطور لدعم السلايدر والانتقال الرايق ==================== -->
+    <!-- ==================== الـ JavaScript لعمل حركة الـ Stack والـ الانتقال الرايق ==================== -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // سحب الكروت الخاصة بسيكشن الكورسات فقط
             const courseCards = Array.from(document.querySelectorAll('#coursesGrid .course-card'));
-            
-            // تحديد أزرار الكورسات بدقة من الحاوية الأب منعاً لأي تضارب
             const coursePrev = document.querySelector('#coursesGridContainer #sliderPrevBtn');
             const courseNext = document.querySelector('#coursesGridContainer #sliderNextBtn');
             let courseActiveIndex = 0;
@@ -461,7 +477,6 @@
 
                 courseCards.forEach((card, index) => {
                     if (isLaptop) {
-                        // حركة اللاب توب (عرض كارتين متجاورين)
                         if (index === courseActiveIndex) {
                             card.style.transform = "translateX(0) scale(1)";
                             card.style.opacity = "1";
@@ -485,7 +500,7 @@
                             card.style.pointerEvents = "none";
                         }
                     } else {
-                        // حركة التليفون (نظام الـ Stack المتراكب والانتقال الرايق الملموم)
+                        // نظام السلايدر الرايق للموبايل (الانتقال المتراكب)
                         if (index === courseActiveIndex) {
                             card.style.transform = "translateX(0) scale(1) translateY(0)";
                             card.style.opacity = "1";
@@ -493,12 +508,12 @@
                             card.style.pointerEvents = "auto";
                         } else if (index > courseActiveIndex) {
                             let offset = index - courseActiveIndex;
-                            card.style.transform = `scale(${1 - offset * 0.05}) translateY(${offset * 15}px)`;
+                            card.style.transform = `scale(${1 - offset * 0.05}) translateY(${offset * 12}px)`;
                             card.style.opacity = offset === 1 ? "0.8" : "0.5";
                             card.style.zIndex = `${3 - offset}`;
                             card.style.pointerEvents = "none";
                         } else {
-                            card.style.transform = "translateX(-120%) scale(0.9) rotate(-5deg)";
+                            card.style.transform = "translateX(-120%) scale(0.9) rotate(-4deg)";
                             card.style.opacity = "0";
                             card.style.zIndex = "1";
                             card.style.pointerEvents = "none";
@@ -524,7 +539,6 @@
                 });
             }
 
-            // تشغيل السلايدر وتحديثه عند تغيير حجم الشاشة
             updateCourseStack();
             window.addEventListener('resize', updateCourseStack);
         });
