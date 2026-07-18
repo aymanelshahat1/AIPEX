@@ -319,7 +319,7 @@
     }
 </style>
 
-<!-- ==================== الـ JavaScript الذكي والمسؤول عن ربط الإضافة بالشبكة ==================== -->
+<!-- ==================== الـ JavaScript المطور والمضمون لحل مشكلة عدم الظهور ==================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const addVideoForm = document.getElementById('addVideoForm');
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const noVideosMessage = document.getElementById('noVideosMessage');
     const adminStatus = document.getElementById('adminStatus');
 
-    // دالة لاستخراج الـ ID بتاع فيديو اليوتيوب عشان يشتغل جوة الـ Iframe صح
+    // دالة لاستخراج الـ ID بتاع فيديو اليوتيوب
     function getYoutubeId(url) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
@@ -336,21 +336,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // دالة بناء ورسم الفيديوهات على الشاشة
     function renderVideos() {
-        // هنجيب الفيديوهات المتسجلة من الـ LocalStorage (لو مفيش هيعمل مصفوفة فاضية)
         const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
         
-        // أولاً: تصفير الجريد مع الحفاظ على رسالة "لا توجد فيديوهات" في الذاكرة
-        videosGrid.innerHTML = '';
-        videosGrid.appendChild(noVideosMessage);
+        // 1️⃣ تنظيف الكروت القديمة فقط (عشان منمسحش المنت الهيكل الأساسي)
+        const oldCards = videosGrid.querySelectorAll('.video-card');
+        oldCards.forEach(card => card.remove());
 
         if (savedVideos.length === 0) {
-            videosGrid.style.display = 'block'; // أظهر الحاوية كـ Block عشان جملة السنتر
-            noVideosMessage.style.display = 'inline-block';
+            // لو مفيش فيديوهات: أظهر الرسالة واخفي الجريد كـ عناصر
+            if (noVideosMessage) noVideosMessage.style.setProperty('display', 'inline-block', 'important');
+            videosGrid.style.setProperty('display', 'block', 'important'); 
         } else {
-            videosGrid.style.display = 'grid'; // حوّل الحاوية لـ Grid لعرض الفيديوهات ريسبونسيف
-            noVideosMessage.style.display = 'none'; // اخفي رسالة لا توجد فيديوهات
+            // 🔥 أهم خطوة: إخفاء الرسالة تماماً وتحويل الحاوية لـ Grid مرئي فوراً
+            if (noVideosMessage) noVideosMessage.style.setProperty('display', 'none', 'important');
+            videosGrid.style.setProperty('display', 'grid', 'important'); 
 
-            // رسم كروت الفيديوهات
+            // 2️⃣ توليد الكروت الجديدة وإضافتها جوة الجريد
             savedVideos.forEach(video => {
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
@@ -367,10 +368,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // الاستماع لحدث الضغط على زرار الإضافة في الفورم
+    // الاستماع لحدث الضغط على زرار الإضافة
     if (addVideoForm) {
         addVideoForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // 🔥 أهم سطر: يمنع ريفريش الصفحة وضياع البيانات
+            e.preventDefault(); // منع الريفرش
 
             const titleInput = document.getElementById('videoTitle');
             const urlInput = document.getElementById('videoUrl');
@@ -382,31 +383,30 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!embedId) {
                 adminStatus.style.display = 'block';
                 adminStatus.style.color = '#ff6b6b';
-                adminStatus.innerText = "<Invalid YouTube URL! Please check the link./>";
+                adminStatus.innerText = "<Invalid YouTube URL! Check the link./>";
                 return;
             }
 
-            // جلب المصفوفة الحالية، إضافة الفيديو الجديد، وحفظها
+            // الحفظ في الـ LocalStorage
             const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
             savedVideos.push({ title, embedId });
             localStorage.setItem('course_videos', JSON.stringify(savedVideos));
 
-            // تصفير الخانات وإظهار رسالة نجاح
+            // تصفير الخانات وإشعارات النجاح
             titleInput.value = '';
             urlInput.value = '';
             adminStatus.style.display = 'block';
             adminStatus.style.color = '#dfcda4';
             adminStatus.innerText = "<Video added successfully!/>";
 
-            // إخفاء رسالة النجاح بعد 3 ثواني تلقائياً
             setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
 
-            // 🔥 استدعاء دالة التحديث فوراً لتظهر الفيديوهات على الشاشة بدون ريفريش
+            // 🔥 تحديث الشاشة فوراً
             renderVideos();
         });
     }
 
-    // تشغيل الدالة أول ما الصفحة تفتح عشان لو في فيديوهات متسجلة تظهر علطول
+    // تشغيل الدالة فور تحميل الصفحة
     renderVideos();
 });
 </script>
