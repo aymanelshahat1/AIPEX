@@ -335,29 +335,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // دالة بناء ورسم الفيديوهات على الشاشة
+   // دالة بناء ورسم الفيديوهات المحدثة لتبلغ الاستجابة للنقر
     function renderVideos() {
         const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
         
-        // 1️⃣ تنظيف الكروت القديمة فقط (عشان منمسحش المنت الهيكل الأساسي)
+        // تنظيف الكروت القديمة
         const oldCards = videosGrid.querySelectorAll('.video-card');
         oldCards.forEach(card => card.remove());
 
         if (savedVideos.length === 0) {
-            // لو مفيش فيديوهات: أظهر الرسالة واخفي الجريد كـ عناصر
             if (noVideosMessage) noVideosMessage.style.setProperty('display', 'inline-block', 'important');
             videosGrid.style.setProperty('display', 'block', 'important'); 
         } else {
-            // 🔥 أهم خطوة: إخفاء الرسالة تماماً وتحويل الحاوية لـ Grid مرئي فوراً
             if (noVideosMessage) noVideosMessage.style.setProperty('display', 'none', 'important');
             videosGrid.style.setProperty('display', 'grid', 'important'); 
 
-            // 2️⃣ توليد الكروت الجديدة وإضافتها جوة الجريد
+            // توليد الكروت الجديدة مع السماح بالنقر والتشغيل المباشر
             savedVideos.forEach(video => {
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
+                // 🔥 ضفنا pointer-events: auto هنا عشان نضمن إن الكارت بيستقبل الضغط
+                videoCard.style.cssText = "pointer-events: auto !important; cursor: pointer;"; 
+                
                 videoCard.innerHTML = `
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/${video.embedId}" allowfullscreen></iframe>
+                    <div class="video-wrapper" style="pointer-events: auto !important;">
+                        <iframe 
+                            src="https://www.youtube.com/embed/${video.embedId}?rel=0&showinfo=0&autoplay=0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            style="pointer-events: auto !important; z-index: 50;">
+                        </iframe>
                     </div>
                     <div class="video-info">
                         <h4>${video.title}</h4>
@@ -367,7 +374,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
-
     // الاستماع لحدث الضغط على زرار الإضافة
     if (addVideoForm) {
         addVideoForm.addEventListener('submit', function (e) {
