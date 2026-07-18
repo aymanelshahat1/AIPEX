@@ -433,6 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener('load', loadParticles);
         setTimeout(loadParticles, 500);
     </script>
+<!-- ==================== الـ JavaScript المطور والمصحح بالكامل ==================== -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -452,29 +453,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // 🎯 معرف الكورس الحالي
+    // ربطهم بالـ window للتوافق مع أي سكربت خارجي بالموقع
+    window.auth = auth;
+    window.db = db;
+
+    // 🎯 معرف الكورس الحالي (بايثون)
     const COURSE_ID = "python"; 
 
     const adminPanel = document.getElementById('adminPanel');
     const addVideoForm = document.getElementById('addVideoForm');
-    const videosGrid = document.getElementById('videosGrid');
-    const noVideosMessage = document.getElementById('noVideosMessage');
+    const videosGrid = document.getElementById('publicVideosGrid');
+    const loginPrompt = document.getElementById('loginPrompt');
     const adminStatus = document.getElementById('adminStatus');
 
-    // دالة استخراج وتنسيق رابط الـ Embed لليوتيوب
-    function getEmbedUrl(url) {
-        let videoId = '';
-        if (url.includes('youtu.be/')) {
-            videoId = url.split('youtu.be/')[1].split(/[?#]/)[0];
-        } else if (url.includes('youtube.com/embed/')) {
-            return url;
-        } else if (url.includes('v=')) {
-            videoId = url.split('v=')[1].split('&')[0];
-        }
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    // دالة استخراج الـ ID من يوتيوب
+    function getYoutubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // دالة مسح الفيديو الحديثة (مربوطة بالـ window ليقرأها الـ HTML)
+    // دالة مسح الفيديو سحابياً للأدمن
     window.deleteVideo = async function(videoId) {
         if (confirm("هل أنت متأكد من حذف هذا الفيديو نهائياً؟")) {
             try {
@@ -487,58 +486,77 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // فحص رتبة الأدمن للمستخدم الحالي
+    // 🔒 حماية المحتوى وفحص رتبة الأدمن والـ LocalStorage
     onAuthStateChanged(auth, async (user) => {
-        if (user) {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        if (user && isLoggedIn) {
+            if (videosGrid) videosGrid.style.setProperty('display', 'grid', 'important');
+            if (loginPrompt) loginPrompt.style.setProperty('display', 'none', 'important');
+
             try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists() && userDoc.data().role === "admin") {
-                    if (adminPanel) adminPanel.style.display = "block";
+                    if (adminPanel) adminPanel.style.setProperty('display', 'block', 'important');
                 } else {
-                    if (adminPanel) adminPanel.style.display = "none";
+                    if (adminPanel) adminPanel.style.setProperty('display', 'none', 'important');
                 }
             } catch (err) {
                 console.error("Error checking admin role: ", err);
             }
         } else {
-            if (adminPanel) adminPanel.style.display = "none";
+            if (videosGrid) videosGrid.style.setProperty('display', 'none', 'important');
+            if (adminPanel) adminPanel.style.setProperty('display', 'none', 'important');
+            if (loginPrompt) loginPrompt.style.setProperty('display', 'block', 'important');
         }
     });
 
-    // رفع الفيديو الجديد
+    // 🔥 2️⃣ رفع وفرد الفيديو الجديد جوه السيرفر بالـ Syntax المحدث
     if (addVideoForm) {
         addVideoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const title = document.getElementById('videoTitle').value.trim();
-            const rawUrl = document.getElementById('videoUrl').value.trim();
-            const embedUrl = getEmbedUrl(rawUrl);
 
-            adminStatus.style.color = "#dfcda4";
-            adminStatus.textContent = "Uploading video details...";
-            adminStatus.style.display = "block";
+            const titleInput = document.getElementById('videoTitle');
+            const urlInput = document.getElementById('videoUrl');
+            
+            const title = titleInput.value.trim();
+            const url = urlInput.value.trim();
+            const embedId = getYoutubeId(url);
+
+            if (!embedId) {
+                adminStatus.style.display = 'block';
+                adminStatus.style.color = '#ff6b6b';
+                adminStatus.innerText = "<Invalid YouTube URL!/>";
+                return;
+            }
+
+            adminStatus.style.display = 'block';
+            adminStatus.style.color = '#dfcda4';
+            adminStatus.innerText = "<Uploading video details.../>";
 
             try {
                 await addDoc(collection(db, "videos"), {
                     courseId: COURSE_ID,
                     title: title,
-                    videoUrl: embedUrl,
+                    embedId: embedId,
                     createdAt: new Date().toISOString()
                 });
 
-                adminStatus.style.color = "#2ec4b6";
-                adminStatus.textContent = "Success! Video added successfully.";
-                addVideoForm.reset();
-                setTimeout(() => { adminStatus.style.display = "none"; }, 3000);
+                titleInput.value = '';
+                urlInput.value = '';
+                adminStatus.style.color = '#dfcda4';
+                adminStatus.innerText = "<Video deployed to Cloud successfully!/>";
+                setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
 
-            } catch (err) {
-                adminStatus.style.color = "#ff4a4a";
-                adminStatus.textContent = "Failed to add video.";
-                console.error("Error adding video: ", err);
+            } catch (error) {
+                adminStatus.style.color = '#ff6b6b';
+                adminStatus.innerText = "<Upload failed. Check permissions!/>";
+                console.error("Firestore Add Error: ", error);
             }
         });
     }
 
-    // 1️⃣ جلب الفيديوهات لايف وعرضها متناسقة مع رتبة الأدمن وحالة المسح
+    // 🔥 1️⃣ الاستماع للفيديوهات لايف (Real-time) وعرضها مع زر الحذف للأدمن
     const videosQuery = query(
         collection(db, "videos"),
         where("courseId", "==", COURSE_ID),
@@ -548,67 +566,55 @@ document.addEventListener("DOMContentLoaded", function () {
     onSnapshot(videosQuery, (snapshot) => {
         if (!videosGrid) return;
         
-        videosGrid.innerHTML = '';
-        
+        videosGrid.innerHTML = ''; 
+
         if (snapshot.empty) {
-            if (noVideosMessage) videosGrid.appendChild(noVideosMessage);
+            // لو مفيش فيديوهات خالص، اخفي الجريد عشان الشكل
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                videosGrid.style.setProperty('display', 'none', 'important');
+            }
             return;
         }
-        
+
+        // لو فيه فيديوهات والمستخدم مسجل دخول أظهر الجريد فوراً
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            videosGrid.style.setProperty('display', 'grid', 'important');
+        }
+
         snapshot.forEach((videoDoc) => {
-            const data = videoDoc.data();
-            const videoId = videoDoc.id; // استخراج الـ ID للحذف
+            const video = videoDoc.data();
+            const videoId = videoDoc.id; 
             
             const videoCard = document.createElement('div');
-            videoCard.style.cssText = "background: #0b0b0b; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column;";
+            videoCard.className = 'video-card';
             
-            // زرار الحذف يظهر فقط لو لوحة التحكم (adminPanel) معروضة حالياً (يعني المستخدم أدمن)
-            const isAdminVisible = adminPanel && adminPanel.style.display === "block";
-            const deleteBtnHtml = isAdminVisible ? 
-                `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-top: 10px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: bold; width: 100%; transition: 0.3s;">DELETE VIDEO</button>` 
+            // التحقق إذا كان الأدمن بانل ظاهر عشان نظهر زرار الحذف
+            const isAdmin = adminPanel && adminPanel.style.display === "block";
+            const deleteBtnHtml = isAdmin ? 
+                `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: bold; width: 100%; transition: 0.3s; letter-spacing: 1px;">DELETE LECTURE</button>` 
                 : '';
 
             videoCard.innerHTML = `
-                <div style="position: relative; width: 100%; padding-top: 56.25%;">
-                    <iframe src="${data.videoUrl}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/${video.embedId}?rel=0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
                 </div>
-                <div style="padding: 15px 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                    <h4 style="font-size: 15px; color: #fff; margin: 0; font-weight: 600; line-height: 1.4;">${data.title}</h4>
+                <div class="video-info" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                    <h4>${video.title}</h4>
                     ${deleteBtnHtml}
                 </div>
             `;
             videosGrid.appendChild(videoCard);
         });
     }, (error) => {
-        console.error("Firestore loading error: ", error);
+        console.error("Error fetching videos: ", error);
     });
 
-    // 2️⃣ إدارة حجب وحماية العرض بناءً على تسجيل الدخول والـ LocalStorage
-    document.addEventListener("DOMContentLoaded", function() {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        const userRole = localStorage.getItem('userRole');
-
-        const currentAdminPanel = document.getElementById('adminPanel');
-        const loginPrompt = document.getElementById('loginPrompt');
-        const currentVideosGrid = document.getElementById('videosGrid');
-
-        if (isLoggedIn === 'true') {
-            if (currentVideosGrid) currentVideosGrid.style.display = 'grid';
-            if (loginPrompt) loginPrompt.style.display = 'none';
-
-            if (userRole === 'admin') {
-                if (currentAdminPanel) currentAdminPanel.style.display = 'block';
-            } else {
-                if (currentAdminPanel) currentAdminPanel.style.display = 'none';
-            }
-        } else {
-            if (currentVideosGrid) currentVideosGrid.style.display = 'none';
-            if (currentAdminPanel) currentAdminPanel.style.display = 'none';
-            if (loginPrompt) loginPrompt.style.display = 'block';
-        }
-    });
-
-    // دالة فتح المودال أو التحويل للرئيسية
+    // دالة الـ Modal الاحتياطية
     window.openLoginModal = function() {
         const modal = document.getElementById('loginModal');
         if (modal) {
@@ -616,7 +622,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             window.location.href = 'index.html?showLogin=true';
         }
-    }
+    };
 </script>
 
 </body>
