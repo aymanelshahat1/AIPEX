@@ -139,6 +139,7 @@
     <!-- كود الـ CSS الإضافي للموبايل وتحسين شكل الأزرار -->
     <!-- 👇 استبدل الـ <style> والـ <script> القدام بالنسخة المظبوطة دي: -->
     <!-- 👇 استبدل الـ <style> والـ <script> القدام بالنسخة المضمونة دي: -->
+    <!-- 👇 استبدل الـ <style> القديم بالنسخة دي عشان يرجع مربع متناسق: -->
     <style>
         /* إخفاء شريط التمرير الافتراضي */
         #servicesGridContainer::-webkit-scrollbar { 
@@ -153,37 +154,58 @@
             box-shadow: 0 0 15px rgba(223, 205, 164, 0.25);
         }
 
-        /* 📱 التظبيط الشامل للموبايل والتليفون - حل مشكلة التآكل */
+        /* 📱 التظبيط الشامل للموبايل والتليفون - تحويل المستطيل لمربع ملموم */
         @media (max-width: 768px) {
             #servicesGridContainer { 
                 display: flex !important;
                 flex-direction: row !important;
-                grid-template-columns: none !important; /* إلغاء الـ Grid القديم */
+                grid-template-columns: none !important;
                 gap: 20px !important; 
-                padding: 10px 0 !important;
+                padding: 20px 0 !important;
                 width: 100% !important;
                 overflow-x: auto !important;
             }
             
-            /* إجبار الكارت على أخذ عرض الشاشة بالملي بدون كارت مجاور */
+            /* إجبار الكارت على أخذ شكل مربع ملموم ومتناسق */
             #servicesGridContainer .service-card { 
-                flex: 0 0 100% !important; 
-                width: 100% !important;
-                min-width: 100% !important; /* تمنع الكارت من الانكماش */
-                max-width: 100% !important;
+                flex: 0 0 85% !important; /* صغرنا العرض سنة لـ 85% عشان يلم الطول معاه ويكون أشيك */
+                width: 85% !important;
+                min-width: 85% !important;
+                max-width: 85% !important;
                 box-sizing: border-box !important;
-                margin: 0 !important;
+                margin: 0 auto !important;
+                padding: 20px 15px !important; /* تقليل الـ padding الداخلي عشان نلم الطول */
+                height: auto !important;
+            }
+
+            /* صغرنا حجم نص الوصف شوية عشان يلم طول المربع وميمطش تحت */
+            #servicesGridContainer .service-card p {
+                font-size: 12px !important;
+                line-height: 1.4 !important;
+                margin-bottom: 10px !important;
+            }
+
+            /* تصغير حجم الصورة الدائرية سنة لتتناسب مع المربع */
+            #servicesGridContainer .service-card .card-image {
+                width: 100px !important;
+                height: 100px !important;
+                margin: 0 auto 10px auto !important;
+            }
+
+            #servicesGridContainer .service-card h3 {
+                font-size: 18px !important;
+                margin-bottom: 5px !important;
             }
             
-            /* سحب الأسهم بره الكروت على الأطراف تماماً عشان متغطيش على الكلام */
+            /* تظبيط مكان الأسهم على أطراف التصميم الجديد */
             #sliderPrevBtn { 
-                left: 5px !important; 
+                left: 0px !important; 
                 width: 36px !important; 
                 height: 36px !important; 
                 font-size: 12px !important;
             }
             #sliderNextBtn { 
-                right: 5px !important; 
+                right: 0px !important; 
                 width: 36px !important; 
                 height: 36px !important; 
                 font-size: 12px !important;
