@@ -501,6 +501,10 @@
 
     window.openLoginModal = () => { window.location.href = 'index.html?showLogin=true'; };
 </script>
+<!-- نص اسم المحاضر: مدمج بالكامل، ريسبونسيف سطر واحد، وتفاعلي -->
+<div style="text-align: center; margin: 20px auto; width: 100%; overflow: hidden;">
+    <p onmouseenter="this.style.color='rgba(223, 205, 164, 0.85)'; this.style.transform='translateX(6px)'; setTimeout(() => { if(this.style.transform.includes('6px')) this.style.transform='translateX(-6px)'; }, 200); this._interval = setInterval(() => { this.style.transform = this.style.transform === 'translateX(6px)' ? 'translateX(-6px)' : 'translateX(6px)'; }, 400);" onmouseleave="clearInterval(this._interval); this.style.color='rgba(223, 205, 164, 0.35)'; this.style.transform='translateX(0)'; ExtStyle='';" style="font-family: 'Montserrat', sans-serif; color: rgba(223, 205, 164, 0.35); font-size: clamp(10px, 3vw, 13px); letter-spacing: 2px; text-transform: uppercase; margin: 0; display: inline-block; cursor: default; transition: transform 0.4s ease-in-out, color 0.3s ease; white-space: nowrap; will-change: transform;">Instructor: Baraa Issa</p>
+</div>
     <footer class="site-footer">
         © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
     </footer>
