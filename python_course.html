@@ -251,30 +251,30 @@
         <!-- 3️⃣ حاوي السلايدر والمربع الشفاف بالفيديوهات -->
         <div id="sliderWrapper" style="display: none !important; position: relative; width: 100%; align-items: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(223, 205, 164, 0.1); border-radius: 16px; padding: 30px 40px; box-sizing: border-box; backdrop-filter: blur(10px);">
             
-            <!-- زر الحركة الشمال -->
-            <button id="prevBtn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(11, 11, 11, 0.8); border: 1px solid #dfcda4; color: #dfcda4; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 100; font-family: 'Orbitron', sans-serif; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">&lt;</button>
+            <!-- زر الحركة الشمال (مصغر وخافت جداً افتراضياً) -->
+            <button id="prevBtn" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: rgba(11, 11, 11, 0.6); border: 1px solid rgba(223, 205, 164, 0.4); color: rgba(223, 205, 164, 0.6); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; z-index: 100; font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; opacity: 0.25;">&lt;</button>
             
-            <!-- المربع الداخلي اللي بيحتوي على السطر المخفي -->
+            <!-- المربع الداخلي لعرض الفيديوهات -->
             <div id="sliderContainer" style="width: 100%; overflow: hidden;">
                 <div id="publicVideosGrid" style="display: flex !important; gap: 20px; transition: transform 0.5s ease-in-out; will-change: transform;">
-                    <!-- الفيديوهات هتنزل هنا سحابياً على شكل سطر متصل -->
+                    <!-- الفيديوهات تنزل هنا سحابياً -->
                 </div>
             </div>
             
-            <!-- زر الحركة اليمين -->
-            <button id="nextBtn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(11, 11, 11, 0.8); border: 1px solid #dfcda4; color: #dfcda4; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 100; font-family: 'Orbitron', sans-serif; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);">&gt;</button>
+            <!-- زر الحركة اليمين (مصغر وخافت جداً افتراضياً) -->
+            <button id="nextBtn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(11, 11, 11, 0.6); border: 1px solid rgba(223, 205, 164, 0.4); color: rgba(223, 205, 164, 0.6); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; z-index: 100; font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; opacity: 0.25;">&gt;</button>
         </div>
 
     </div>
 </main>
 
 <style>
-    /* التنسيق الافتراضي للإخفاء لمنع ومضات الـ UI */
+    /* الإخفاء الافتراضي الأولي */
     #adminPanel, #sliderWrapper, #loginPrompt { display: none !important; }
     
-    /* ضبط عرض الكارت جوه السلايدر ليشغل تلت أو ربع المساحة بناءً على حجم الشاشة */
+    /* ضبط عرض الكروت داخل السلايدر (3 كروت في الشاشة) */
     .video-card {
-        flex: 0 0 calc(33.333% - 14px); /* الافتراضي: 3 فيديوهات في الشاشة */
+        flex: 0 0 calc(33.333% - 14px);
         background: #0b0b0b;
         border: 1px solid rgba(223, 205, 164, 0.15);
         border-radius: 12px;
@@ -290,13 +290,26 @@
     .video-info { padding: 15px; z-index: 5; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; }
     .video-info h4 { margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 14px; line-height: 1.4; }
 
-    /* ريسبونسيف للشاشات الكبيرة والصغيرة لضبط مساحات الفيديوهات */
+    /* تأثير إظهار الأزرار برواق عند الاقتراب من السلايدر */
+    #sliderWrapper:hover #prevBtn, 
+    #sliderWrapper:hover #nextBtn {
+        opacity: 0.85 !important;
+    }
+
+    #prevBtn:hover, #nextBtn:hover {
+        background: #dfcda4 !important;
+        color: #000 !important;
+        border-color: #dfcda4 !important;
+        opacity: 1 !important;
+    }
+
+    /* ريسبونسيف متكامل للمقاسات المختلفة */
     @media (max-width: 1024px) {
-        .video-card { flex: 0 0 calc(50% - 10px); } /* فيديوهين في الشاشات المتوسطة */
+        .video-card { flex: 0 0 calc(50% - 10px); }
         #sliderWrapper { padding: 30px 45px; }
     }
     @media (max-width: 650px) {
-        .video-card { flex: 0 0 100%; } /* فيديو واحد كامل في الموبايل */
+        .video-card { flex: 0 0 100%; }
         #sliderWrapper { padding: 25px 45px; }
         .responsive-locked-card { width: 100% !important; padding: 30px 15px !important; }
         .admin-responsive-form { display: flex !important; flex-direction: column !important; gap: 12px !important; }
@@ -330,7 +343,6 @@
     const videosGrid = document.getElementById('publicVideosGrid');
     const loginPrompt = document.getElementById('loginPrompt');
     
-    // زراير السلايدر
     const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
 
@@ -345,7 +357,6 @@
         if (confirm("هل أنت متأكد من حذف هذا الفيديو نهائياً؟")) {
             try {
                 await deleteDoc(doc(db, 'videos', videoId));
-                // عند الحذف نرجع خطوة للوراء بالسلايدر عشان الـ UI ميعلقش في مساحة فاضية
                 if (currentSlideIndex > 0) currentSlideIndex--;
             } catch (error) { console.error(error); }
         }
@@ -357,7 +368,6 @@
         return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // إدارة الجلسات والصلاحيات
     onAuthStateChanged(auth, async (user) => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         
@@ -388,7 +398,6 @@
         renderVideos();
     });
 
-    // دالة رفع وفرد الفيديو الجديد
     const addVideoForm = document.getElementById('addVideoForm');
     const adminStatus = document.getElementById('adminStatus');
     if (addVideoForm) {
@@ -424,7 +433,6 @@
         });
     }
 
-    // جلب الفيديوهات ورسمها وتفعيل حركة السلايدر
     let unsubscribeVideos = null;
     function renderVideos() {
         if (unsubscribeVideos) unsubscribeVideos();
@@ -455,20 +463,17 @@
                 videosGrid.appendChild(videoCard);
             });
 
-            // إعادة ضبط السلايدر للحجم الحالي بعد جلب الكروت
             updateSliderPosition();
         });
     }
 
-    // منطق حركة الـ Slider بالزراير
     function updateSliderPosition() {
         const cards = document.querySelectorAll('.video-card');
         if (cards.length === 0) return;
 
         const cardWidth = cards[0].getBoundingClientRect().width;
-        const gap = 20; // نفس قيمة الـ gap المعرفة في الفلكس
+        const gap = 20; 
         
-        // حساب الحركة الكلية بناءً على العرض والمسافات
         const moveAmount = (cardWidth + gap) * currentSlideIndex;
         videosGrid.style.transform = `translateX(-${moveAmount}px)`;
     }
@@ -476,7 +481,6 @@
     if (nextBtn && prevBtn) {
         nextBtn.addEventListener('click', () => {
             const cards = document.querySelectorAll('.video-card');
-            // تحديد كام كارد ظاهر في الشاشة بناءً على المقاس الحقيقي للـ wrapper
             const visibleCardsCount = window.innerWidth <= 650 ? 1 : (window.innerWidth <= 1024 ? 2 : 3);
             
             if (currentSlideIndex < cards.length - visibleCardsCount) {
@@ -492,7 +496,6 @@
             }
         });
 
-        // إعادة الحساب التلقائي لو المستخدم غير مقاس الشاشة أو قلب الموبايل عرضي
         window.addEventListener('resize', updateSliderPosition);
     }
 
