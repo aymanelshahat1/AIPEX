@@ -212,7 +212,7 @@
 <main>
     <div class="course-content-container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; font-family: 'Montserrat', sans-serif;">
         
-        <!-- 1️⃣ لوحة الأدمن (مستقلة تماماً) -->
+        <!-- 1️⃣ لوحة الأدمن -->
         <div id="adminPanel" style="display: block; background: #0b0b0b; border: 1px dashed #dfcda4; border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 0 20px rgba(223, 205, 164, 0.05); text-align: left;">
             <h3 style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                 Admin Control Panel
@@ -233,7 +233,7 @@
             <p id="adminStatus" style="margin-top: 10px; margin-bottom: 0; font-size: 13px; display: none; color: #dfcda4; font-family: monospace;"></p>
         </div>
 
-        <!-- 2️⃣ لوحة الحجب للمسجلين -->
+        <!-- 2️⃣ لوحة الحجب للمستخدم غير المسجل -->
         <div id="loginPrompt" class="responsive-locked-card" style="display: none; background: #000; border: 1px dashed #dfcda4; border-radius: 12px; padding: 40px 20px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 0 30px rgba(223, 205, 164, 0.03); box-sizing: border-box; width: 100%;">
             <h3 class="locked-title" style="font-family: 'Orbitron', sans-serif; color: #dfcda4; margin-top: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap !important; overflow: hidden;">
                 🔒 CONTENT LOCKED
@@ -248,9 +248,9 @@
             </div>
         </div>
 
-        <!-- 3️⃣ شبكة الفيديوهات العامة (تم حذف النص الملخبط منها تماماً) -->
+        <!-- 3️⃣ شبكة الفيديوهات العامة (مستقلة تماماً وتتغذى من Firebase) -->
         <div id="publicVideosGrid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 1;">
-            <!-- الفيديوهات هتنزل هنا علطول وبشكل مباشر -->
+            <!-- الفيديوهات هتنزل هنا سحابياً -->
         </div>
     </div>
 </main>
@@ -289,7 +289,6 @@
         margin: 0; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.4;
     }
 
-    /* شاشات الموبايل بالشعرة */
     @media (max-width: 600px) {
         .responsive-locked-card { width: 100% !important; padding: 30px 15px !important; }
         .locked-title { font-size: 4.5vw !important; letter-spacing: 0.5px !important; }
@@ -299,33 +298,36 @@
     }
 </style>
 
-<!-- ==================== الـ JavaScript السريع والمباشر بدون كود النص المحذوف ==================== -->
+<!-- ==================== الـ JavaScript المربوط بـ Firebase Firestore ==================== -->
 <script>
+// تأكد أنك قمت بعمل تهيئة لـ Firebase (db) مسبقاً في ملفك الخارجي أو أعلى الصفحة
 document.addEventListener("DOMContentLoaded", function () {
     const addVideoForm = document.getElementById('addVideoForm');
     const videosGrid = document.getElementById('publicVideosGrid');
     const adminStatus = document.getElementById('adminStatus');
 
+    // دالة استخراج الـ ID من يوتيوب
     function getYoutubeId(url) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    function renderVideos() {
-        const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
-        
-        // مسح المحتوى بالكامل لإعادة البناء النظيف
-        videosGrid.innerHTML = '';
+    // 🔥 1️⃣ قراءة الفيديوهات سحابياً ومزامنتها فوراً عند أي تغيير (Real-time Listening)
+    // افترضنا اسم الكوليكشن 'videos'، قم بتغييره لاسم الكوليكشن عندك إذا لزم الأمر
+    if (typeof db !== 'undefined') {
+        db.collection('videos').orderBy('createdAt', 'asc').onSnapshot((snapshot) => {
+            videosGrid.innerHTML = ''; // مسح الشبكة لإعادة الرسم النظيف
 
-        if (savedVideos.length === 0) {
-            // لو مفيش فيديوهات خالص بتفضل مخفية
-            videosGrid.style.setProperty('display', 'none', 'important'); 
-        } else {
-            // أول ما ينزل فيديو بيتم فرض نمط الجريد فوراً وإظهاره للكل
-            videosGrid.style.setProperty('display', 'grid', 'important'); 
+            if (snapshot.empty) {
+                videosGrid.style.setProperty('display', 'none', 'important');
+                return;
+            }
 
-            savedVideos.forEach(video => {
+            videosGrid.style.setProperty('display', 'grid', 'important');
+
+            snapshot.forEach((doc) => {
+                const video = doc.data();
                 const videoCard = document.createElement('div');
                 videoCard.className = 'video-card';
                 
@@ -343,9 +345,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
                 videosGrid.appendChild(videoCard);
             });
-        }
+        }, (error) => {
+            console.error("Error fetching videos: ", error);
+        });
+    } else {
+        console.warn("Firebase 'db' is not initialized yet. Check your Firebase SDK config.");
     }
 
+    // 🔥 2️⃣ حفظ الفيديو الجديد مباشرة جوة السيرفر (Firestore) بدلاً من LocalStorage
     if (addVideoForm) {
         addVideoForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -364,26 +371,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const savedVideos = JSON.parse(localStorage.getItem('course_videos')) || [];
-            savedVideos.push({ title, embedId });
-            localStorage.setItem('course_videos', JSON.stringify(savedVideos));
-
-            titleInput.value = '';
-            urlInput.value = '';
-            adminStatus.style.display = 'block';
-            adminStatus.style.color = '#dfcda4';
-            adminStatus.innerText = "<Video added successfully!/>";
-
-            setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
-
-            renderVideos();
+            if (typeof db !== 'undefined') {
+                db.collection('videos').add({
+                    title: title,
+                    embedId: embedId,
+                    createdAt: new Date() // عشان يترتبوا كرونولوجياً للطلبة
+                })
+                .then(() => {
+                    titleInput.value = '';
+                    urlInput.value = '';
+                    adminStatus.style.display = 'block';
+                    adminStatus.style.color = '#dfcda4';
+                    adminStatus.innerText = "<Video deployed to Cloud successfully!/>";
+                    setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
+                })
+                .catch((error) => {
+                    adminStatus.style.display = 'block';
+                    adminStatus.style.color = '#ff6b6b';
+                    adminStatus.innerText = "<Upload failed. Check permissions!/>";
+                    console.error("Firestore Add Error: ", error);
+                });
+            } else {
+                alert("Firebase SDK not found!");
+            }
         });
     }
-
-    // تشغيل مباشر فور فتح الصفحة
-    renderVideos();
 });
-
 </script>
     <footer class="site-footer">
         © 2026 AIPEX. All Rights Reserved. Designed by <span class="designer-name">Ayman Elshahat</span>
