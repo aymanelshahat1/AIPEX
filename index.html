@@ -322,44 +322,50 @@
     <!-- حاوية السلايدر المحمية بأزرارك القديمة -->
     <div id="coursesGridContainer" style="width: 100%; position: relative;">
         
-        <!-- الأزرار الأصلية بنفس الأسامي وبأحجام مرنة -->
+        <!-- الأزرار الأصلية بنفس الأسامي المطلوبة وبأحجام مرنة -->
         <button id="sliderPrevBtn" class="course-slider-btn">❮</button>
         <button id="sliderNextBtn" class="course-slider-btn">❯</button>
 
-        <!-- الكورسات بتاعتك بنفس الكلاسات القديمة والـ Structure الصح -->
+        <!-- شبكة الكروت المتطابقة تماماً مع التصميم -->
         <div class="courses-grid" id="coursesGrid">
             
             <!-- كارت 1: بايثون -->
             <div class="course-card card-1">
                 <div class="card-top">
                     <img src="assets/images/wwww.jpg" alt="Python" class="course-image">
-                    <p class="code-text">&lt;Python 3 for Web &amp; Automation/&gt;</p>
                 </div>
-                <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
+                <div class="card-bottom">
+                    <p class="code-text">&lt;Python 3 for Web &amp; Automation/&gt;</p>
+                    <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
+                </div>
             </div>
 
             <!-- كارت 2: سوليدوركس -->
             <div class="course-card card-2">
                 <div class="card-top">
                     <img src="assets/images/nnn.png" alt="SolidWorks" class="course-image">
-                    <p class="code-text">&lt; SolidWorks for Engineering &gt;</p>
                 </div>
-                <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
+                <div class="card-bottom">
+                    <p class="code-text">&lt; SolidWorks for Engineering &gt;</p>
+                    <a href="python_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center;">START LEARNING</a>
+                </div>
             </div>
 
             <!-- كارت 3: أوتوكاد -->
             <div class="course-card card-3">
                 <div class="card-top">
                     <img src="assets/images/aaa.jpg" alt="AutoCAD" class="course-image">
-                    <p class="code-text"><span>&lt;</span> AutoCAD for Engineering <span>/&gt;</span></p>
                 </div>
-                <a href="autocad_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
+                <div class="card-bottom">
+                    <p class="code-text"><span>&lt;</span> AutoCAD for Engineering <span>/&gt;</span></p>
+                    <a href="autocad_course.html" class="btn-gold-outline course-link" style="text-decoration: none; display: block; text-align: center; cursor: pointer;">START LEARNING</a>
+                </div>
             </div>
 
         </div>
     </div>
 
-    <!-- ==================== الـ CSS المطور لضبط الحجم وحماية التصميم من الانهيار ==================== -->
+    <!-- ==================== الـ CSS المظبوط على التصميم الأصلي بالملي ==================== -->
     <style>
         /* ستايل أزرار السلايدر المحمية */
         .course-slider-btn {
@@ -388,39 +394,52 @@
         #coursesGridContainer #sliderPrevBtn { left: 5%; }
         #coursesGridContainer #sliderNextBtn { right: 5%; }
 
-        /* تنسيق الكروت المرن عشان يلم كل العناصر جواه */
+        /* تنسيق الكروت الأساسي لتطابق شكل الصورة */
         .courses-grid { position: relative; display: block; margin: 0 auto; }
         
         .course-card {
             background: #111111;
             border: 1px solid rgba(223, 205, 164, 0.15);
             border-radius: 24px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
             box-sizing: border-box;
-            padding: 30px 20px;
         }
 
+        /* الجزء العلوي: خلفية سوداء بالكامل ويفصل بخط سفلي رفيع */
         .card-top {
+            background: #000000 !important;
+            width: 100%;
+            height: 65%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(223, 205, 164, 0.15);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* حماية عرض اللوجو بالكامل بدون تشويه */
+        .course-image {
+            max-width: 85% !important;
+            max-height: 90% !important;
+            object-fit: contain !important;
+        }
+
+        /* الجزء السفلي: يحتوي على النصوص والأزرار مرصوفة بدقة */
+        .card-bottom {
+            height: 35%;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex: 1;
+            padding: 15px 20px;
+            box-sizing: border-box;
         }
 
-        /* حماية اللوجو: يظهر كامل ومياكلش مساحة الكارت */
-        .course-image {
-            max-width: 85% !important;
-            height: 160px !important; /* الارتفاع المثالي في اللاب توب ليظهر بالكامل */
-            object-fit: contain !important;
-            margin-bottom: 20px;
-        }
-
-        /* المربع الأصفر الأصلي */
+        /* المربع الأصفر المحيط بالنص الداخلي */
         .code-text {
             border: 1px solid #dfcda4;
             color: #dfcda4;
@@ -430,22 +449,23 @@
             text-align: center;
             width: 100%;
             box-sizing: border-box;
-            margin-bottom: 25px;
+            margin: 0 0 15px 0 !important;
         }
 
         .btn-gold-outline {
             width: 100% !important;
         }
 
-        /* 💻 وضع اللاب توب الأصلي المتناسق */
+        /* 💻 وضع اللاب توب المستقر */
         @media (min-width: 769px) {
-            .courses-grid { height: 490px !important; width: 90% !important; max-width: 960px !important; }
+            .courses-grid { height: 460px !important; width: 90% !important; max-width: 960px !important; }
             .course-card { position: absolute !important; top: 0; width: calc(50% - 15px) !important; height: 100% !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; }
+            .code-text { font-size: 14px; }
         }
 
-        /* 📱 وضع التليفون - تصغير ريسبونسيف ذكي (كل الكتلة بتصغر بنسبة وتناسب) */
+        /* 📱 وضع التليفون - تصغير ريسبونسيف ذكي للحفاظ على الأبعاد بالملي */
         @media (max-width: 768px) {
-            .courses-grid { height: 390px !important; width: 78% !important; } 
+            .courses-grid { height: 380px !important; width: 78% !important; } 
             .course-card { 
                 position: absolute !important; 
                 top: 0; 
@@ -454,12 +474,13 @@
                 height: 100% !important; 
                 transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s !important; 
                 border-radius: 20px;
-                padding: 20px 15px; 
             }
             
-            /* تصغير اللوجو والمربع والزرار مع بعض عشان يحافظوا على نفس الشكل */
-            .course-image { height: 110px !important; margin-bottom: 15px; }
-            .code-text { font-size: 11.5px !important; padding: 6px 8px !important; margin-bottom: 15px; }
+            .card-top { padding: 15px; }
+            .card-bottom { padding: 10px 15px; }
+            
+            /* تصغير نسبي متناسق لكل المكونات لتجنب أي تداخل */
+            .code-text { font-size: 11.5px !important; padding: 6px 8px !important; margin-bottom: 10px !important; }
             .btn-gold-outline { padding: 8px 0 !important; font-size: 11px !important; border-radius: 20px !important; }
 
             #coursesGridContainer #sliderPrevBtn { left: -8px !important; width: 34px; height: 34px; font-size: 11px; }
