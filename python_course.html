@@ -256,7 +256,6 @@
 </main>
 
 <style>
-    /* CSS إجباري لضمان ثبات التنسيق */
     #adminPanel, #publicVideosGrid, #loginPrompt { display: none !important; }
     
     .video-card {
@@ -305,7 +304,15 @@
     const videosGrid = document.getElementById('publicVideosGrid');
     const loginPrompt = document.getElementById('loginPrompt');
 
+    // 🔒 متغير داخلي آمن ومستقل لتخزين حالة الأدمن الحقيقية من السيرفر
+    let currentUserIsAdmin = false;
+
     window.deleteVideo = async function(videoId) {
+        // حماية برمجية إضافية حتى لو حاول شخص التلاعب بالكونسول
+        if (!currentUserIsAdmin) {
+            alert("⚠️ غير مسموح لك بإجراء هذه العملية.");
+            return;
+        }
         if (confirm("هل أنت متأكد من حذف هذا الفيديو نهائياً؟")) {
             try {
                 await deleteDoc(doc(db, 'videos', videoId));
@@ -313,49 +320,111 @@
         }
     };
 
+    // دالة لاستخراج الـ ID من يوتيوب لضمان عمل دالة الـ Add
+    function getYoutubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    // إدارة الصلاحيات وحالة تسجيل الدخول
     onAuthStateChanged(auth, async (user) => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
         if (user && isLoggedIn) {
             videosGrid.style.setProperty('display', 'grid', 'important');
             loginPrompt.style.setProperty('display', 'none', 'important');
+            
             try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists() && userDoc.data().role === "admin") {
+                    currentUserIsAdmin = true; // تأكيد الرتبة سحابياً
                     adminPanel.style.setProperty('display', 'block', 'important');
+                } else {
+                    currentUserIsAdmin = false;
+                    adminPanel.style.setProperty('display', 'none', 'important');
                 }
-            } catch (err) { console.error(err); }
+            } catch (err) { 
+                console.error(err); 
+                currentUserIsAdmin = false;
+            }
         } else {
+            currentUserIsAdmin = false;
             videosGrid.style.setProperty('display', 'none', 'important');
             adminPanel.style.setProperty('display', 'none', 'important');
             loginPrompt.style.setProperty('display', 'block', 'important');
         }
-    });
-
-    // جلب الفيديوهات
-    const videosQuery = query(collection(db, "videos"), where("courseId", "==", COURSE_ID), orderBy("createdAt", "asc"));
-    onSnapshot(videosQuery, (snapshot) => {
-        videosGrid.innerHTML = ''; 
-        if (snapshot.empty) return;
         
-        snapshot.forEach((videoDoc) => {
-            const video = videoDoc.data();
-            const videoId = videoDoc.id; 
-            
-            const isAdmin = localStorage.getItem('isLoggedIn') === 'true' && 
-                            localStorage.getItem('userRole') === 'admin' && 
-                            adminPanel.style.display !== 'none';
-            
-            const deleteBtnHtml = isAdmin ? `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: bold; width: 100%;">DELETE LECTURE</button>` : '';
-
-            const videoCard = document.createElement('div');
-            videoCard.className = 'video-card';
-            videoCard.innerHTML = `
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${video.embedId}?rel=0" allowfullscreen></iframe></div>
-                <div class="video-info"><h4>${video.title}</h4>${deleteBtnHtml}</div>
-            `;
-            videosGrid.appendChild(videoCard);
-        });
+        // إعادة تحديث عرض الفيديوهات بعد التأكد من الرتبة الحقيقية
+        renderVideos();
     });
+
+    // دالة رفع وفرد الفيديو الجديد
+    const addVideoForm = document.getElementById('addVideoForm');
+    const adminStatus = document.getElementById('adminStatus');
+    if (addVideoForm) {
+        addVideoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUserIsAdmin) return;
+
+            const titleInput = document.getElementById('videoTitle');
+            const urlInput = document.getElementById('videoUrl');
+            const embedId = getYoutubeId(urlInput.value.trim());
+
+            if (!embedId) {
+                adminStatus.style.display = 'block';
+                adminStatus.style.color = '#ff6b6b';
+                adminStatus.innerText = "<Invalid YouTube URL!/>";
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "videos"), {
+                    courseId: COURSE_ID,
+                    title: titleInput.value.trim(),
+                    embedId: embedId,
+                    createdAt: new Date().toISOString()
+                });
+                titleInput.value = '';
+                urlInput.value = '';
+                adminStatus.style.display = 'block';
+                adminStatus.style.color = '#dfcda4';
+                adminStatus.innerText = "<Video deployed successfully!/>";
+                setTimeout(() => { adminStatus.style.display = 'none'; }, 3000);
+            } catch (error) { console.error(error); }
+        });
+    }
+
+    // دالة رندر الفيديوهات المستقلة والآمنة تماماً
+    let unsubscribeVideos = null;
+    function renderVideos() {
+        if (unsubscribeVideos) unsubscribeVideos();
+
+        const videosQuery = query(collection(db, "videos"), where("courseId", "==", COURSE_ID), orderBy("createdAt", "asc"));
+        
+        unsubscribeVideos = onSnapshot(videosQuery, (snapshot) => {
+            videosGrid.innerHTML = ''; 
+            if (snapshot.empty) return;
+            
+            snapshot.forEach((videoDoc) => {
+                const video = videoDoc.data();
+                const videoId = videoDoc.id; 
+                
+                // 🔒 الاعتماد الكلي على المتغير البرمجي الصارم currentUserIsAdmin
+                const deleteBtnHtml = currentUserIsAdmin ? 
+                    `<button onclick="deleteVideo('${videoId}')" style="background: #ff4444; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: bold; width: 100%; font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 1px;">DELETE LECTURE</button>` 
+                    : '';
+
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${video.embedId}?rel=0" allowfullscreen></iframe></div>
+                    <div class="video-info"><h4>${video.title}</h4>${deleteBtnHtml}</div>
+                `;
+                videosGrid.appendChild(videoCard);
+            });
+        });
+    }
 
     window.openLoginModal = () => { window.location.href = 'index.html?showLogin=true'; };
 </script>
